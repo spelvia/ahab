@@ -48,4 +48,38 @@ Authentication uses `ANTHROPIC_API_KEY` (or an `ant auth login` profile).
 
 ```sh
 go build ./... && go test ./...
+go run ./cmd/ahab --help
+```
+
+### End-to-end smoke test (needs kind, kubectl, and an Anthropic credential)
+
+```sh
+kind create cluster --name ahab-test
+
+# Building: approve the plan, review the manifest diffs, approve each apply.
+go run ./cmd/ahab --context kind-ahab-test build "deploy nginx with 2 replicas and a service"
+
+# Investigation: break something on purpose, then ask for a diagnosis.
+kubectl --context kind-ahab-test create deployment broken --image=nginx:v9.9.9-does-not-exist
+go run ./cmd/ahab --context kind-ahab-test investigate "the broken deployment is not coming up"
+
+# Review what the agent did.
+go run ./cmd/ahab history
+
+kind delete cluster --name ahab-test
+```
+
+## Architecture
+
+```
+cmd/ahab                  cobra CLI (build / investigate / history)
+internal/tui              Bubble Tea frontend: transcript, approval modal, history tab
+internal/agent            manual agentic loop + approval gate + record hook
+internal/agent/tools      tool registry: file tools, cluster_read, preview/run_command, write_file
+internal/agent/build      Building mode (PLAN → WRITE → APPLY)
+internal/agent/investigate Investigation mode (read-only + submit_report)
+internal/executor         allowlisted kubectl / helm / flux / argocd runners
+internal/recorder         JSONL session history + tree rendering
+internal/llm              provider-neutral LLM types; internal/llm/anthropic adapter
+internal/observability    provider interface for future Observability mode
 ```

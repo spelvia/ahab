@@ -16,7 +16,7 @@ type UI interface {
 // NoUI discards all updates.
 type NoUI struct{}
 
-func (NoUI) AgentText(string)          {}
-func (NoUI) Thinking(string)           {}
-func (NoUI) ToolStart(string, string)  {}
+func (NoUI) AgentText(string)             {}
+func (NoUI) Thinking(string)              {}
+func (NoUI) ToolStart(string, string)     {}
 func (NoUI) ToolEnd(string, string, bool) {}

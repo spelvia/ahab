@@ -19,12 +19,12 @@ import (
 type state int
 
 const (
-	stateRunning state = iota // agent turn in flight
-	stateApproval             // waiting for y/n on a gated action
-	stateFeedback             // collecting denial feedback text
-	stateAsk                  // agent asked the user a question
-	stateIdle                 // turn finished; follow-up input available
-	stateDone                 // session over; q to quit
+	stateRunning  state = iota // agent turn in flight
+	stateApproval              // waiting for y/n on a gated action
+	stateFeedback              // collecting denial feedback text
+	stateAsk                   // agent asked the user a question
+	stateIdle                  // turn finished; follow-up input available
+	stateDone                  // session over; q to quit
 )
 
 const maxDetailLines = 30
@@ -46,12 +46,12 @@ type model struct {
 	sess   Session
 	cancel context.CancelFunc
 
-	vp      viewport.Model
-	input   textinput.Model
-	spin    spinner.Model
-	width   int
-	height  int
-	ready   bool
+	vp          viewport.Model
+	input       textinput.Model
+	spin        spinner.Model
+	width       int
+	height      int
+	ready       bool
 	showHistory bool
 
 	state      state
