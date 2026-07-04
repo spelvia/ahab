@@ -24,6 +24,9 @@ const (
 type Tool struct {
 	Def    llm.ToolDef
 	Policy Policy
+	// Phase, when non-empty, switches the session's workflow phase label
+	// (plan/write/apply) as soon as the model calls this tool.
+	Phase string
 	// Describe renders a one-line human-readable intent for approval prompts
 	// and the activity log. May be nil.
 	Describe func(input json.RawMessage) string

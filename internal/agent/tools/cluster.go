@@ -88,6 +88,7 @@ func PreviewCommand(r *executor.Runner) *Tool {
 			Required:    []string{"args"},
 		},
 		Policy: PolicyAuto,
+		Phase:  "apply",
 		Describe: func(raw json.RawMessage) string {
 			_, line := describeCommand(r, raw)
 			return "preview: " + line
@@ -118,6 +119,7 @@ func RunCommand(r *executor.Runner) *Tool {
 			Required:    []string{"args"},
 		},
 		Policy: PolicyAsk,
+		Phase:  "apply",
 		Describe: func(raw json.RawMessage) string {
 			_, line := describeCommand(r, raw)
 			return line

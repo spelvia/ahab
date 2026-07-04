@@ -166,11 +166,21 @@ func (r *Runner) IsRead(cmd Command) bool {
 		return false
 	}
 	verb := cmd.Args[0]
-	if cmd.Executor == "argocd" {
+	switch cmd.Executor {
+	case "argocd":
 		if verb == "app" && len(cmd.Args) >= 2 && slices.Contains(argocdWriteSubverbs, cmd.Args[1]) {
 			return false
 		}
-		return slices.Contains(s.readVerbs, verb)
+	case "kubectl":
+		switch verb {
+		case "rollout":
+			// rollout status/history observe; undo/restart/pause mutate.
+			return len(cmd.Args) >= 2 && (cmd.Args[1] == "status" || cmd.Args[1] == "history")
+		case "wait":
+			// wait blocks on a condition but never mutates; the exec
+			// timeout bounds it.
+			return true
+		}
 	}
 	return slices.Contains(s.readVerbs, verb)
 }

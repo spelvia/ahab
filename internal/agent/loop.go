@@ -105,6 +105,11 @@ func (l *Loop) forward(ev llm.Event) {
 
 // execute runs one tool call and returns the tool_result content.
 func (l *Loop) execute(ctx context.Context, use llm.Block) (content string, isError bool) {
+	tool := l.Registry.Get(use.ToolName)
+	if tool != nil && tool.Phase != "" {
+		l.Phase = tool.Phase
+	}
+
 	rec := Record{
 		Time:  time.Now(),
 		Phase: l.Phase,
@@ -112,7 +117,6 @@ func (l *Loop) execute(ctx context.Context, use llm.Block) (content string, isEr
 		Input: string(use.Input),
 	}
 
-	tool := l.Registry.Get(use.ToolName)
 	if tool == nil {
 		rec.Output = "unknown tool"
 		rec.IsError = true
