@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -53,5 +52,3 @@ func newHistoryCmd() *cobra.Command {
 	cmd.Flags().StringVar(&session, "session", "", "session ID (defaults to the most recent)")
 	return cmd
 }
-
-var errNotImplemented = errors.New("not implemented yet")

@@ -31,7 +31,8 @@ func newRootCmd() *cobra.Command {
 		Long: "ahab drives an LLM agent that builds and maintains Kubernetes systems.\n" +
 			"You supervise: the agent proposes plans, file changes, and commands,\n" +
 			"and nothing consequential runs without your approval.",
-		SilenceUsage: true,
+		SilenceUsage:  true,
+		SilenceErrors: true,
 	}
 	root.PersistentFlags().BoolVar(&flagAuto, "auto", false, "run without approval gates (not yet supported)")
 	root.PersistentFlags().StringVar(&flagKubeContext, "context", "", "kubeconfig context to use")

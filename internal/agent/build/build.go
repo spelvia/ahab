@@ -52,14 +52,24 @@ type Deps struct {
 
 // Run executes one supervised build session.
 func Run(ctx context.Context, d Deps, prompt string) error {
-	readRoots, err := tools.NewRoots(d.WorkDir, d.Repos...)
+	loop, err := New(d)
 	if err != nil {
 		return err
+	}
+	return loop.Run(ctx, prompt)
+}
+
+// New assembles the Building-mode agent loop. Callers that support follow-up
+// turns (the TUI) keep the loop and call Run on it repeatedly.
+func New(d Deps) (*agent.Loop, error) {
+	readRoots, err := tools.NewRoots(d.WorkDir, d.Repos...)
+	if err != nil {
+		return nil, err
 	}
 	// Writes are confined to the project directory only.
 	writeRoots, err := tools.NewRoots(d.WorkDir)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	registry := tools.NewRegistry(
@@ -76,7 +86,7 @@ func Run(ctx context.Context, d Deps, prompt string) error {
 		registry.Add(tools.AskUser(d.Ask))
 	}
 
-	loop := &agent.Loop{
+	return &agent.Loop{
 		Provider:  d.Provider,
 		Registry:  registry,
 		Gate:      d.Gate,
@@ -85,8 +95,7 @@ func Run(ctx context.Context, d Deps, prompt string) error {
 		System:    systemPrompt,
 		MaxTokens: d.MaxTokens,
 		Phase:     "plan",
-	}
-	return loop.Run(ctx, prompt)
+	}, nil
 }
 
 // submitPlan returns the gated plan-approval tool. Approval advances the
