@@ -18,10 +18,18 @@ const ProjectDir = ".ahab"
 
 // Config holds all ahab settings. Zero values are replaced by defaults in Load.
 type Config struct {
-	// Provider selects the LLM provider implementation (only "anthropic" in v1).
+	// Provider selects the LLM backend: anthropic (default), openai,
+	// deepseek, qwen, or openai-compatible (custom endpoint).
 	Provider string `yaml:"provider"`
-	// Model is the model ID passed to the provider.
+	// Model is the model ID passed to the provider. Empty selects the
+	// provider's default model.
 	Model string `yaml:"model"`
+	// BaseURL overrides the provider's API endpoint (required for
+	// openai-compatible, optional elsewhere — e.g. a regional Qwen endpoint).
+	BaseURL string `yaml:"baseURL"`
+	// APIKeyEnv overrides which environment variable holds the API key
+	// (required for openai-compatible).
+	APIKeyEnv string `yaml:"apiKeyEnv"`
 	// MaxTokens caps output tokens per model request.
 	MaxTokens int `yaml:"maxTokens"`
 	// KubeContext, when set, is passed to kubectl/helm as --context/--kube-context.
@@ -42,7 +50,6 @@ type Config struct {
 func Defaults() *Config {
 	return &Config{
 		Provider:  "anthropic",
-		Model:     "claude-opus-4-8",
 		MaxTokens: 16000,
 	}
 }

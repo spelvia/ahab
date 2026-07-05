@@ -40,15 +40,34 @@ Every command the agent runs is recorded to `.ahab/history/<session>.jsonl`; `ah
 `~/.config/ahab/config.yaml` (user) merged with `./.ahab/config.yaml` (project):
 
 ```yaml
-provider: anthropic        # LLM provider
-model: claude-opus-4-8
+provider: anthropic        # anthropic | openai | deepseek | qwen | openai-compatible
+model: claude-opus-4-8     # optional; empty = provider default
 kubeContext: kind-dev
 namespace: default
 repos:                     # source repos the agent may explore during investigations
   - ../payments-service
 ```
 
-Authentication uses `ANTHROPIC_API_KEY` (or an `ant auth login` profile).
+### LLM providers
+
+| `provider` | API key env var | Default model | Endpoint |
+|---|---|---|---|
+| `anthropic` (default) | `ANTHROPIC_API_KEY` (or `ant auth login` profile) | `claude-opus-4-8` | Anthropic Messages API |
+| `openai` | `OPENAI_API_KEY` | `gpt-5.5` | `https://api.openai.com/v1` |
+| `deepseek` | `DEEPSEEK_API_KEY` | `deepseek-v4-pro` | `https://api.deepseek.com/v1` |
+| `qwen` | `DASHSCOPE_API_KEY` | `qwen-max` | DashScope compatible mode (intl) |
+| `openai-compatible` | your choice via `apiKeyEnv` | — | your choice via `baseURL` |
+
+The non-Anthropic providers all speak the OpenAI Chat Completions format. `baseURL` and `apiKeyEnv` can override any provider's endpoint and credential source — e.g. a regional Qwen endpoint, or a self-hosted vLLM/Ollama gateway via `openai-compatible`:
+
+```yaml
+provider: openai-compatible
+baseURL: http://localhost:11434/v1
+apiKeyEnv: OLLAMA_API_KEY
+model: qwen3:32b
+```
+
+> Reasoning models that stream `reasoning_content` (DeepSeek, Qwen thinking modes) are supported; the reasoning is treated as display-only and never sent back as context, per their API docs.
 
 ## Safety model
 
@@ -92,6 +111,6 @@ internal/agent/build      Building mode (PLAN → WRITE → APPLY)
 internal/agent/investigate Investigation mode (read-only + submit_report)
 internal/executor         allowlisted kubectl / helm / flux / argocd runners
 internal/recorder         JSONL session history + tree rendering
-internal/llm              provider-neutral LLM types; internal/llm/anthropic adapter
+internal/llm              provider-neutral LLM types; anthropic + openaicompat adapters, factory
 internal/observability    provider interface for future Observability mode
 ```
