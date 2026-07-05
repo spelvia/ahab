@@ -14,10 +14,11 @@ permissions:
   contents: write
   packages: write
 
-# One release at a time; queue rather than cancel so every merge gets a version.
+# Real releases (main) queue so every merge gets a version; PR dry-runs are
+# superseded by a repush, so cancel those.
 concurrency:
   group: release-${{ github.ref }}
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   # Compute the next semver tag from commit messages since the last tag:
