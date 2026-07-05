@@ -1,8 +1,14 @@
 name: Release
 
+# Push to main: full release (tag + GitHub Release + ghcr push).
+# Pull requests and manual dispatch: dry run — the whole pipeline executes
+# (version computation, all binaries, multi-arch image build) but nothing is
+# tagged, released, or pushed.
 on:
   push:
     branches: [main]
+  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -10,7 +16,7 @@ permissions:
 
 # One release at a time; queue rather than cancel so every merge gets a version.
 concurrency:
-  group: release
+  group: release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -22,6 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.bump.outputs.tag }}
+      publish: ${{ steps.bump.outputs.publish }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -29,8 +36,12 @@ jobs:
 
       - name: Bump semver tag
         id: bump
+        env:
+          PUBLISH: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run: |
           set -euo pipefail
+          echo "publish=$PUBLISH" >> "$GITHUB_OUTPUT"
+
           existing=$(git tag --points-at HEAD --list 'v*' | head -1)
           if [ -n "$existing" ]; then
             echo "HEAD already tagged $existing; reusing it"
@@ -54,11 +65,15 @@ jobs:
             tag="v${major}.${minor}.${patch}"
           fi
 
-          git tag "$tag"
-          git push origin "$tag"
+          if [ "$PUBLISH" = "true" ]; then
+            git tag "$tag"
+            git push origin "$tag"
+          else
+            echo "dry run: would tag $tag"
+          fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
-  # Cross-platform binaries attached to a GitHub Release for the new tag.
+  # Cross-platform binaries; attached to a GitHub Release when publishing.
   binaries:
     needs: version
     runs-on: ubuntu-latest
@@ -90,8 +105,10 @@ jobs:
             fi
           done
           (cd dist && sha256sum * > checksums.txt)
+          ls -la dist/
 
       - name: Create GitHub Release
+        if: needs.version.outputs.publish == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -105,13 +122,11 @@ jobs:
               --repo "$GITHUB_REPOSITORY"
           fi
 
-  # Container image with the ahab binary, pushed to this repo's GitHub
-  # Container Registry (ghcr.io/<owner>/<repo>).
+  # Container image with the ahab binary; pushed to this repo's GitHub
+  # Container Registry (ghcr.io/<owner>/<repo>) when publishing.
   image:
     needs: version
     runs-on: ubuntu-latest
-    env:
-      TAG: ${{ needs.version.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
 
@@ -120,6 +135,7 @@ jobs:
       - uses: docker/setup-buildx-action@v3
 
       - uses: docker/login-action@v3
+        if: needs.version.outputs.publish == 'true'
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -128,7 +144,7 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: .
-          push: true
+          push: ${{ needs.version.outputs.publish == 'true' }}
           platforms: linux/amd64,linux/arm64
           build-args: |
             VERSION=${{ needs.version.outputs.tag }}
