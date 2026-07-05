@@ -12,6 +12,9 @@ import (
 	"github.com/spelvia/ahab/internal/config"
 )
 
+// version is stamped at release time via -ldflags "-X main.version=v1.2.3".
+var version = "dev"
+
 var (
 	flagAuto        bool
 	flagKubeContext string
@@ -33,6 +36,7 @@ func newRootCmd() *cobra.Command {
 			"and nothing consequential runs without your approval.",
 		SilenceUsage:  true,
 		SilenceErrors: true,
+		Version:       version,
 	}
 	root.PersistentFlags().BoolVar(&flagAuto, "auto", false, "run without approval gates (not yet supported)")
 	root.PersistentFlags().StringVar(&flagKubeContext, "context", "", "kubeconfig context to use")

@@ -13,6 +13,18 @@
 | **Testing** | planned | Chaos / smoke testing driven by the agent. |
 | **Observability** | planned | Provider-agnostic sync with dashboards (Grafana, …). |
 
+## Install
+
+Grab a binary from the [GitHub Releases](https://github.com/spelvia/ahab/releases) page, or pull the container image (bundles kubectl + helm):
+
+```sh
+docker pull ghcr.io/spelvia/ahab:latest
+```
+
+Or build from source: `go install github.com/spelvia/ahab/cmd/ahab@latest`.
+
+Every merge to `main` is released automatically: the version is bumped from commit messages (`feat:` → minor, `feat!:`/`BREAKING CHANGE` → major, anything else → patch), binaries for linux/darwin/windows are attached to the release, and the image is pushed to ghcr.
+
 ## Usage
 
 ```sh
