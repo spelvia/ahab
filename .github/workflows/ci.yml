@@ -1,12 +1,19 @@
 name: CI
 
+# Runs when a PR is opened and on every repush to it. Not on main: the merged
+# commit already passed on the PR, and the Release workflow covers main.
 on:
   pull_request:
-  push:
-    branches: [main]
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+# A repush supersedes the previous run — cancel it instead of running both.
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
