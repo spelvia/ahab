@@ -11,7 +11,7 @@ import (
 	"github.com/spelvia/ahab/internal/agent/investigate"
 	"github.com/spelvia/ahab/internal/config"
 	"github.com/spelvia/ahab/internal/executor"
-	anthropicllm "github.com/spelvia/ahab/internal/llm/anthropic"
+	"github.com/spelvia/ahab/internal/llm/factory"
 	"github.com/spelvia/ahab/internal/recorder"
 	"github.com/spelvia/ahab/internal/tui"
 )
@@ -20,7 +20,10 @@ func runBuild(ctx context.Context, cfg *config.Config, prompt string) error {
 	if strings.TrimSpace(prompt) == "" {
 		return errors.New(`usage: ahab build "<what to build or change>"`)
 	}
-	provider := anthropicllm.New(cfg.Model)
+	provider, err := factory.New(cfg)
+	if err != nil {
+		return err
+	}
 	runner := executor.New(cfg.KubeContext, cfg.Namespace)
 	sessionID := agent.NewSessionID()
 
@@ -65,7 +68,10 @@ func runBuild(ctx context.Context, cfg *config.Config, prompt string) error {
 }
 
 func runInvestigate(ctx context.Context, cfg *config.Config, problem string) error {
-	provider := anthropicllm.New(cfg.Model)
+	provider, err := factory.New(cfg)
+	if err != nil {
+		return err
+	}
 	runner := executor.New(cfg.KubeContext, cfg.Namespace)
 	sessionID := agent.NewSessionID()
 
