@@ -1,0 +1,3 @@
+apps/ui/src/shared/api/generated/** -whitespace linguist-generated
+apps/ui/src/routeTree.gen.ts -whitespace linguist-generated
+crates/ahab/openapi.json linguist-generated

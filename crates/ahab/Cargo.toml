@@ -1,0 +1,106 @@
+[package]
+name = "ahab"
+version = "0.1.0-rc.1"
+description = "Ahab: a self-hosted agentic workspace, run and used from the command line"
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "ahab"
+path = "src/main.rs"
+
+[dependencies]
+async-trait = "0.1.92"
+aws-lc-rs = { version = "1.19.0", default-features = false, features = ["alloc", "aws-lc-sys"] }
+axum = { version = "0.8.9", features = ["macros", "ws"] }
+base64 = "0.23.1"
+clap = { version = "4.6.7", features = ["derive", "env", "string"] }
+clap_complete = "4.6.11"
+dialoguer = { version = "0.12.0", default-features = false }
+directories = "6.0.0"
+dotenvy = "0.15.7"
+ed25519-dalek = "3.0.0"
+flate2 = "1"
+form_urlencoded = "1.2.2"
+futures-util = "0.3.34"
+gethostname = "1.1.0"
+getrandom = "0.4.3"
+globset = "0.4.21"
+grep-matcher = "0.1.9"
+grep-regex = "0.1.14"
+grep-searcher = "0.1.17"
+ignore = "0.4.34"
+lsp-types = "0.97"
+notify = "8.2.2"
+portable-pty = "0.9.0"
+qrcode = { version = "0.14.1", default-features = false }
+quick-xml = "0.42.0"
+regex = "1"
+reqwest = { version = "0.13.5", default-features = false, features = ["http2", "json", "rustls"] }
+rust-embed = { version = "8.14.0", features = ["mime-guess"] }
+rustix = { version = "1.1.6", features = ["fs", "process"] }
+rustls = { version = "0.23.46", default-features = false, features = ["aws_lc_rs", "std"] }
+semver = "1"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = { version = "1.0.154", features = ["preserve_order"] }
+sha2 = "0.11.1"
+sqlx = { version = "0.9.0", default-features = false, features = [
+	"any",
+	"macros",
+	"migrate",
+	"postgres",
+	"runtime-tokio",
+	"sqlite",
+	"tls-rustls-aws-lc-rs",
+] }
+# From crates.io, pinned to an exact version.
+stubb = { version = "=0.1.1-rc.2", features = ["mcp"] }
+sysinfo = "0.40.4"
+tar = "0.4"
+tempfile = "3.27"
+thiserror = "2.0.21"
+time = { version = "0.3.55", features = ["formatting", "macros", "parsing", "serde"] }
+tokio = { version = "1.54.1", features = [
+	"macros",
+	"net",
+	"rt-multi-thread",
+	"signal",
+	"sync",
+	"time",
+] }
+tokio-tungstenite = { version = "0.30.0", features = ["rustls-tls-native-roots"] }
+toml = "1.2.1"
+tower-http = { version = "0.7.1", features = [
+	"catch-panic",
+	"compression-full",
+	"fs",
+	"request-id",
+	"trace",
+	"util",
+] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter", "fmt", "json"] }
+utoipa = { version = "6.0.0", features = ["axum_extras", "time", "uuid"] }
+utoipa-axum = "0.3.0"
+utoipa-scalar = { version = "0.4.0", features = ["axum"] }
+uuid = { version = "1.29.0", features = ["serde", "v7"] }
+vt100 = "0.18.1"
+vte = "0.15.0"
+webbrowser = "1.2.7"
+zip = { version = "9", default-features = false, features = ["deflate-flate2"] }
+
+[target.'cfg(unix)'.dependencies]
+nix = { version = "0.32.0", features = ["signal"] }
+
+[dev-dependencies]
+http-body-util = "0.1.5"
+insta = { version = "1.49.0", features = ["json", "redactions"] }
+tempfile = "3.27.0"
+tower = { version = "0.5.3", features = ["util"] }
+
+[lints]
+workspace = true

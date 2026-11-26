@@ -1,0 +1,36 @@
+{
+	"id": "google-java-format",
+	"name": "google-java-format",
+	"kind": "formatter",
+	"languages": ["java"],
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/google/google-java-format",
+	"description": "Formats Java in Google's style.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "google/google-java-format",
+		"version": "2.0.0",
+		"tag": "v${version}",
+		"assets": {
+			"linux-x64": {
+				"file": "google-java-format_linux-x86-64",
+				"sha256": "c351f587e6dd1f11836be7296894ea2ab3bd91847dbd14101f4f04d390380fe9"
+			},
+			"linux-arm64": {
+				"file": "google-java-format_linux-arm64",
+				"sha256": "3193ae2e3a32634a45effc9f575005e7adf202699ab4d9d6488ff1a715588d10"
+			},
+			"darwin-arm64": {
+				"file": "google-java-format_darwin-arm64",
+				"sha256": "04b13ad486bcc29ef64f7168c2d3eb330e73ae458610ba5bcf44f6018b655dc4"
+			}
+		}
+	},
+	"bin": {
+		"google-java-format": "google-java-format"
+	},
+	"run": {
+		"command": ["google-java-format", "-"]
+	},
+	"hint": "brew install google-java-format"
+}

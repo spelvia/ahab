@@ -1,0 +1,31 @@
+{
+	"id": "vscode-json-language-server",
+	"name": "JSON language server",
+	"kind": "languageServer",
+	"languages": ["json"],
+	"license": "MIT",
+	"homepage": "https://github.com/hrsh7th/vscode-langservers-extracted",
+	"description": "JSON: schemas, validation and formatting.",
+	"source": {
+		"type": "npm",
+		"package": "vscode-langservers-extracted",
+		"version": "4.10.0"
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 18
+		}
+	],
+	"bin": {
+		"vscode-json-language-server": "node_modules/.bin/vscode-json-language-server"
+	},
+	"run": {
+		"command": ["vscode-json-language-server", "--stdio"],
+		"versionArgs": [],
+		"initializationOptions": {
+			"provideFormatter": true
+		}
+	},
+	"hint": "npm install --global vscode-langservers-extracted"
+}

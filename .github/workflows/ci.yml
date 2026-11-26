@@ -1,0 +1,178 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  rust:
+    name: Rust
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container: rust:1.99.1-slim-trixie
+    services:
+      postgres:
+        image: postgres:18.6-trixie
+        env:
+          POSTGRES_USER: ahab
+          POSTGRES_PASSWORD: ahab
+          POSTGRES_DB: ahab
+          # Each test drops its database as it ends, which waits for every
+          # connection, also one still logging in (tests/support/database.rs).
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd "pg_isready --username=ahab --dbname=ahab"
+          --health-interval 2s --health-timeout 5s --health-retries 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pinned Rust toolchain
+        run: rustup show active-toolchain
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          save-if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      # Plugins run on Node 24; the tests build and run the echo
+      # test plugin with it.
+      # git for the Git tests; curl and xz for Node.
+      - name: Install Node 24 and git
+        env:
+          NODE_VERSION: 24.18.0
+          NODE_SHA256: 55aa7153f9d88f28d765fcdad5ae6945b5c0f98a36881703817e4c450fa76742
+        run: |
+          apt-get update && apt-get install --yes --no-install-recommends curl xz-utils ca-certificates git
+          curl -fsSL -o /tmp/node.tar.xz "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
+          echo "$NODE_SHA256  /tmp/node.tar.xz" | sha256sum --check
+          tar -xJf /tmp/node.tar.xz -C /usr/local --strip-components=1
+      - name: Install pnpm
+        # The version package.json pins (packageManager).
+        run: npm install --global "$(node --print 'require("./package.json").packageManager')" # zizmor: ignore[adhoc-packages]
+      - name: Build the test plugins
+        run: |
+          pnpm install --frozen-lockfile --ignore-scripts
+          pnpm --filter './crates/ahab/tests/fixtures/plugins/*' build
+      - name: Formatting
+        run: cargo fmt --all -- --check
+      - name: Clippy
+        run: cargo clippy --all-targets --locked -- -D warnings
+      # Includes the check that openapi.json is current.
+      - name: Tests (SQLite)
+        run: cargo test --workspace --locked
+      # The same tests, each on a fresh database on the Postgres service.
+      - name: Tests (Postgres)
+        env:
+          AHAB_TEST_POSTGRES_URL: postgres://ahab:ahab@postgres:5432/ahab
+        run: cargo test --workspace --locked
+      - name: Dependencies (licenses, advisories, sources)
+        run: |
+          cargo install --locked cargo-deny
+          cargo deny check
+
+  ui:
+    name: UI
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    container: node:26.13.0-trixie-slim
+    steps:
+      # Checked out with git, so generated files can be compared.
+      - name: Install git
+        run: apt-get update && apt-get install --yes --no-install-recommends ca-certificates git
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install pnpm
+        # The version package.json pins (packageManager).
+        run: npm install --global "$(node --print 'require("./package.json").packageManager')" # zizmor: ignore[adhoc-packages]
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Formatting
+        run: pnpm exec oxfmt --check
+      - name: Lint
+        run: pnpm exec oxlint --deny-warnings
+      - name: API client is current
+        run: |
+          pnpm --filter @ahab/ui generate:api
+          git -c safe.directory="$PWD" diff --exit-code -- apps/ui/src/shared/api/generated
+      - name: Typecheck
+        run: pnpm --filter @ahab/ui typecheck && pnpm --filter @ahab/e2e typecheck && pnpm --filter @ahab/plugin typecheck
+      - name: Layout rules
+        run: pnpm --filter @ahab/ui check:layout
+      - name: Unused files, exports and dependencies
+        run: pnpm exec knip
+      - name: Tests
+        run: pnpm --filter @ahab/ui test && pnpm --filter @ahab/plugin test
+      - name: Build
+        run: pnpm --filter @ahab/ui build && pnpm --filter @ahab/docs build
+
+  checks:
+    name: Checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          # Every commit, for the secrets scan.
+          fetch-depth: 0
+      - uses: taiki-e/install-action@ab49d3c64680143e184118bed66a46419fc15519 # v2.90.5
+        with:
+          tool: cargo-machete@0.9.2,cargo-sort@2.1.4,taplo@0.10.0,typos@1.52.2,zizmor@1.32.0
+      - name: Install gitleaks
+        env:
+          VERSION: 8.30.1
+          SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          curl --fail --silent --show-error --location --output gitleaks.tar.gz \
+            "https://github.com/gitleaks/gitleaks/releases/download/v${VERSION}/gitleaks_${VERSION}_linux_x64.tar.gz"
+          echo "${SHA256}  gitleaks.tar.gz" | sha256sum --check
+          tar --extract --gzip --file gitleaks.tar.gz gitleaks && rm gitleaks.tar.gz
+          sudo mv gitleaks /usr/local/bin/
+      - name: Secrets (every commit)
+        run: gitleaks git --redact --no-banner
+      - name: Spelling
+        run: typos
+      - name: TOML formatting
+        run: taplo fmt --check
+      - name: Cargo.toml order
+        run: cargo sort --workspace --check --no-format
+      - name: Unused Rust dependencies
+        run: cargo machete
+      - name: GitHub Actions security
+        run: zizmor --offline .github/
+      - name: Links between files
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
+        with:
+          args: --offline --config lychee.toml './**/*.md' './**/*.mdx'
+          fail: true
+
+  required:
+    name: CI passed
+    if: always()
+    needs: [rust, ui, checks]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 1
+    steps:
+      - name: Require every job to succeed
+        env:
+          RESULTS: ${{ toJSON(needs.*.result) }}
+        run: |
+          python3 - <<'PYTHON'
+          import json
+          import os
+          import sys
+          results = json.loads(os.environ["RESULTS"])
+          sys.exit(0 if all(result == "success" for result in results) else 1)
+          PYTHON

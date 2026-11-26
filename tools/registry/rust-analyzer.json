@@ -1,0 +1,42 @@
+{
+	"id": "rust-analyzer",
+	"name": "rust-analyzer",
+	"kind": "languageServer",
+	"languages": ["rust"],
+	"license": "MIT OR Apache-2.0",
+	"homepage": "https://rust-analyzer.github.io",
+	"description": "The Rust language server.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "rust-lang/rust-analyzer",
+		"version": "2026-11-16",
+		"assets": {
+			"linux-x64": {
+				"file": "rust-analyzer-x86_64-unknown-linux-gnu.gz",
+				"sha256": "4a08727a03094e5114db4438e4bd1d6182cc26eff37d6962115ea1ec1a491ca3"
+			},
+			"linux-arm64": {
+				"file": "rust-analyzer-aarch64-unknown-linux-gnu.gz",
+				"sha256": "73d8b9b87384b3115a183a8a51db9f7c205ce4c89ea511f3c8c8fea863038a50"
+			},
+			"darwin-x64": {
+				"file": "rust-analyzer-x86_64-apple-darwin.gz",
+				"sha256": "6901d956b4f2b091343eaf3570944098488f3ffec018987145285ed8253c07d2"
+			},
+			"darwin-arm64": {
+				"file": "rust-analyzer-aarch64-apple-darwin.gz",
+				"sha256": "608b7c7d6bec1fcd6c964578b1f8234888afe6d6c0e7915284f1e2fd36ef1343"
+			}
+		}
+	},
+	"bin": {
+		"rust-analyzer": "rust-analyzer"
+	},
+	"run": {
+		"command": ["rust-analyzer"],
+		"rootMarkers": ["Cargo.toml", "rust-project.json"],
+		"topMostContaining": "[workspace]",
+		"settingsFiles": ["rust-analyzer.toml"]
+	},
+	"hint": "rustup component add rust-analyzer"
+}

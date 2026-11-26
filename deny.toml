@@ -1,0 +1,43 @@
+[advisories]
+yanked = "deny"
+ignore = [
+	# Bundled SQLite before 3.54 (libsqlite3-sys < 0.39): stale memory when
+	# opening a database with a crafted `-wal` written by someone less
+	# trusted. Ahab opens only its own database in its own data folder.
+	# sqlx-sqlite 0.9.0 allows libsqlite3-sys < 0.38 only; remove this once
+	# sqlx allows 0.39 (cargo update -p libsqlite3-sys). Added 2026-11-15.
+	{ id = "RUSTSEC-2026-0459", reason = "not exposed: own database only; fix waits on sqlx" },
+	# chrono is unmaintained (not a vulnerability). It comes only through rmcp,
+	# which Stubb's `mcp` feature uses for MCP prompts. Remove once rmcp no
+	# longer depends on it. Added 2026-11-26.
+	{ id = "RUSTSEC-2026-0543", reason = "unmaintained chrono, only via rmcp (Stubb's mcp feature)" },
+]
+
+[licenses]
+confidence-threshold = 0.9
+unused-allowed-license = "allow"
+allow = [
+	"Apache-2.0",
+	"Apache-2.0 WITH LLVM-exception",
+	"BSD-2-Clause",
+	"BSD-3-Clause",
+	"BSL-1.0",
+	# A public-domain dedication (notify, for watching files).
+	"CC0-1.0",
+	"CDLA-Permissive-2.0",
+	"ISC",
+	"MIT",
+	"MPL-2.0",
+	"Unicode-3.0",
+	"Zlib",
+]
+# Ahab's own crates are unpublished and unlicensed for now.
+private = { ignore = true }
+
+[bans]
+multiple-versions = "warn"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-git = ["ssh://git@github.com/spelvia/stubb.git"]

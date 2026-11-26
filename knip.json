@@ -1,0 +1,22 @@
+{
+	"$schema": "https://unpkg.com/knip@6/schema.json",
+	"workspaces": {
+		".": {
+			"entry": ["scripts/*.mjs", "crates/ahab/tests/fixtures/tools/*.mjs"],
+			"ignore": ["apps/native/target/**", "apps/native/gen/**"]
+		},
+		"apps/ui": {
+			"entry": ["src/routes/**/*.tsx", "scripts/*.mjs", "public/push-worker.js"],
+			"ignore": ["src/shared/api/generated/**"]
+		},
+		"e2e": {},
+		"apps/docs": {},
+		"sdk/plugin": {
+			"entry": ["src/*/index.ts", "bin/*.mjs"],
+			"ignoreDependencies": ["tailwindcss"]
+		},
+		"crates/ahab/tests/fixtures/plugins/*": {
+			"entry": ["src/web/index.tsx", "src/daemon/index.ts", "src/shared/settings.ts"]
+		}
+	}
+}

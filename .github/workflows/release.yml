@@ -1,0 +1,171 @@
+name: Release
+
+# Push an annotated tag `v<version>` on a commit whose push build on main
+# passed (see docs/releases/README.md). The release carries the `ahab`
+# binary for each platform, with its SHA-256, and the install script.
+
+on:
+  push:
+    tags: ["v[0-9]*"]
+  # A dry run: builds every platform from the chosen branch, and publishes
+  # nothing.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_TERM_COLOR: always
+  NODE_VERSION: 26.13.0
+
+jobs:
+  verify:
+    name: Verify
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Check version and release notes
+        run: |
+          version=$(sed -n 's/^version = "\(.*\)"/\1/p' crates/ahab/Cargo.toml | head -1)
+          test "$GITHUB_REF_NAME" = "v$version"
+          test -s "docs/releases/$version.md"
+      - name: Require successful main CI for this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha=$(git rev-parse HEAD)
+          runs=$(gh api --method GET "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yml/runs" -f branch=main -f event=push -f head_sha="$sha" -F per_page=1)
+          jq -e '.workflow_runs[0].conclusion == "success"' <<< "$runs"
+
+  draft:
+    name: Draft the release
+    needs: verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Create a draft with the notes and the install script
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=${GITHUB_REF_NAME#v}
+          # Until 0.1.0, release candidates are full releases, so the latest
+          # one is always at releases/latest (the install script's default).
+          gh release create "$GITHUB_REF_NAME" --verify-tag --draft --title "Ahab $version" \
+            --notes-file "docs/releases/$version.md" scripts/install.sh
+
+  build:
+    name: Build ${{ matrix.name }}
+    needs: draft
+    # On a dry run, the draft is skipped and the build goes on without it.
+    if: ${{ !cancelled() && (needs.draft.result == 'success' || github.event_name == 'workflow_dispatch') }}
+    runs-on: ${{ matrix.runner }}
+    container: ${{ matrix.container }}
+    timeout-minutes: 45
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Debian 12's glibc (2.36): the binary runs on it and on newer.
+          - name: ahab-linux-x86_64
+            runner: ubuntu-24.04
+            container: rust:1.99.1-slim-bookworm
+            node: linux-x64
+            node_sha256: d28a96af6c38596f6d9d97c0ee531c13d238d757742387d1928de822d959e997
+          - name: ahab-linux-aarch64
+            runner: ubuntu-24.04-arm
+            container: rust:1.99.1-slim-bookworm
+            node: linux-arm64
+            node_sha256: 406fe3fbde1c054adff8b297c16fdb5af6659db327c1ac8acd46b56ef1af9a92
+          - name: ahab-macos-aarch64
+            runner: macos-15
+            container: ""
+            node: darwin-arm64
+            node_sha256: 6f5b3187d9df9fc007e881167905bc7d69ad26450ddc377c83d63256a2495b6e
+    steps:
+      - name: Install build tools (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          apt-get update
+          apt-get install --yes --no-install-recommends ca-certificates curl git xz-utils
+          # gh, to upload to the release.
+          curl --fail --silent --show-error --location \
+            https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+            --output /usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" \
+            > /etc/apt/sources.list.d/github-cli.list
+          apt-get update && apt-get install --yes --no-install-recommends gh
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install Node
+        env:
+          NODE: ${{ matrix.node }}
+          NODE_SHA256: ${{ matrix.node_sha256 }}
+        run: |
+          curl --fail --silent --show-error --location --output /tmp/node.tar.xz \
+            "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-$NODE.tar.xz"
+          echo "$NODE_SHA256  /tmp/node.tar.xz" | shasum -a 256 --check 2>/dev/null \
+            || echo "$NODE_SHA256  /tmp/node.tar.xz" | sha256sum --check
+          mkdir -p "$RUNNER_TEMP/node"
+          tar -xJf /tmp/node.tar.xz -C "$RUNNER_TEMP/node" --strip-components=1
+          echo "$RUNNER_TEMP/node/bin" >> "$GITHUB_PATH"
+      - name: Install pnpm
+        # The version package.json pins (packageManager).
+        run: npm install --global "$(node --print 'require("./package.json").packageManager')" # zizmor: ignore[adhoc-packages]
+      - name: Build the web app
+        run: |
+          pnpm install --frozen-lockfile --ignore-scripts
+          pnpm --filter @ahab/ui build
+      - name: Build ahab
+        run: |
+          rustup show active-toolchain
+          cargo build --release --locked --bin ahab
+      - name: Pack, and upload to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NAME: ${{ matrix.name }}
+        run: |
+          target/release/ahab --version
+          mkdir -p target/dist
+          tar -czf "target/dist/$NAME.tar.gz" -C target/release ahab
+          cd target/dist
+          shasum -a 256 "$NAME.tar.gz" > "$NAME.tar.gz.sha256" 2>/dev/null \
+            || sha256sum "$NAME.tar.gz" > "$NAME.tar.gz.sha256"
+          cat "$NAME.tar.gz.sha256"
+          if [ "$GITHUB_EVENT_NAME" = push ]; then
+            gh release upload "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" \
+              "$NAME.tar.gz" "$NAME.tar.gz.sha256"
+          fi
+
+  publish:
+    name: Publish the release
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Publish the draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release edit "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --draft=false --latest

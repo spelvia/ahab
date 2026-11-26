@@ -1,0 +1,40 @@
+{
+	"id": "shfmt",
+	"name": "shfmt",
+	"kind": "formatter",
+	"languages": ["bash"],
+	"license": "BSD-3-Clause",
+	"homepage": "https://github.com/mvdan/sh",
+	"description": "Formats shell scripts.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "mvdan/sh",
+		"version": "3.14.1",
+		"tag": "v${version}",
+		"assets": {
+			"linux-x64": {
+				"file": "shfmt_v${version}_linux_amd64",
+				"sha256": "76e77641faa025814b77f153b29796b8e6fa2fca03e0c76a691608b86c7ea7bf"
+			},
+			"linux-arm64": {
+				"file": "shfmt_v${version}_linux_arm64",
+				"sha256": "5f2db09dae91fca848f7adbdd014632e921a383863a2ad7e0450ad3aba0c6489"
+			},
+			"darwin-x64": {
+				"file": "shfmt_v${version}_darwin_amd64",
+				"sha256": "d33eee0da0f92835b3562e9767a05cee7e4eaeef47daa03bfd09da17b4b590a6"
+			},
+			"darwin-arm64": {
+				"file": "shfmt_v${version}_darwin_arm64",
+				"sha256": "b7c872db63553ccffc7253aba3ed7d4885a27d83f1ba567b1138c6315a5847e5"
+			}
+		}
+	},
+	"bin": {
+		"shfmt": "shfmt"
+	},
+	"run": {
+		"command": ["shfmt", "--filename", "${path}"]
+	},
+	"hint": "go install mvdan.cc/sh/v3/cmd/shfmt@latest"
+}

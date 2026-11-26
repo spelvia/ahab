@@ -1,0 +1,23 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"useTabs": true,
+	"tabWidth": 2,
+	"printWidth": 100,
+	"semi": true,
+	"singleQuote": false,
+	"trailingComma": "all",
+	"insertFinalNewline": true,
+	// Tailwind class sorting, as prettier-plugin-tailwindcss does
+	"sortTailwindcss": true,
+	"sortImports": {
+		"internalPattern": ["@/"],
+	},
+	"ignorePatterns": [
+		"Cargo.lock",
+		"pnpm-lock.yaml",
+		"crates/ahab/openapi.json",
+		"apps/docs/.astro/**",
+		"apps/ui/src/routeTree.gen.ts",
+		"apps/ui/src/shared/api/generated/**",
+	],
+}

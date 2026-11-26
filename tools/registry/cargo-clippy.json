@@ -1,0 +1,48 @@
+{
+	"id": "cargo-clippy",
+	"name": "cargo clippy",
+	"kind": "check",
+	"languages": ["rust"],
+	"license": "MIT OR Apache-2.0",
+	"homepage": "https://github.com/rust-lang/rust-clippy",
+	"description": "Rust's lints for the whole project, from rustup.",
+	"source": {
+		"type": "system"
+	},
+	"bin": {
+		"cargo": "cargo"
+	},
+	"run": {
+		"command": ["cargo", "clippy", "--workspace", "--all-targets", "--message-format=json"],
+		"rootMarkers": ["Cargo.toml"],
+		"topMostContaining": "[workspace]",
+		"settingsFiles": ["clippy.toml", ".clippy.toml"],
+		"versionArgs": ["clippy", "--version"],
+		"on": ["save", "agentTurn", "request"],
+		"output": {
+			"format": "json",
+			"json": {
+				"lines": true,
+				"when": {
+					"reason": "compiler-message"
+				},
+				"path": "message.spans[is_primary=true].file_name",
+				"line": "message.spans[is_primary=true].line_start",
+				"column": "message.spans[is_primary=true].column_start",
+				"endLine": "message.spans[is_primary=true].line_end",
+				"endColumn": "message.spans[is_primary=true].column_end",
+				"severity": "message.level",
+				"code": "message.code.code",
+				"message": "message.message",
+				"severities": {
+					"error": "error",
+					"warning": "warning",
+					"note": "information",
+					"help": "hint",
+					"failure-note": "information"
+				}
+			}
+		}
+	},
+	"hint": "rustup component add clippy"
+}

@@ -1,0 +1,385 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@import "@ahab/plugin/theme.css";
+@import "./syntax.css";
+
+/* Ahab's onboarding direction (design/onboarding): graphite dark by default,
+   warm-paper light, one sea-glass accent, Manrope for headings, DM Sans for
+   text and JetBrains Mono for paths and commands. */
+
+:root {
+	--radius: 0.5rem;
+
+	--background: #f4f2ea;
+	--foreground: #27312e;
+	--heading: #182321;
+
+	--card: #fbfaf6;
+	--card-foreground: #27312e;
+
+	--popover: #ffffff;
+	--popover-foreground: #27312e;
+
+	--primary: #315f57;
+	--primary-foreground: #ffffff;
+
+	--secondary: #ebe8de;
+	--secondary-foreground: #27312e;
+
+	--muted: #ebe8de;
+	--muted-foreground: #56635d;
+
+	--accent: #e6e3d8;
+	--accent-foreground: #182321;
+
+	--destructive: #a4412f;
+	--destructive-foreground: #ffffff;
+
+	--border: #e0dfd6;
+	--input: #d3d6ce;
+	--ring: #315f57;
+
+	--success: #315f57;
+	--success-foreground: #ffffff;
+	--warning: #89590f;
+	--warning-foreground: #89590f;
+	/* Information in the editor (problems' blue underlines), as VS Code's. */
+	--info: #1a6bb0;
+
+	/* Syntax highlighting (syntax.css): muted inks on warm paper,
+	   each at least 4.5:1 on the background. */
+	--syntax-plain: var(--foreground);
+	--syntax-comment: #66706a;
+	--syntax-keyword: #7b3f8f;
+	--syntax-control: #8f3f62;
+	--syntax-string: #44701b;
+	--syntax-regexp: #a03c36;
+	--syntax-escape: #9a4f12;
+	--syntax-constant: #9a4f12;
+	--syntax-number: #9a4f12;
+	--syntax-function: #2f5d9e;
+	--syntax-macro: #2f5d9e;
+	--syntax-type: #1d6b63;
+	--syntax-parameter: #7a5a20;
+	--syntax-property: #3b5878;
+	--syntax-attribute: #9a4f12;
+	--syntax-tag: #a03c36;
+	--syntax-label: #8f3f62;
+	--syntax-operator: #56635d;
+	--syntax-punctuation: #56635d;
+	--syntax-heading: var(--heading);
+	--syntax-link: #2f5d9e;
+}
+
+.dark {
+	--background: #252526;
+	--foreground: #d4d4d4;
+	--heading: #f1f1f1;
+
+	--card: #2b2d2e;
+	--card-foreground: #d4d4d4;
+
+	--popover: #353739;
+	--popover-foreground: #d4d4d4;
+
+	--primary: #8fb3a3;
+	--primary-foreground: #17201c;
+
+	--secondary: #353739;
+	--secondary-foreground: #d4d4d4;
+
+	--muted: #2d2d30;
+	--muted-foreground: #a8a8a8;
+
+	--accent: #3a3d3f;
+	--accent-foreground: #f1f1f1;
+
+	--destructive: #e39a8a;
+	--destructive-foreground: #17201c;
+
+	--border: #3a3d40;
+	--input: #45484b;
+	--ring: #8fb3a3;
+
+	--success: #8fb3a3;
+	--success-foreground: #17201c;
+	--warning: #d9b26a;
+	--warning-foreground: #d9b26a;
+	--info: #6cb0e8;
+
+	/* Syntax highlighting: the colours people know from dark editors. */
+	--syntax-plain: var(--foreground);
+	--syntax-comment: #6a9955;
+	--syntax-keyword: #569cd6;
+	--syntax-control: #c586c0;
+	--syntax-string: #ce9178;
+	--syntax-regexp: #e07c7c;
+	--syntax-escape: #d7ba7d;
+	--syntax-constant: #4fc1ff;
+	--syntax-number: #b5cea8;
+	--syntax-function: #dcdcaa;
+	--syntax-macro: #dcdcaa;
+	--syntax-type: #4ec9b0;
+	--syntax-parameter: #9cdcfe;
+	--syntax-property: #9cdcfe;
+	--syntax-attribute: #9cdcfe;
+	--syntax-tag: #569cd6;
+	--syntax-label: #c8c8c8;
+	--syntax-operator: #d4d4d4;
+	--syntax-punctuation: #b0b0b0;
+	--syntax-heading: #569cd6;
+	--syntax-link: #4fc1ff;
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+
+	html {
+		-webkit-font-smoothing: antialiased;
+	}
+
+	body {
+		@apply bg-background text-foreground font-sans;
+		/* Inter's l with a tail (cv05) and I with serifs (cv08), so l, I and 1 differ. */
+		font-feature-settings: "cv05", "cv08";
+		caret-color: var(--primary);
+		scrollbar-color: var(--input) transparent;
+	}
+
+	::selection {
+		background-color: color-mix(in srgb, var(--primary) 32%, transparent);
+		color: var(--heading);
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--ring);
+		outline-offset: 2px;
+	}
+
+	/* Times, versions and counts line up in tables. */
+	table {
+		font-variant-numeric: tabular-nums;
+	}
+
+	h1,
+	h2,
+	h3 {
+		@apply font-heading text-heading tracking-[-0.011em];
+	}
+}
+
+@layer components {
+	/* Status pills: a word and a tint, as in the onboarding design. */
+	.pill {
+		@apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold whitespace-nowrap;
+	}
+	.pill-ok {
+		@apply bg-success/15 text-success;
+	}
+	.pill-warn {
+		@apply bg-warning/15 text-warning-foreground;
+	}
+	.pill-danger {
+		@apply bg-destructive/15 text-destructive;
+	}
+	.pill-muted {
+		@apply border-border text-muted-foreground border;
+	}
+}
+
+/* The tiles (Dockview) in Ahab's palette: tabs on the muted bar, the active
+   tab on the page's own ground with a sea-glass edge, quiet sashes. */
+.dockview-theme-dark.dockview-theme-ahab {
+	color-scheme: inherit;
+	--dv-group-view-background-color: var(--background);
+	--dv-tabs-and-actions-container-background-color: color-mix(
+		in srgb,
+		var(--muted) 40%,
+		var(--background)
+	);
+	--dv-tabs-and-actions-container-height: 34px;
+	--dv-tabs-and-actions-container-font-size: 13px;
+	--dv-activegroup-visiblepanel-tab-background-color: var(--background);
+	--dv-activegroup-hiddenpanel-tab-background-color: transparent;
+	--dv-inactivegroup-visiblepanel-tab-background-color: var(--background);
+	--dv-inactivegroup-hiddenpanel-tab-background-color: transparent;
+	--dv-activegroup-visiblepanel-tab-color: var(--heading);
+	--dv-activegroup-hiddenpanel-tab-color: var(--muted-foreground);
+	--dv-inactivegroup-visiblepanel-tab-color: var(--foreground);
+	--dv-inactivegroup-hiddenpanel-tab-color: var(--muted-foreground);
+	--dv-tab-divider-color: var(--border);
+	--dv-separator-border: var(--border);
+	--dv-paneview-header-border-color: var(--border);
+	--dv-drag-over-background-color: color-mix(in srgb, var(--primary) 18%, transparent);
+	--dv-drag-over-border-color: var(--primary);
+	--dv-active-sash-color: var(--primary);
+	--dv-icon-hover-background-color: var(--accent);
+	--dv-scrollbar-background-color: color-mix(in srgb, var(--muted-foreground) 30%, transparent);
+	--dv-context-menu-background-color: var(--popover);
+	--dv-context-menu-color: var(--popover-foreground);
+	font-family: inherit;
+}
+.dockview-theme-dark.dockview-theme-ahab .dv-tab.dv-active-tab {
+	box-shadow: inset 0 2px 0 var(--primary);
+}
+.dockview-theme-dark.dockview-theme-ahab .dv-groupview.dv-inactive-group .dv-tab.dv-active-tab {
+	box-shadow: inset 0 2px 0 var(--border);
+}
+.ahab-session-tab .dv-default-tab {
+	min-width: 0;
+}
+.ahab-session-tab .dv-default-tab-content {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.ahab-session-tab .dv-default-tab-action {
+	flex-shrink: 0;
+}
+
+/* An indeterminate bar: a third of the track sweeping across it. */
+@keyframes loading-bar {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(300%);
+	}
+}
+.loading-bar {
+	animation: loading-bar 1.2s ease-in-out infinite;
+}
+
+/* Markdown written by agents (shared/ui/markdown). */
+@layer components {
+	.markdown {
+		@apply text-sm leading-6 break-words;
+	}
+	.markdown > :first-child {
+		@apply mt-0;
+	}
+	.markdown > :last-child {
+		@apply mb-0;
+	}
+	/* Math (KaTeX): a wide formula scrolls on its own, not the message. */
+	.markdown .katex-display {
+		@apply my-3 overflow-x-auto overflow-y-hidden py-1;
+	}
+	.markdown .katex {
+		font-size: 1.08em;
+	}
+	.markdown .katex-error {
+		@apply text-destructive font-mono text-xs;
+	}
+	.markdown p,
+	.markdown ul,
+	.markdown ol,
+	.markdown pre,
+	.markdown blockquote,
+	.markdown table {
+		@apply my-3;
+	}
+	.markdown h1,
+	.markdown h2,
+	.markdown h3,
+	.markdown h4 {
+		@apply text-heading mt-5 mb-2 font-semibold;
+	}
+	.markdown h1 {
+		@apply text-lg;
+	}
+	.markdown h2 {
+		@apply text-base;
+	}
+	.markdown h3,
+	.markdown h4 {
+		@apply text-sm;
+	}
+	.markdown ul {
+		@apply list-disc pl-5;
+	}
+	.markdown ol {
+		@apply list-decimal pl-5;
+	}
+	.markdown li {
+		@apply my-1;
+	}
+	.markdown li > ul,
+	.markdown li > ol {
+		@apply my-1;
+	}
+	.markdown li:has(> input[type="checkbox"]) {
+		@apply list-none;
+	}
+	.markdown input[type="checkbox"] {
+		@apply mr-1.5 -ml-5 align-middle;
+	}
+	.markdown a {
+		@apply text-primary underline underline-offset-2;
+	}
+	.markdown strong {
+		@apply text-heading font-semibold;
+	}
+	.markdown code {
+		@apply bg-muted/70 rounded px-1 py-0.5 font-mono text-[0.85em];
+	}
+	.markdown pre {
+		@apply bg-muted/60 overflow-x-auto rounded-md p-3 text-xs leading-5;
+	}
+	.markdown pre code {
+		@apply bg-transparent p-0 text-[inherit];
+	}
+	.markdown blockquote {
+		@apply border-border text-muted-foreground border-l-2 pl-3;
+	}
+	.markdown hr {
+		@apply border-border my-4;
+	}
+	.markdown table {
+		@apply block border-collapse overflow-x-auto;
+	}
+	.markdown th,
+	.markdown td {
+		@apply border-border border px-2 py-1 text-left;
+	}
+	.markdown th {
+		@apply bg-muted/50 font-semibold;
+	}
+}
+
+/* Phones list a session's tabs in a sheet instead of tab bars. */
+.ahab-tabless .dv-tabs-and-actions-container {
+	display: none;
+}
+
+/* Settings → Appearance → Motion: Reduce, whatever the system says. */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+	animation-duration: 0.01ms !important;
+	animation-iteration-count: 1 !important;
+	transition-duration: 0.01ms !important;
+	scroll-behavior: auto !important;
+}
+
+/* Keep replies distinct while commands and thinking summaries read as a list. */
+.chat-transcript > li + li {
+	margin-block-start: 1.25rem;
+}
+
+.chat-transcript
+	> :is([data-kind="toolCall"], [data-kind="thinking"])
+	+ :is([data-kind="toolCall"], [data-kind="thinking"]) {
+	margin-block-start: 0.125rem;
+}
+
+.chat-transcript
+	> :is([data-kind="toolCall"], [data-kind="thinking"])
+	+ [data-kind="agentMessage"]::before {
+	content: "";
+	display: block;
+	margin-block-end: 0.875rem;
+	border-block-start: 1px solid var(--border);
+}

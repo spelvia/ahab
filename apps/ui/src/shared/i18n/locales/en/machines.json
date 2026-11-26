@@ -1,0 +1,475 @@
+{
+	"status": {
+		"online": "Online",
+		"offline": "Offline",
+		"pending": "Waits for approval"
+	},
+	"presence": {
+		"connected": "Connected",
+		"never": "never"
+	},
+	"nameProblem": {
+		"empty": "Enter a name.",
+		"tooLong": "Use at most 63 characters.",
+		"characters": "Use lowercase letters, digits and hyphens.",
+		"hyphenAtEnds": "Do not start or end the name with a hyphen."
+	},
+	"units": {
+		"duration": {
+			"days": "{{days}} d {{hours}} h",
+			"hours": "{{hours}} h {{minutes}} min",
+			"minutes": "{{minutes}} min"
+		},
+		"cpuTime": {
+			"seconds": "{{seconds}}s",
+			"hours": "{{hours}}h {{minutes}}m"
+		},
+		"rate": "{{size}}/s"
+	},
+	"links": {
+		"label": "Machines"
+	},
+	"statusItem": {
+		"label": "{{name}}: {{state}}. Open the machine's page",
+		"labelWithoutState": "{{name}}. Open the machine's page",
+		"outdatedState": "connected, but its Ahab is older: update it",
+		"offline": "offline",
+		"outdated": "outdated"
+	},
+	"menu": {
+		"label": "Actions for {{name}}",
+		"rename": "Rename",
+		"copyFingerprint": "Copy fingerprint",
+		"fingerprintCopied": "Copied {{name}}'s fingerprint.",
+		"fingerprintNotCopied": "Cannot copy {{name}}'s fingerprint here: open its details and select it.",
+		"reject": "Reject"
+	},
+	"section": {
+		"planned": "Planned"
+	},
+	"table": {
+		"machine": "Machine",
+		"platform": "Platform",
+		"agents": "Agents",
+		"version": "Version",
+		"lastSeen": "Last seen",
+		"actions": "Actions",
+		"thisServer": "This server"
+	},
+	"removeConfirmation": {
+		"rejectLabel": "Reject machine",
+		"removeLabel": "Remove machine",
+		"rejectQuestion": "Reject <name>{{name}}</name>? It must join again to come back.",
+		"removeQuestion": "Remove <name>{{name}}</name>? It must join again to come back.",
+		"reject": "Reject",
+		"keep": "Keep"
+	},
+	"renameForm": {
+		"name": "Name"
+	},
+	"waitingBand": {
+		"title_one": "{{count}} machine waits for approval",
+		"title_other": "{{count}} machines wait for approval",
+		"hint": "Approve only if the check code matches the one <code>ahab setup</code> shows there.",
+		"asked": "Asked {{when}}",
+		"checkCode": "Check code",
+		"reject": "Reject"
+	},
+	"waitingCount": {
+		"title_one": "{{count}} machine waits for approval",
+		"title_other": "{{count}} machines wait for approval",
+		"waiting": "waiting for approval"
+	},
+	"machinesPage": {
+		"title": "Machines",
+		"online": "{{online}} of {{total}} online",
+		"description": "The computers whose daemons connect to this server. Agents run on them, and their files stay on them.",
+		"loadFailed": "The machines cannot be loaded: {{message}}",
+		"tryAgain": "Try again",
+		"emptyTitle": "No machines yet",
+		"emptyText": "This server runs without its own daemon. Start it with <code>ahab up --daemon=true</code> to make this computer a machine, or add another computer.",
+		"loading": "Loading machines"
+	},
+	"machineLayout": {
+		"breadcrumb": "Breadcrumb",
+		"machines": "Machines",
+		"machine": "Machine",
+		"loading": "Loading the machine…",
+		"notFound": "There is no such machine: it may have been rejected or removed, or its request expired.",
+		"back": "Back to machines",
+		"loadFailed": "The machine cannot be loaded: {{message}}",
+		"tryAgain": "Try again",
+		"thisServer": "This server",
+		"olderAhabTitle": "Update Ahab on this machine to use: {{methods}}",
+		"olderAhab": "Older Ahab",
+		"tabsLabel": "{{name}}'s tabs",
+		"tabs": {
+			"overview": "Overview",
+			"agents": "Agents",
+			"lsps": "LSPs",
+			"resources": "Resources",
+			"plugins": "Plugins",
+			"environment": "Environment",
+			"settings": "Settings"
+		},
+		"waiting": "This machine waits for approval. Approve it only if this check code matches the one <code>ahab setup</code> shows on the joining computer:",
+		"reject": "Reject"
+	},
+	"overview": {
+		"glance": "At a glance",
+		"system": "System",
+		"systemDescription": "What the machine is.",
+		"os": "Operating system",
+		"architecture": "Architecture",
+		"version": "Ahab version",
+		"joined": "Joined",
+		"approved": "Approved",
+		"lastSeen": "Last seen",
+		"checkCode": "Check code",
+		"fingerprint": "Fingerprint",
+		"fingerprintCopy": "fingerprint",
+		"machineId": "Machine ID",
+		"machineIdCopy": "machine ID"
+	},
+	"agentsPage": {
+		"title": "Agents",
+		"description": "The coding agents installed here: whether each is signed in, where its program is, how much of its plan is used, and the models it offers. Each machine has its own sign-ins."
+	},
+	"environment": {
+		"tools": {
+			"title": "Tools",
+			"description": "What sessions, terminals and plugins use here, found on the machine; later installed by Ahab when missing.",
+			"git": "Its version, and the identity and credentials commits and pushes use here.",
+			"shell": "Shell",
+			"shellDetail": "The login shell terminals start, and the environment they get.",
+			"node": "The runtime plugins' machine parts run on, and its version.",
+			"languageTools": "Language tools",
+			"languageToolsDetail": "Language servers, linters and formatters found here, and those Ahab installed."
+		},
+		"sandboxes": {
+			"title": "Sandboxes",
+			"description": "Where sessions can run fenced in, and what each really enforces on this machine.",
+			"os": "OS sandbox",
+			"osDetail": "bubblewrap with Landlock on Linux, Seatbelt on macOS: folders and network, no extra software.",
+			"docker": "A container per session, the folder mounted; needs Docker or Podman here.",
+			"kubernetes": "A pod per session, from this machine's kubeconfig.",
+			"vm": "Virtual machine",
+			"vmDetail": "A microVM per session, for the strongest isolation.",
+			"later": "later"
+		}
+	},
+	"machineSettings": {
+		"title": "Settings for this machine",
+		"description": "What is set for this machine alone, over the server's settings and under a project's.",
+		"pluginSettings": "Plugin settings",
+		"pluginSettingsDetail": "Every plugin setting changed for this machine, in one place, with what it overrides.",
+		"pluginsHere": "Plugins here",
+		"pluginsHereDetail": "Turn a plugin off on this machine only, and keep it on elsewhere.",
+		"daemon": "Daemon",
+		"daemonDetail": "How often agents are detected again, and limits on what runs here.",
+		"sandbox": "Sandbox defaults",
+		"sandboxDetail": "The sandbox new sessions here start in."
+	},
+	"addMachineMenu": {
+		"button": "Add machine",
+		"ssh": "Over SSH (recommended)",
+		"sshText": "One command installs, joins and starts Ahab there.",
+		"code": "With a one-time code",
+		"codeText": "Approved as soon as it joins.",
+		"approval": "With approval",
+		"approvalText": "Run ahab setup there, then approve it here after comparing its check code.",
+		"opensDocs": "opens the docs"
+	},
+	"addMachine": {
+		"title": "Add a machine with a one-time code",
+		"intro": "On the computer to add, install the Ahab CLI and run:",
+		"withdraw": "Withdraw code",
+		"addAnother": "Add another",
+		"newCode": "Create a new code",
+		"noCode": "No code was created.",
+		"creating": "Creating a one-time code…",
+		"copyLabel": "command",
+		"waiting": "Waiting for a machine to use this code. It works once, until {{time}}.",
+		"joined": "A machine joined with this code; it is in the list below.",
+		"expired": "This code expired at {{time}} without being used.",
+		"failed": "The code cannot be created: {{message}}"
+	},
+	"addOverSsh": {
+		"title": "Add a machine over SSH",
+		"intro": "On this server's computer, or any computer whose Ahab CLI is logged in to it, run:",
+		"copyLabel": "SSH command",
+		"body": "It copies Ahab to the other computer, joins it to this server and starts it there: no code to type, nothing to compare. SSH must log in without asking for a password (a key in your SSH agent), and the other computer must run the same operating system and processor type.",
+		"docs": "More in the docs"
+	},
+	"approve": {
+		"label": "Approve {{name}}",
+		"approving": "Approving…",
+		"approve": "Approve"
+	},
+	"agentState": {
+		"ready": "Ready",
+		"notSignedIn": "Not signed in",
+		"unsupportedVersion": "Unsupported version",
+		"notInstalled": "Not installed",
+		"error": "Cannot tell"
+	},
+	"facets": {
+		"all": "All",
+		"attention": "Needs you",
+		"ready": "Ready",
+		"update": "Update",
+		"installed": "Installed",
+		"missing": "Not installed"
+	},
+	"agents": {
+		"search": "Search agents",
+		"checked": "Checked {{when}}",
+		"notChecked": "Not checked yet",
+		"offline": "The machine is offline.",
+		"checking": "Checking…",
+		"checkAgain": "Check again",
+		"facetsLabel": "Show",
+		"checkFailed": "Cannot check again: {{message}}",
+		"loading": "Loading the agents…",
+		"loadFailed": "The agents cannot be loaded: {{message}}",
+		"notDetected": "Not detected yet. Check again to look now.",
+		"notDetectedOffline": "Not detected yet: the machine has not connected since it joined.",
+		"noMatchQuery": "No agent here matches “{{query}}”.",
+		"noMatchFilter": "No agent here matches this filter.",
+		"groups": {
+			"attention": "Needs you",
+			"installed": "Installed",
+			"missing": "Not installed here"
+		},
+		"rowLabel": "{{agent}}: details",
+		"limitTitle": "{{limit}}: {{percent}}% used",
+		"signIn": "Sign in"
+	},
+	"agentDetails": {
+		"signIn": "Run <code>{{command}}</code> on {{machine}} to sign in.",
+		"notInstalled": "{{agent}} is not installed on {{machine}}.",
+		"notInstalledBecause": "{{agent}} is not installed on {{machine}}: {{detail}}",
+		"custom": "A custom agent, over the Agent Client Protocol.",
+		"registry": "From the ACP registry, over the Agent Client Protocol.",
+		"about": "About",
+		"version": "Version",
+		"unknownVersion": "unknown",
+		"program": "Program",
+		"pathCopy": "path",
+		"account": "Account",
+		"checked": "Checked",
+		"planLimits": "Plan limits",
+		"models": "Models"
+	},
+	"agentSummary": {
+		"none": "None found",
+		"agentState": "{{agent}}: {{state}}"
+	},
+	"agentGlance": {
+		"label": "Agents ready",
+		"value": "{{ready}} of {{installed}}",
+		"noneReady": "None ready",
+		"link": "Agents"
+	},
+	"updateGlance": {
+		"label": "Agent updates",
+		"out_one": "{{count}} out",
+		"out_other": "{{count}} out",
+		"none": "None",
+		"upToDate": "Every agent is up to date",
+		"link": "Agents"
+	},
+	"catalog": {
+		"title": "Available from the ACP registry",
+		"registry": "registry {{version}}",
+		"registryBundled": "registry {{version}}, the copy shipped with Ahab",
+		"added": "{{agent}} is added to {{machine}}; Ahab checks it starts.",
+		"addFailed": "{{agent}} could not be added: {{message}}",
+		"adding": "Adding…",
+		"add": "Add",
+		"downloadOnlyTitle": "It ships only as a download, which Ahab cannot install yet.",
+		"downloadOnly": "Download only"
+	},
+	"addCustomAgent": {
+		"button": "Add custom agent",
+		"title": "Add a custom agent to {{machine}}",
+		"description": "Any program that speaks the Agent Client Protocol over its input and output. Ahab starts it on {{machine}} and checks that it answers.",
+		"name": "Name",
+		"namePlaceholder": "My agent",
+		"program": "Program",
+		"programPlaceholder": "my-agent, or /path/to/my-agent",
+		"arguments": "Arguments",
+		"adding": "Adding…",
+		"add": "Add agent",
+		"added": "{{agent}} is added to {{machine}}; Ahab checks it starts."
+	},
+	"removeAgent": {
+		"button": "Remove from {{machine}}",
+		"title": "Remove {{agent}} from {{machine}}?",
+		"description": "New sessions on {{machine}} cannot use {{agent}} until it is added again. Nothing is uninstalled."
+	},
+	"agentUpdate": {
+		"method": {
+			"native": "its own installer",
+			"unknown": "an unknown way"
+		},
+		"available": "<version>{{latest}}</version> is out ({{installed}} here)",
+		"upToDate": "Up to date with <version>{{latest}}</version> on {{channel}}",
+		"unknown": "The newest version is unknown.",
+		"unknownBecause": "The newest version is unknown: {{reason}}",
+		"installedWith": "installed with {{method}}",
+		"updating": "Updating…",
+		"updateTo": "Update to {{version}}",
+		"update": "Update",
+		"elsewhere": "{{reason}}. Update it there: {{command}}.",
+		"running": "Running <code>{{command}}</code> on {{machine}}; this can take a few minutes.",
+		"failed": "The update failed: {{message}}",
+		"updated": "Updated from {{before}} to {{after}}.",
+		"unchanged": "The updater finished; the version is still {{version}}.",
+		"unknownVersion": "unknown",
+		"updaterError": "The updater reported an error.",
+		"output": "What it printed",
+		"confirmTitle": "Update {{agent}} on {{machine}}?",
+		"confirmDescription": "Ahab runs `{{command}}` there, which installs {{version}}. Sessions using {{agent}} on {{machine}} may stop and need to be continued.",
+		"toastUpdated": "{{agent}} is now {{version}} on {{machine}}.",
+		"toastUpdatedNoVersion": "{{agent}} is now updated on {{machine}}.",
+		"toastUpdaterError": "{{agent}}'s updater reported an error on {{machine}}.",
+		"toastFailed": "{{agent}} could not be updated: {{message}}"
+	},
+	"usage": {
+		"resetsNow": "resets now",
+		"resetsInMinutes": "resets in {{minutes}} min",
+		"resetsInHours": "resets in {{hours}} h",
+		"resetsOn": "resets {{date}}",
+		"meterLabel": "{{agent}} plan usage: {{limits}}",
+		"meterLimit": "{{limit}} {{percent}} used",
+		"checkAgain": "Check usage again",
+		"asOf": "For the account signed in on this session's machine, as of {{when}}.",
+		"checkFailed": "Cannot check again: {{message}}",
+		"limitsLabel": "{{agent}} plan limits"
+	},
+	"resourceGlance": {
+		"label": "Resources",
+		"offline": "Offline",
+		"cpu": "{{percent}}% CPU",
+		"memory": "memory {{percent}}%",
+		"disk": "{{mount}} {{percent}}% full",
+		"link": "Resources"
+	},
+	"resources": {
+		"reading": "Reading the machine's resources…",
+		"offline": "The machine is offline: its resources show while its daemon is connected.",
+		"readFailed": "The resources cannot be read: {{message}}",
+		"stale": "Stale: sampled {{when}}",
+		"live": "Live",
+		"uptime": "up {{duration}}",
+		"chartSpan": "charts show the last {{minutes}} min",
+		"glance": "At a glance",
+		"cpu": "CPU",
+		"memory": "Memory",
+		"memoryDetail": "{{used}} of {{total}}",
+		"swap": "swap {{percent}}%",
+		"load": "Load",
+		"loadDetail": "of {{cores}} cores · {{loads}} over 5, 15 min",
+		"loadUnknown": "Not reported on this system",
+		"disk": "Disk",
+		"diskAt": "Disk {{mount}}",
+		"diskFree": "{{size}} free",
+		"moreDisks": "{{more}} more below",
+		"noDisks": "No disks reported",
+		"tabs": {
+			"label": "Details",
+			"processes": "Processes ({{total}})",
+			"disks": "Disks ({{total}})",
+			"cores": "Cores ({{total}})",
+			"system": "System"
+		},
+		"diskLine": "{{fileSystem}} · {{free}} free of {{total}}",
+		"core": "Core {{index}}",
+		"coreTitle": "Core {{index}}: {{percent}}%",
+		"perCore": "Per core: {{percents}}",
+		"system": {
+			"host": "Host",
+			"system": "System",
+			"kernel": "Kernel",
+			"up": "Up",
+			"processes": "Processes",
+			"cores": "Cores",
+			"logical": "{{logical}} logical",
+			"logicalAndPhysical": "{{logical}} logical, {{physical}} physical"
+		}
+	},
+	"ahabUse": {
+		"title": "Ahab on this machine",
+		"description": "What Ahab and everything it started use: agent sessions, terminals, plugins.",
+		"nothing": "Nothing of Ahab's runs here.",
+		"processes_one": "{{count}} process",
+		"processes_other": "{{count}} processes",
+		"sessions_one": "{{count}} session",
+		"sessions_other": "{{count}} sessions",
+		"terminals_one": "{{count}} terminal",
+		"terminals_other": "{{count}} terminals",
+		"openAgent": "Open {{agent}}",
+		"plugin": "Plugin: {{plugin}}",
+		"unknownPlugin": "unknown",
+		"openPlugin": "Open the {{plugin}} plugin",
+		"terminalsTitle": "Terminals",
+		"ahabParts": "server, daemon and terminal host"
+	},
+	"processes": {
+		"state": {
+			"running": "Running",
+			"sleeping": "Sleeping",
+			"zombie": "Zombie",
+			"stopped": "Stopped",
+			"disk": "Waiting on disk"
+		},
+		"role": {
+			"terminal": "A terminal",
+			"agent": "{{agent}} session",
+			"plugin": "Plugin {{plugin}}"
+		},
+		"search": "Search processes",
+		"searchPlaceholder": "Name, user or PID",
+		"view": {
+			"label": "View",
+			"apps": "By program",
+			"tree": "Tree",
+			"flat": "One by one"
+		},
+		"show": {
+			"label": "Show",
+			"all": "All",
+			"ahab": "Ahab's"
+		},
+		"running": "{{running}} running · only names are read, never arguments",
+		"columns": {
+			"program": "Program",
+			"process": "Process",
+			"user": "User",
+			"state": "State",
+			"cpu": "CPU",
+			"memory": "Memory",
+			"cpuTime": "CPU time",
+			"disk": "Disk"
+		},
+		"noMatch": "No process matches.",
+		"noMatchQuery": "No process matches “{{query}}”.",
+		"drawer": "Process {{pid}}",
+		"drawerWithScript": "Process {{pid}} · {{script}}",
+		"notListed": "{{more}} more, quieter, not listed",
+		"rowLabel": "{{name}} {{pid}}: details",
+		"threads": "{{threads}} threads",
+		"details": {
+			"startedBy": "Started by Ahab",
+			"parent": "Parent",
+			"cpu": "<cpu>{{percent}}%</cpu> now · {{time}} in all",
+			"memory": "{{resident}} resident · {{virtual}} virtual",
+			"disk": "{{read}} read · {{written}} written",
+			"runningFor": "Running for",
+			"since": "since {{date}}",
+			"program": "Program",
+			"folder": "Folder"
+		}
+	}
+}

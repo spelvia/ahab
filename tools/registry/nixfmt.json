@@ -1,0 +1,28 @@
+{
+	"id": "nixfmt",
+	"name": "nixfmt",
+	"kind": "formatter",
+	"languages": ["nix"],
+	"license": "MPL-2.0",
+	"homepage": "https://github.com/NixOS/nixfmt",
+	"description": "The official Nix formatter.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "NixOS/nixfmt",
+		"version": "1.5.0",
+		"tag": "v${version}",
+		"assets": {
+			"linux-x64": {
+				"file": "nixfmt",
+				"sha256": "aa029247ab89c897e2f3948463967553f902f86e86e3402fa28cb29c4a44f745"
+			}
+		}
+	},
+	"bin": {
+		"nixfmt": "nixfmt"
+	},
+	"run": {
+		"command": ["nixfmt"]
+	},
+	"hint": "nix profile install nixpkgs#nixfmt"
+}

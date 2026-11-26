@@ -1,0 +1,79 @@
+{
+	"id": "vscode-eslint-language-server",
+	"name": "ESLint",
+	"kind": "languageServer",
+	"languages": ["javascript", "typescript", "tsx"],
+	"license": "MIT",
+	"homepage": "https://github.com/hrsh7th/vscode-langservers-extracted",
+	"description": "ESLint's problems and fixes, where the project configures ESLint.",
+	"source": {
+		"type": "npm",
+		"package": "vscode-langservers-extracted",
+		"version": "4.10.0"
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 18
+		}
+	],
+	"bin": {
+		"vscode-eslint-language-server": "node_modules/.bin/vscode-eslint-language-server"
+	},
+	"run": {
+		"command": ["vscode-eslint-language-server", "--stdio"],
+		"rootMarkers": ["package.json"],
+		"configFiles": [
+			"eslint.config.js",
+			"eslint.config.mjs",
+			"eslint.config.cjs",
+			"eslint.config.ts",
+			"eslint.config.mts",
+			"eslint.config.cts",
+			".eslintrc",
+			".eslintrc.js",
+			".eslintrc.cjs",
+			".eslintrc.json",
+			".eslintrc.yaml",
+			".eslintrc.yml"
+		],
+		"settingsFiles": ["eslint.config.js"],
+		"versionArgs": [],
+		"settings": {
+			"validate": "on",
+			"packageManager": null,
+			"useESLintClass": false,
+			"experimental": {},
+			"codeActionOnSave": {
+				"enable": false,
+				"mode": "all"
+			},
+			"format": true,
+			"quiet": false,
+			"onIgnoredFiles": "off",
+			"rulesCustomizations": [],
+			"run": "onType",
+			"problems": {
+				"shortenToSingleLine": false
+			},
+			"nodePath": "",
+			"workingDirectory": {
+				"mode": "location"
+			},
+			"workspaceFolder": {
+				"uri": "${rootUri}",
+				"name": "${rootName}"
+			},
+			"codeAction": {
+				"disableRuleComment": {
+					"enable": true,
+					"location": "separateLine"
+				},
+				"showDocumentation": {
+					"enable": true
+				}
+			}
+		}
+	},
+	"hint": "npm install --global vscode-langservers-extracted"
+}

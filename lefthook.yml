@@ -1,0 +1,56 @@
+# Git hooks, installed by `pnpm install`.
+pre-commit:
+  parallel: true
+  jobs:
+    - name: format web files
+      glob: "*.{ts,tsx,js,mjs,json,jsonc,css,html,md,yml,yaml}"
+      # Generated files keep the format their generator writes.
+      exclude:
+        - "crates/ahab/openapi.json"
+        - "apps/ui/src/shared/api/generated/**"
+        - "apps/ui/src/routeTree.gen.ts"
+      run: pnpm exec oxfmt --no-error-on-unmatched-pattern {staged_files}
+      stage_fixed: true
+    - name: lint web files
+      glob: "*.{ts,tsx,js,mjs}"
+      exclude:
+        - "apps/ui/src/shared/api/generated/**"
+        - "apps/ui/src/routeTree.gen.ts"
+      # Nothing to lint is fine, for example when only generated files change.
+      run: pnpm exec oxlint --deny-warnings --no-error-on-unmatched-pattern {staged_files}
+    - name: format rust files
+      glob: "*.rs"
+      run: rustfmt --edition 2024 {staged_files}
+      stage_fixed: true
+    - name: format toml files
+      glob: "*.toml"
+      run: taplo fmt {staged_files}
+      stage_fixed: true
+    - name: order Cargo.toml
+      glob: "*Cargo.toml"
+      run: cargo sort --workspace --no-format
+      stage_fixed: true
+    - name: spelling
+      run: typos --force-exclude {staged_files}
+    - name: secrets
+      run: gitleaks git --pre-commit --staged --redact --no-banner
+
+# Conventional Commits, as in Stubb: `type(scope): summary`.
+commit-msg:
+  jobs:
+    - name: conventional commit
+      run: >-
+        head -n 1 {1} | grep -Eq '^[a-z][a-z0-9-]*(\([^()]+\))?!?: [^[:space:]].*$'
+        || { echo "Use a Conventional Commit subject, such as 'feat(server): add project groups'." >&2; exit 1; }
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: clippy
+      run: cargo clippy --all-targets --locked -- -D warnings
+    - name: typecheck
+      run: pnpm --filter @ahab/ui typecheck
+    - name: unused code and dependencies
+      run: pnpm exec knip && cargo machete
+    - name: ui tests
+      run: pnpm --filter @ahab/ui test

@@ -1,0 +1,17 @@
+{
+	"id": "gofmt",
+	"name": "gofmt",
+	"kind": "formatter",
+	"languages": ["go"],
+	"license": "BSD-3-Clause",
+	"homepage": "https://pkg.go.dev/cmd/gofmt",
+	"description": "Go's formatter, from Go.",
+	"source": {
+		"type": "system"
+	},
+	"run": {
+		"command": ["gofmt"],
+		"versionArgs": []
+	},
+	"hint": "comes with Go: https://go.dev/dl"
+}

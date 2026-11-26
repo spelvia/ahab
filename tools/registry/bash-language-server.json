@@ -1,0 +1,32 @@
+{
+	"id": "bash-language-server",
+	"name": "Bash language server",
+	"kind": "languageServer",
+	"languages": ["bash"],
+	"license": "MIT",
+	"homepage": "https://github.com/bash-lsp/bash-language-server",
+	"description": "Shell scripts; it formats with shfmt.",
+	"source": {
+		"type": "npm",
+		"package": "bash-language-server",
+		"version": "5.8.1"
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 18
+		}
+	],
+	"bin": {
+		"bash-language-server": "node_modules/.bin/bash-language-server"
+	},
+	"run": {
+		"command": ["bash-language-server", "start"],
+		"settings": {
+			"bashIde": {
+				"shellcheckPath": ""
+			}
+		}
+	},
+	"hint": "npm install --global bash-language-server"
+}

@@ -1,0 +1,211 @@
+{
+	"features": {
+		"title": "Features",
+		"intro": "The parts Ahab is made of. Switch off what you don't use: its sidebar view, commands, + entries and shortcuts go away for everyone on this server. Nothing is deleted, and switching it back on brings it all back.",
+		"alwaysOn": "Always on",
+		"switchOn": "{{feature}} on",
+		"switchOff": "{{feature}} off"
+	},
+	"editor": {
+		"title": "Editor",
+		"intro": "How file windows look and behave. A project can open its files editable, or not, whatever is set here (Settings → Projects)."
+	},
+	"agentEditor": {
+		"title": "Agent editor",
+		"intro": "How chats with agents read and how you write to them: the transcript and session usage on this device, the composer for everyone on this server.",
+		"transcript": {
+			"title": "Transcript",
+			"description": "Kept on this device.",
+			"thinking": "Show thinking expanded",
+			"thinkingDescription": "An agent's thinking opens as it comes, instead of folded.",
+			"tools": "Show commands and tool calls expanded",
+			"toolsDescription": "Commands with their output, file changes and other tool calls open as they come."
+		},
+		"usage": {
+			"title": "Session usage",
+			"description": "What a chat's Session usage shows, beside its composer. Kept on this device.",
+			"tokens": "Show token usage",
+			"tokensDescription": "The tokens the session has spent, added up over its turns.",
+			"cost": "Show session cost",
+			"costDescription": "What the session cost in US dollars, for agents that report it."
+		},
+		"composer": {
+			"title": "Composer",
+			"description": "For everyone on this server."
+		}
+	},
+	"settingsFields": {
+		"cannotLoad": "These settings cannot be loaded.",
+		"labels": {
+			"editableByDefault": "Files open editable",
+			"autoSave": "Auto-save",
+			"autoSaveDelay": "Auto-save delay (ms)",
+			"vim": "Vim key bindings",
+			"fontSize": "Font size",
+			"lineWrapping": "Wrap long lines",
+			"lineNumbers": "Line numbers",
+			"indentationGuides": "Indentation guides",
+			"problemsAtLineEnd": "Show problems at the end of the line",
+			"tabSize": "Tab size",
+			"chatWhileWorking": "Messages sent while the agent works",
+			"chatVim": "Vim key bindings in the chat composer"
+		},
+		"choices": {
+			"off": "Off",
+			"afterDelay": "After a delay",
+			"onFocusChange": "When the window loses focus",
+			"queue": "Queue until the turn ends",
+			"interrupt": "Stop the turn and send"
+		},
+		"on": "On",
+		"off": "Off",
+		"valueOn": "on",
+		"valueOff": "off",
+		"switchOn": "{{label}} on",
+		"switchOff": "{{label}} off",
+		"serverPlaceholder": "{{value}} (server)",
+		"asServer": "As the server says ({{value}})"
+	},
+	"keyboard": {
+		"title": "Keyboard shortcuts",
+		"intro": "Open an action to give it other keys. Changes are kept in this browser.",
+		"allReset": "Every shortcut is back to Ahab's keys.",
+		"resetAll_one": "Reset {{count}} change",
+		"resetAll_other": "Reset {{count}} changes",
+		"using": "Using",
+		"clearKeyFilter": "Clear the key filter",
+		"filterListening": "Press the keys to look for…",
+		"filterPlaceholder": "Filter by action or key",
+		"filterLabel": "Filter shortcuts",
+		"findByKeys": "Find a shortcut by pressing its keys",
+		"noMatch": {
+			"title": "No shortcut matches",
+			"keyFree": "<key/> is free: open an action to give it to one.",
+			"tryAnother": "Try another word, or press the keys instead."
+		},
+		"groups": {
+			"general": "General",
+			"windows": "Windows",
+			"files": "Files",
+			"editor": "Editor",
+			"chat": "Chat"
+		},
+		"editorNote": "These work while a file's editor has the focus. With Vim on, Vim's own keys come first (Ctrl+D scrolls), and these have the keys Vim leaves.",
+		"chatNote": "These work while a request in a chat has the focus, not while you type in it.",
+		"vim": {
+			"title": "Vim mappings",
+			"intro": "With Vim key bindings on (Settings → Editor), keys you type can stand for others, as Vim's :map makes them: jk for <Esc> in insert mode, or <C-s> for :w<CR>. Kept in this browser.",
+			"none": "No mappings yet.",
+			"add": "Add a mapping",
+			"mode": "Mapping {{number}}: mode",
+			"lhs": "Mapping {{number}}: keys typed",
+			"rhs": "Mapping {{number}}: keys they stand for",
+			"lhsPlaceholder": "jk",
+			"rhsPlaceholder": "<Esc>",
+			"recursive": "Mapping {{number}}: recursive",
+			"recursiveShort": "Recursive",
+			"remove": "Remove mapping {{number}}",
+			"modes": {
+				"normal": "Normal",
+				"insert": "Insert",
+				"visual": "Visual",
+				"all": "Normal, visual and pending"
+			},
+			"ahabKeys": "Ahab adds gd (definition), gy (type definition), gi (implementation), gr (references), K and gh (hover), ]d and [d (problems); gc and gcc comment lines out. A mapping reaches them only when it is recursive; others reach Vim's own keys.",
+			"problems": {
+				"lhsEmpty": "Not applied: type the keys to map.",
+				"rhsEmpty": "Not applied: type the keys they stand for.",
+				"exCommand": "Not applied: Ex commands (:w) cannot be mapped here, only keys.",
+				"typing": "Not applied: a single character in insert mode could no longer be typed.",
+				"same": "Not applied: the keys stand for themselves.",
+				"duplicate": "Not applied: an earlier mapping in this mode has the same keys.",
+				"unknownKey": "Not applied: {{key}} is not a key the editor's Vim knows."
+			}
+		},
+		"featureNames": {
+			"terminal": "Terminal",
+			"files": "Files",
+			"search": "Search"
+		},
+		"terminalNoteMac": "In a terminal, ⌘ keys go to Ahab and ⌃ keys stay with the shell.",
+		"terminalNote": "In a terminal, plain Ctrl+letter keys (Ctrl+K, Ctrl+W) stay with the shell, except Go to file's.",
+		"browserNote": "Keys a browser tab keeps for itself, such as Ctrl+T, work only when Ahab is installed as an app.",
+		"row": {
+			"changed": "Changed",
+			"featureOff": "{{feature}} is off",
+			"clash": "Clash",
+			"noShortcut": "No shortcut",
+			"more_one": "or {{count}} more",
+			"more_other": "or {{count}} more"
+		},
+		"editor": {
+			"added": "{{key}} now does {{action}}.",
+			"removed": "{{key}} no longer does {{action}}.",
+			"reset": "{{action}} is back to Ahab's keys.",
+			"hasItAlready": "{{action}} has it already.",
+			"needsModifierMac": "Hold ⌃, ⌥ or ⌘ too: without it, the key would fire while you type.",
+			"needsModifier": "Hold Ctrl or Alt too: without it, the key would fire while you type.",
+			"keys": "{{action}}'s keys",
+			"also": "Also {{actions}}",
+			"appOnly": "App only: a browser tab keeps it",
+			"remove": "Remove {{key}} from {{action}}",
+			"noKeys": "No keys: it runs from the palette only.",
+			"addKey": "Add a key",
+			"pressKeys": "Press the keys",
+			"escCancels": "Esc cancels",
+			"taken": "does <action>{{actions}}</action>. Move it here?",
+			"moveHere": "Move it here",
+			"tryAnother": "Try another",
+			"resetToDefaults": "Reset to Ahab's keys",
+			"defaults": "({{keys}})",
+			"none": "none",
+			"ownKeys": "These are Ahab's own keys.",
+			"done": "Done"
+		}
+	},
+	"appearance": {
+		"title": "Appearance",
+		"intro": "How Ahab looks on this device. Each browser and app keeps its own, so a phone and a desktop can differ.",
+		"theme": {
+			"title": "Theme",
+			"system": "Match the system",
+			"light": "Light",
+			"dark": "Dark",
+			"systemNowDark": "The system is dark now; Ahab follows when it changes.",
+			"systemNowLight": "The system is light now; Ahab follows when it changes."
+		},
+		"textSize": {
+			"title": "Text size",
+			"description": "Scale the interface, including chats, the editor and terminals.",
+			"percentage": "Text size percentage",
+			"reset": "Reset to 100%"
+		},
+		"motion": {
+			"title": "Motion",
+			"reduce": "Reduce motion",
+			"reduceDescription": "No animations or sliding panels, even when the system allows them."
+		},
+		"language": {
+			"title": "Language",
+			"description": "Ahab is in English for now; more languages can be added."
+		},
+		"colorTheme": {
+			"title": "Colour theme",
+			"description": "Its light or dark colours follow the theme chosen above; a theme with only one shows it either way.",
+			"ahab": "Ahab",
+			"both": "Light and dark",
+			"darkOnly": "Dark only",
+			"lightOnly": "Light only"
+		},
+		"fonts": {
+			"title": "Fonts",
+			"description": "For this device. Another font is used by its name: install it on this computer first.",
+			"ui": "Interface",
+			"code": "Code, editor and terminals",
+			"ahab": "Ahab's ({{font}})",
+			"system": "This system's",
+			"other": "Another font…",
+			"name": "{{what}}: font name"
+		}
+	}
+}

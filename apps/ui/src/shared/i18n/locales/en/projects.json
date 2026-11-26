@@ -1,0 +1,719 @@
+{
+	"fileView": {
+		"external": {
+			"gone": "This file outside the project is no longer available: the language server that pointed at it stopped. Go to its definition again.",
+			"readOnly": "Read-only, outside the project"
+		},
+		"path": "Path",
+		"showAs": "Show as",
+		"views": {
+			"source": "Source",
+			"preview": "Preview",
+			"split": "Side by side"
+		},
+		"cannotShow": "Cannot show this file.",
+		"imageFailed": "Couldn’t load this image. Image previews support files up to 10 MiB.",
+		"notText": "This file is not text, or not in UTF-8 ({{size}}): Ahab opens UTF-8 text.",
+		"problems": {
+			"file_too_large": "This file is larger than 2 MB; Ahab shows smaller files for now.",
+			"machine_offline": "The machine with this file is offline.",
+			"not_found": "This file is gone.",
+			"permission_denied": "Ahab may not read this file."
+		},
+		"plain": {
+			"truncated": "Not highlighted: only the first part of this file is shown.",
+			"tooLarge": "Not highlighted: the file is over 2 MB or has a line over {{max}} characters."
+		},
+		"menu": {
+			"addToTarget": "Add to “{{title}}”",
+			"addToChat": "Add to chat…",
+			"copyLines": "Copy lines",
+			"copied": "Copied",
+			"cannotCopy": "Cannot copy here"
+		},
+		"language": {
+			"definition": "Go to definition",
+			"typeDefinition": "Go to type definition",
+			"implementation": "Go to implementation",
+			"references": "Find references",
+			"rename": "Rename…",
+			"fixes": "Fixes…",
+			"format": "Format"
+		},
+		"toolbar": {
+			"truncated": "The first part of this {{size}} file; files over 2 MB cannot be edited.",
+			"readOnlyProject": "Read-only project",
+			"readOnly": "Read-only",
+			"edit": "Edit",
+			"editing": "Editing",
+			"editTitle": "Edit ({{shortcut}})",
+			"stopEditingTitle": "Stop editing ({{shortcut}})",
+			"unsaved": "Unsaved",
+			"unsavedTitle": "Kept in this browser until saved",
+			"outline": "Outline",
+			"outlineTitle": "Outline ({{shortcut}})",
+			"saveTitle": "Save ({{shortcut}})"
+		},
+		"locations": {
+			"places_one": "{{count}} place",
+			"places_other": "{{count}} places",
+			"approximate_one": "{{count}} place · approximate: found by name, until a language server runs",
+			"approximate_other": "{{count}} places · approximate: found by name, until a language server runs"
+		},
+		"compare": {
+			"onDisk": "On disk",
+			"yours": "Yours"
+		},
+		"banner": {
+			"refused": "Not saved: the file changed on disk since you started editing (an agent, Git or another device).",
+			"changed": "The file changed on disk; your changes are not saved yet.",
+			"compare": "Compare",
+			"backToEditing": "Back to editing",
+			"reload": "Reload",
+			"saveAnyway": "Save anyway",
+			"keepMine": "Keep mine",
+			"deleted": "The file was deleted on disk.",
+			"saveAgain": "Save it again",
+			"dismiss": "Dismiss",
+			"restored": "Unsaved changes from before are back.",
+			"discard": "Discard them",
+			"ok": "OK"
+		}
+	},
+	"languageMenu": {
+		"plainText": "Plain text",
+		"plainMark": "· plain",
+		"triggerTitle": "The file's language: choose another",
+		"triggerLabel": "Language: {{name}}",
+		"detect": "Find it from the file ({{name}})",
+		"forgetPattern": "Find the language of {{pattern}} files again",
+		"choosePattern": "Show every {{pattern}} file as {{name}}"
+	},
+	"outline": {
+		"title": "Outline",
+		"filter": "Filter",
+		"filterLabel": "Filter the outline",
+		"finding": "Finding definitions…",
+		"none": "No outline for this language.",
+		"noMatch": "Nothing matches.",
+		"empty": "No definitions found."
+	},
+	"fileTree": {
+		"label": "Files",
+		"newFile": "New file",
+		"newFolder": "New folder",
+		"refresh": "Refresh file explorer",
+		"collapseAll": "Collapse folders",
+		"menu": {
+			"newFile": "New file…",
+			"newFolder": "New folder…",
+			"addToChat": "Add to “{{title}}”",
+			"chooseChat": "Add to chat…",
+			"addFilesToChat_one": "Add {{count}} file to “{{title}}”",
+			"addFilesToChat_other": "Add {{count}} files to “{{title}}”",
+			"chooseChatFiles_one": "Add {{count}} file to chat…",
+			"chooseChatFiles_other": "Add {{count}} files to chat…",
+			"open": "Open",
+			"openBeside": "Open to the side",
+			"findInFolder": "Find in folder…",
+			"copyPath": "Copy path",
+			"copyRelativePath": "Copy relative path",
+			"copyPaths": "Copy paths",
+			"copyRelativePaths": "Copy relative paths",
+			"cut": "Cut",
+			"copy": "Copy",
+			"paste": "Paste",
+			"rename": "Rename…",
+			"duplicate": "Duplicate",
+			"delete": "Delete…",
+			"deleteMany_one": "Delete {{count}} item…",
+			"deleteMany_other": "Delete {{count}} items…"
+		},
+		"copiedPath": "Copied the path",
+		"copiedRelativePath": "Copied the relative path",
+		"copiedPaths_one": "Copied {{count}} path",
+		"copiedPaths_other": "Copied {{count}} paths",
+		"copyFailed": "Could not copy",
+		"errors": {
+			"failed": "That did not work.",
+			"alreadyExists": "Something with that name is already there.",
+			"readOnly": "This project is read-only.",
+			"machineOutdated": "The project's machine runs an older Ahab: update it to change files."
+		},
+		"create": {
+			"nameIn": "Name, in {{folder}}/",
+			"name": "Name (a path makes its folders too)",
+			"action": "Create"
+		},
+		"rename": {
+			"title": "Rename {{name}}",
+			"label": "New path in the project",
+			"action": "Rename"
+		},
+		"delete": {
+			"title": "Delete {{name}}?",
+			"folder": "{{path}} and everything in it are deleted from the machine. This cannot be undone.",
+			"file": "{{path}} is deleted from the machine. This cannot be undone.",
+			"manyTitle_one": "Delete {{count}} item?",
+			"manyTitle_other": "Delete {{count}} items?",
+			"many": "{{names}}, with everything in the folders, are deleted from the machine. This cannot be undone.",
+			"manyMore_one": "{{names}} and {{count}} more, with everything in the folders, are deleted from the machine. This cannot be undone.",
+			"manyMore_other": "{{names}} and {{count}} more, with everything in the folders, are deleted from the machine. This cannot be undone."
+		},
+		"cannotList": "Cannot list this folder.",
+		"empty": "This folder is empty.",
+		"truncated": "More entries than shown.",
+		"outsideLink": "A link that leads outside this project",
+		"sort": {
+			"label": "Sort files",
+			"name": "Name",
+			"type": "Type",
+			"modified": "Date modified",
+			"size": "Size",
+			"foldersFirst": "Folders first"
+		}
+	},
+	"fileDrag": {
+		"duplicated_one": "Duplicated as {{name}}",
+		"duplicated_other": "Duplicated {{count}} items",
+		"copyUndone": "Copy undone",
+		"moveUndone": "Move undone",
+		"cannotUndo": "Cannot undo that.",
+		"failed": "That did not work.",
+		"machineOutdated": "The project's machine runs an older Ahab: update it to copy or replace files.",
+		"done": {
+			"moved": {
+				"toFolder_one": "Moved {{name}} to {{folder}}",
+				"toFolder_other": "Moved {{count}} items to {{folder}}",
+				"toRoot_one": "Moved {{name}} to the project's folder",
+				"toRoot_other": "Moved {{count}} items to the project's folder"
+			},
+			"copied": {
+				"toFolder_one": "Copied {{name}} to {{folder}}",
+				"toFolder_other": "Copied {{count}} items to {{folder}}",
+				"toRoot_one": "Copied {{name}} to the project's folder",
+				"toRoot_other": "Copied {{count}} items to the project's folder"
+			}
+		},
+		"doneReplacing": {
+			"moved": {
+				"toFolder_one": "Moved {{name}} to {{folder}}, replacing what was there",
+				"toFolder_other": "Moved {{count}} items to {{folder}}, replacing what was there",
+				"toRoot_one": "Moved {{name}} to the project's folder, replacing what was there",
+				"toRoot_other": "Moved {{count}} items to the project's folder, replacing what was there"
+			},
+			"copied": {
+				"toFolder_one": "Copied {{name}} to {{folder}}, replacing what was there",
+				"toFolder_other": "Copied {{count}} items to {{folder}}, replacing what was there",
+				"toRoot_one": "Copied {{name}} to the project's folder, replacing what was there",
+				"toRoot_other": "Copied {{count}} items to the project's folder, replacing what was there"
+			}
+		},
+		"conflict": {
+			"title": "{{name}} is already there",
+			"copy": {
+				"inFolder": "{{folder}} already has a file or folder named {{name}}. Replace it with the one you copy? Replacing cannot be undone.",
+				"inRoot": "The project's folder already has a file or folder named {{name}}. Replace it with the one you copy? Replacing cannot be undone."
+			},
+			"move": {
+				"inFolder": "{{folder}} already has a file or folder named {{name}}. Replace it with the one you move? Replacing cannot be undone.",
+				"inRoot": "The project's folder already has a file or folder named {{name}}. Replace it with the one you move? Replacing cannot be undone."
+			},
+			"keepBoth": "Keep both",
+			"replace": "Replace"
+		}
+	},
+	"fileStatus": {
+		"source": {
+			"window": "Chosen for this window",
+			"editorconfig": "From .editorconfig",
+			"detected": "Found in the text",
+			"settings": "From Settings → Editor"
+		},
+		"sourceInline": {
+			"window": "chosen for this window",
+			"editorconfig": "from .editorconfig",
+			"detected": "found in the text",
+			"settings": "from settings → editor"
+		},
+		"edit": {
+			"editing": {
+				"label": "Editing",
+				"title": "Editing: stop editing"
+			},
+			"viewing": {
+				"label": "Read-only",
+				"title": "Read-only: edit the file"
+			},
+			"readOnly": {
+				"label": "Read-only",
+				"title": "This file cannot be edited"
+			},
+			"readOnlyProject": {
+				"label": "Read-only",
+				"title": "The project is read-only"
+			},
+			"truncated": {
+				"label": "Read-only",
+				"title": "Only the first part is shown: files over 2 MB cannot be edited"
+			},
+			"external": {
+				"label": "Read-only",
+				"title": "Outside the project: read-only"
+			}
+		},
+		"toggleEdit": "{{title}} ({{shortcut}})",
+		"cursor": "{{cursor}}: go to line and column",
+		"indentation": {
+			"title": "{{indentation}} ({{source}}): change",
+			"label": "Indentation: {{indentation}}",
+			"useSpaces": "Indent using spaces",
+			"useTabs": "Indent using tabs",
+			"tabSize": "Tab size: {{size}}",
+			"spaces": "Spaces: {{size}}",
+			"findAgain": "Find it again (EditorConfig, the text, Settings)",
+			"editorSettings": "Editor settings…"
+		},
+		"encoding": "What the file was read as: Ahab opens UTF-8 text",
+		"lineEnding": {
+			"mixedTitle": "Mixed line endings: saved as {{ending}}",
+			"title": "Lines end with {{ending}}: change",
+			"label": "Line endings: {{ending}}",
+			"lf": "LF (Linux, macOS)",
+			"crlf": "CRLF (Windows)",
+			"mixed": "Mixed: saved as {{ending}} unless you choose",
+			"convert": "Convert the line endings",
+			"editToConvert": "Edit the file to convert its line endings"
+		}
+	},
+	"folderPicker": {
+		"noMachine": "No machine is online. Start Ahab with <code>ahab up</code>.",
+		"machine": "Machine",
+		"up": "Up one folder",
+		"folders": "Folders",
+		"cannotList": "Cannot list this folder.",
+		"empty": "No folders in here.",
+		"showHidden": "Show hidden folders",
+		"opening": "Opening…",
+		"pickNamed": "{{action}}: {{name}}"
+	},
+	"filesModel": {
+		"badName": {
+			"empty": "Enter a name.",
+			"absolute": "Use a path inside the project.",
+			"dots": "Use a path inside the project, without . or ..",
+			"backslash": "Use / between folders."
+		},
+		"intoItself": "{{name}} cannot move into itself."
+	},
+	"filesApi": {
+		"cannotEdit": "{{path}} cannot be edited here."
+	},
+	"gitView": {
+		"repository": "Repository",
+		"repositoryNamed": "Repository {{name}}",
+		"worktrees_one": "{{count}} worktree",
+		"worktrees_other": "{{count}} worktrees",
+		"detached": "detached",
+		"unreadable": "Cannot read Git here.",
+		"notRepository": {
+			"message": "This project's folder is not a Git repository, and none was found inside it.",
+			"hint": "If its repository is elsewhere, make that folder a project instead.",
+			"initialize": "Initialize a repository here…"
+		},
+		"initialize": {
+			"title": "Make this folder a Git repository?",
+			"description": "Runs git init in {{path}} on {{machine}}. Do this only if this folder should be a repository of its own.",
+			"action": "Initialize"
+		},
+		"toast": {
+			"pushed": "Pushed",
+			"published": "Branch published",
+			"synced": "Synced",
+			"fetched": "Fetched",
+			"pulled": "Pulled",
+			"amendedAndPushed": "Amended and pushed",
+			"committedAndPushed": "Committed and pushed",
+			"amended": "Commit amended",
+			"committed": "Committed",
+			"stashed": "Changes stashed"
+		},
+		"amendPushed": {
+			"title": "Amend a pushed commit?",
+			"description": "The last commit on {{branch}} is already on {{upstream}}. Amending it makes your branch differ from the remote's, and pushing it then needs a force push, which Ahab does not do.",
+			"action": "Amend"
+		},
+		"discard": {
+			"titleOne": "Discard changes to {{path}}?",
+			"titleMany_one": "Discard changes to {{count}} file?",
+			"titleMany_other": "Discard changes to {{count}} files?",
+			"untracked": "The new file is deleted. This cannot be undone.",
+			"tracked": "Its changes since it was last staged are undone. This cannot be undone.",
+			"many": "Their changes that are not staged are undone, and new files are deleted. This cannot be undone.",
+			"action": "Discard"
+		},
+		"commitMessage": "Commit message",
+		"commitPlaceholder": "Message (⌘Enter to commit on {{branch}})",
+		"noChanges": "No changes.",
+		"confirm": "OK"
+	},
+	"repositoryHeader": {
+		"detachedAt": "detached at {{head}}",
+		"noCommits": "no commits",
+		"switchBranchTitle": "{{branch}}: switch branch",
+		"switchBranchLabel": "Branch {{branch}}: switch branch",
+		"syncTitle": "Sync with {{upstream}}: pull {{behind}}, push {{ahead}}",
+		"syncLabel": "Sync: {{behind}} to pull, {{ahead}} to push",
+		"localTitle": "This branch is not on a remote yet",
+		"local": "local",
+		"working": "Working",
+		"commitChanges": "Commit changes",
+		"refresh": "Refresh",
+		"more": "More Git actions",
+		"menu": {
+			"sync": "Sync (pull, then push)",
+			"publish": "Publish branch",
+			"pull": "Pull",
+			"push": "Push",
+			"fetch": "Fetch",
+			"switchBranch": "Switch branch…",
+			"stash": "Stash changes"
+		}
+	},
+	"mainButton": {
+		"commit": "Commit",
+		"commitAll": "Commit all",
+		"commitAndPush": "Commit and push",
+		"commitAllAndPush": "Commit all and push",
+		"commitAndSync": "Commit and sync",
+		"commitAllAndSync": "Commit all and sync",
+		"publish": "Publish branch",
+		"sync": "Sync changes",
+		"more": "More ways to commit",
+		"amend": "Amend the last commit"
+	},
+	"graphView": {
+		"title": "Graph",
+		"resize": "Resize the graph",
+		"showCurrent": "Show only the current branch",
+		"showAll": "Show every branch",
+		"commits": "Commits",
+		"loadingOlder": "Loading older commits…",
+		"showOlder": "Show older commits",
+		"empty": "No commits yet.",
+		"current": "{{name}} (current)"
+	},
+	"changes": {
+		"title": "Changes",
+		"stageAll": "Stage all",
+		"unstageAll": "Unstage all",
+		"stage": "Stage {{path}}",
+		"unstage": "Unstage {{path}}",
+		"showEvery": "Show every change",
+		"onlyThisSession": "Only this session's",
+		"viewAsList": "View as a list",
+		"viewAsTree": "View as a tree",
+		"discardAll": "Discard all changes",
+		"discard": "Discard changes",
+		"openFile": "Open the file",
+		"editedInSession": "Edited in this session",
+		"editedBySessionAgents": "Edited by this session's agents",
+		"fold": "Fold {{name}}",
+		"unfold": "Unfold {{name}}"
+	},
+	"conflicts": {
+		"title": "Conflicts",
+		"markResolved": "Mark resolved",
+		"continue": "Continue",
+		"abort": "Abort",
+		"operation": {
+			"merge_one": "Merging: {{count}} conflicted file",
+			"merge_other": "Merging: {{count}} conflicted files",
+			"mergeResolved": "Merging: conflicts resolved",
+			"rebase_one": "Rebasing: {{count}} conflicted file",
+			"rebase_other": "Rebasing: {{count}} conflicted files",
+			"rebaseResolved": "Rebasing: conflicts resolved",
+			"cherryPick_one": "Cherry-picking: {{count}} conflicted file",
+			"cherryPick_other": "Cherry-picking: {{count}} conflicted files",
+			"cherryPickResolved": "Cherry-picking: conflicts resolved",
+			"revert_one": "Reverting: {{count}} conflicted file",
+			"revert_other": "Reverting: {{count}} conflicted files",
+			"revertResolved": "Reverting: conflicts resolved"
+		}
+	},
+	"stashes": {
+		"title": "Stashes",
+		"apply": "Apply",
+		"pop": "Pop (apply and remove)",
+		"drop": "Drop",
+		"empty": "No stashes.",
+		"dropDialog": {
+			"title": "Drop this stash?",
+			"description": "Its changes are lost. This cannot be undone.",
+			"action": "Drop"
+		}
+	},
+	"branchButton": {
+		"label": "Branch {{branch}}: switch branch",
+		"title": "Switch branch",
+		"detached": "detached"
+	},
+	"branchPicker": {
+		"title": "Switch branch",
+		"switched": "On {{branch}}",
+		"switchedStashed": "Changes stashed; on {{branch}}",
+		"created": "Created {{branch}}",
+		"dirty": {
+			"title": "Switch to {{branch}}?",
+			"description": "You have uncommitted changes. Carry them over to {{branch}} (when Git can), or stash them first and switch with a clean working tree.",
+			"stash": "Stash and switch",
+			"carry": "Carry them over"
+		},
+		"query": {
+			"label": "Find or create a branch",
+			"placeholder": "Find a branch, or name a new one"
+		},
+		"create": "Create branch <name>{{name}}</name> from {{base}}",
+		"branches": "Branches",
+		"remoteBranches": "Remote branches",
+		"rename": "Rename {{branch}}",
+		"delete": "Delete {{branch}}",
+		"renameDialog": {
+			"title": "Rename {{branch}}",
+			"label": "New name",
+			"action": "Rename"
+		},
+		"deleteDialog": {
+			"title": "Delete {{branch}}?",
+			"titleNotMerged": "{{branch}} is not merged. Delete it anyway?",
+			"description": "The local branch is deleted; remote branches are not touched.",
+			"descriptionNotMerged": "Its commits that are on no other branch will be hard to find again."
+		}
+	},
+	"diffView": {
+		"group": {
+			"changes": "Changes",
+			"staged": "Staged",
+			"untracked": "New file",
+			"conflicts": "Conflict: ours ↔ working tree",
+			"commit": "Commit"
+		},
+		"stageLines_one": "Stage {{count}} line",
+		"stageLines_other": "Stage {{count}} lines",
+		"unstageLines_one": "Unstage {{count}} line",
+		"unstageLines_other": "Unstage {{count}} lines",
+		"linesStaged_one": "{{count}} line staged",
+		"linesStaged_other": "{{count}} lines staged",
+		"linesUnstaged_one": "{{count}} line unstaged",
+		"linesUnstaged_other": "{{count}} lines unstaged",
+		"hunkStaged": "Hunk staged",
+		"hunkUnstaged": "Hunk unstaged",
+		"clearChosen": "Clear the chosen lines",
+		"openFile": "Open the file",
+		"sideBySide": "Side by side",
+		"oneColumn": "One column",
+		"cannotShow": "Cannot show these changes.",
+		"binary": "This file is not text; its changes cannot be shown.",
+		"tooLarge": "This file is larger than 2 MB; its changes are not shown.",
+		"noChanges": "No changes.",
+		"unchangedLines_one": "{{count}} unchanged line",
+		"unchangedLines_other": "{{count}} unchanged lines",
+		"chooseLine": "Choose line {{line}}",
+		"unchooseLine": "Unchoose line {{line}}",
+		"chooseLineTitle": "Choose this line (Shift: a range)",
+		"stageHunk": "Stage hunk",
+		"unstageHunk": "Unstage hunk"
+	},
+	"tiles": {
+		"layoutFailed": "The saved layout cannot be loaded.",
+		"layoutConflict": "Another window saved this project’s layout. Your changes are still here.",
+		"useSavedLayout": "Use saved layout",
+		"keepMyLayout": "Save my layout",
+		"otherProjectTitle": "{{name}} · {{project}}",
+		"diffTitle": {
+			"staged": "{{name}} (staged)",
+			"commit": "{{name}} @ {{commit}}",
+			"conflict": "{{name}} (conflict)",
+			"changes": "{{name}} (changes)"
+		}
+	},
+	"startSurface": {
+		"noProject": "No project yet",
+		"browseFiles": "Browse files",
+		"commands": "Commands",
+		"comingSoon": "Agent sessions and terminals will start from here."
+	},
+	"projectState": {
+		"offline": "{{machine}} · offline",
+		"missing": "{{machine}} · folder missing"
+	},
+	"projectPage": {
+		"loadFailed": "This project cannot be loaded.",
+		"back": "Projects",
+		"breadcrumb": "Breadcrumb",
+		"project": "Project",
+		"tabsLabel": "{{name}}'s tabs",
+		"tabs": {
+			"overview": "Overview",
+			"lsps": "LSPs",
+			"settings": "Settings"
+		},
+		"archived": "Archived",
+		"open": "Open",
+		"editor": {
+			"title": "Editor",
+			"description": "{{name}}'s own editor settings, over Settings → Editor."
+		},
+		"general": {
+			"title": "General",
+			"name": "Name",
+			"description": "Description",
+			"descriptionPlaceholder": "What this project is, for you and for agents",
+			"group": "Group",
+			"groupPlaceholder": "None: listed with the ungrouped projects"
+		},
+		"folder": {
+			"title": "Folder",
+			"description": "The folder on one of your machines that this project is. Its files stay where they are.",
+			"readOnly": "Read-only",
+			"readOnlyLabel": "{{name}} is read-only"
+		},
+		"lifecycle": {
+			"title": "Archive or delete",
+			"archiveTitle": "Archive this project",
+			"archiveDescription": "It is hidden from your projects; everything is kept.",
+			"archive": "Archive",
+			"restoreTitle": "Restore this project",
+			"restoreDescription": "It shows among your projects again.",
+			"restore": "Restore",
+			"deleteTitle": "Delete this project",
+			"deleteDescription": "Its sessions are deleted from Ahab. Files on your machines are never touched."
+		},
+		"deleteProject": {
+			"title": "Delete {{name}}?",
+			"description": "It and every session in it are deleted from Ahab. This cannot be undone; the folder and its files stay as they are.",
+			"action": "Delete project"
+		},
+		"icon": {
+			"label": "Icon",
+			"emoji": "Emoji or a few letters",
+			"useEmoji": "Use",
+			"upload": "Upload an image",
+			"remove": "Use its initial",
+			"hint": "Shown wherever the project is listed. Images are cropped square; PNG, JPEG, WebP or GIF."
+		}
+	},
+	"projectsPage": {
+		"title": "Projects",
+		"description": "A project is a folder on one of your machines. Ahab never touches the files when you archive or delete one.",
+		"openFolder": "Open folder",
+		"newProject": "New project",
+		"empty": "No projects yet.",
+		"archived": "Archived",
+		"ungrouped": "Other projects",
+		"openFolderDialog": {
+			"title": "Open folder",
+			"description": "Opens the folder's project, or creates one named after it.",
+			"action": "Open",
+			"failed": "This folder cannot be opened."
+		},
+		"moveUp": "Move {{name}} up",
+		"moveDown": "Move {{name}} down"
+	},
+	"startPage": {
+		"title": "Open a folder to start",
+		"description": "Ahab makes a project for it, named after the folder.",
+		"open": "Open"
+	},
+	"commandPalette": {
+		"title": "Commands",
+		"placeholder": "Switch project, or run a command…",
+		"search": "Search commands",
+		"list": "Commands",
+		"empty": "Nothing matches."
+	},
+	"newProject": {
+		"title": "New project",
+		"description": "A folder on one of your machines. Its files stay where they are.",
+		"name": "Name (optional)",
+		"namePlaceholder": "The folder's name",
+		"group": "Group (optional)",
+		"groupPlaceholder": "None",
+		"readOnly": "Read-only: agents and tools only read it",
+		"create": "Create project",
+		"failed": "This folder cannot become a project."
+	},
+	"projectSwitcher": {
+		"label": "Switch project",
+		"projects": "Projects",
+		"elsewhereWaiting": "Another project needs you",
+		"waiting_one": "{{count}} need you",
+		"waiting_other": "{{count}} need you",
+		"ungrouped": "Other projects",
+		"openFolder": "Open folder…",
+		"openInNewWindow": "Open in new window",
+		"manage": "Manage projects",
+		"hint": "Drag to reorder · {{first}}…{{last}} to switch",
+		"hintReorder": "Drag to reorder, or Alt+↑ and Alt+↓"
+	},
+	"searchView": {
+		"query": "Search",
+		"matchCase": "Match case",
+		"wholeWord": "Match whole word",
+		"regex": "Use regular expression",
+		"fewerOptions": "Fewer options",
+		"moreOptions": "Files to include or exclude",
+		"include": "Files to include",
+		"includePlaceholder": "e.g. src/**, *.rs",
+		"exclude": "Files to exclude",
+		"excludePlaceholder": "e.g. **/fixtures/**",
+		"includeIgnored": "Include ignored and hidden files",
+		"failed": "Cannot search here.",
+		"searching": "Searching…",
+		"results": "Results",
+		"reference": "“{{query}}”",
+		"openMatch": "Open (⌘/Ctrl-click: to the side)",
+		"summary": {
+			"none": "No results.",
+			"results_one": "{{count}} result in $t(projects:searchView.summary.files, {\"count\": {{files}} })",
+			"results_other": "{{count}} results in $t(projects:searchView.summary.files, {\"count\": {{files}} })",
+			"files_one": "{{count}} file",
+			"files_other": "{{count}} files",
+			"searching": "{{summary}}, searching…",
+			"cutAtLimit": "{{summary}}: stopped at the limit; narrow the search",
+			"cutAfterTime": "{{summary}}: stopped after 10 seconds; narrow the search"
+		}
+	},
+	"quickOpen": {
+		"title": "Go to file",
+		"placeholder": "Go to file…",
+		"files": "Files",
+		"noMatch": "No file matches.",
+		"empty": "Type a file's name.",
+		"listing": "Listing files…",
+		"truncated": "Only the first {{limit}} files are listed.",
+		"hint": "Enter opens · {{key}}Enter opens to the side"
+	},
+	"projectPlace": "{{path}} on {{machine}}",
+	"projectOverview": {
+		"open": "Open",
+		"readOnly": "read-only",
+		"missing": "Its folder is gone from its machine.",
+		"offline": "{{machine}} is offline.",
+		"git": {
+			"reading": "Reading Git…",
+			"none": "Not in a Git repository",
+			"more_one": "and {{count}} more repository",
+			"more_other": "and {{count}} more repositories",
+			"detached": "detached at {{head}}",
+			"ahead": "Commits to push",
+			"behind": "Commits to pull",
+			"changes_one": "{{count}} changed file",
+			"changes_other": "{{count}} changed files",
+			"clean": "No changes",
+			"conflicts_one": "{{count}} conflict",
+			"conflicts_other": "{{count}} conflicts",
+			"operation": "A {{operation}} is unfinished"
+		}
+	}
+}

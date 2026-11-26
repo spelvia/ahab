@@ -1,0 +1,45 @@
+{
+	"id": "clangd",
+	"name": "clangd",
+	"kind": "languageServer",
+	"languages": ["c", "cpp"],
+	"license": "Apache-2.0 WITH LLVM-exception",
+	"homepage": "https://clangd.llvm.org",
+	"description": "C and C++, from compile_commands.json.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "clangd/clangd",
+		"version": "23.1.0",
+		"assets": {
+			"linux-x64": {
+				"file": "clangd-linux-${version}.zip",
+				"sha256": "e53b1a96196095faedb7642cf64964f7fb9ad4a0c1f00dd2c172a3d9dcbafdfd"
+			},
+			"darwin-x64": {
+				"file": "clangd-mac-${version}.zip",
+				"sha256": "1082e6638223b785ca2daf0939f13afcd0bb95c84ee9a4bbaff4745365159253"
+			},
+			"darwin-arm64": {
+				"file": "clangd-mac-${version}.zip",
+				"sha256": "1082e6638223b785ca2daf0939f13afcd0bb95c84ee9a4bbaff4745365159253"
+			}
+		}
+	},
+	"bin": {
+		"clangd": "clangd_${version}/bin/clangd"
+	},
+	"run": {
+		"command": ["clangd"],
+		"rootMarkers": [
+			"compile_commands.json",
+			"compile_flags.txt",
+			".clangd",
+			".clang-format",
+			"CMakeLists.txt",
+			"meson.build",
+			"Makefile"
+		],
+		"settingsFiles": [".clangd", ".clang-format"]
+	},
+	"hint": "apt install clangd, or brew install llvm"
+}

@@ -1,0 +1,425 @@
+{
+	"kinds": {
+		"languageServer": "Server",
+		"formatter": "Formatter",
+		"linter": "Linter",
+		"check": "Check"
+	},
+	"toolState": {
+		"installed": "installed by Ahab",
+		"found": "found",
+		"available": "available",
+		"missing": "missing",
+		"notFound": "not found",
+		"cannotRun": "cannot run here",
+		"off": "off",
+		"unknown": "unknown"
+	},
+	"stateFilters": {
+		"all": "All states",
+		"present": "Installed or found",
+		"available": "Available",
+		"problems": "Missing or cannot run",
+		"off": "Off"
+	},
+	"jobs": {
+		"install": {
+			"running": "Installing: {{step}}",
+			"failed": "Install failed at {{step}}: {{message}}",
+			"failedHere": "Install failed at {{step}}.",
+			"done": "Installed"
+		},
+		"update": {
+			"running": "Updating: {{step}}",
+			"failed": "Update failed at {{step}}: {{message}}",
+			"failedHere": "Update failed at {{step}}.",
+			"done": "Updated"
+		},
+		"remove": {
+			"running": "Removing: {{step}}",
+			"failed": "Remove failed at {{step}}: {{message}}",
+			"failedHere": "Remove failed at {{step}}.",
+			"done": "Removed"
+		},
+		"other": {
+			"running": "{{action}}: {{step}}",
+			"failed": "{{action}} failed at {{step}}: {{message}}",
+			"failedHere": "{{action}} failed at {{step}}.",
+			"done": "{{action}}"
+		}
+	},
+	"machineProblem": {
+		"outdated": "Update Ahab on this machine for language tools.",
+		"offline": "The machine is offline.",
+		"timeout": "The machine did not answer in time."
+	},
+	"uptime": {
+		"underMinute": "under a minute",
+		"minutes_one": "{{count}} min",
+		"minutes_other": "{{count}} min",
+		"hours_one": "{{count}} h",
+		"hours_other": "{{count}} h",
+		"hoursMinutes": "{{hours}} h {{minutes}} min",
+		"days_one": "{{count}} d",
+		"days_other": "{{count}} d"
+	},
+	"machineTools": {
+		"runtimes": "Runtimes",
+		"noRuntimes": "None found",
+		"scanning": "Scanning…",
+		"scanAgain": "Scan again",
+		"search": "Search tools",
+		"allLanguages": "All languages",
+		"allKinds": "All kinds",
+		"updateAll_one": "Update all ({{count}})",
+		"updateAll_other": "Update all ({{count}})",
+		"loading": "Loading the tools…",
+		"noMatchQuery": "No tool matches “{{query}}”.",
+		"noMatch": "No tool matches these filters.",
+		"columns": {
+			"language": "Language",
+			"tool": "Tool",
+			"kind": "Kind",
+			"state": "State",
+			"version": "Version",
+			"actions": "Actions"
+		},
+		"openSettings": "{{tool}}: settings",
+		"default": "default",
+		"thisMachine": "this machine",
+		"fromPlugin": "From a plugin",
+		"install": "Install",
+		"update": "Update"
+	},
+	"languageServers": {
+		"none": "None running. A server starts when a file of its language opens.",
+		"up": "up {{time}}",
+		"documents_one": "{{count}} open",
+		"documents_other": "{{count}} open",
+		"restart": "Restart",
+		"logs": "Logs",
+		"memory": "<used>{{used}}</used> of a <budget>{{budget}}</budget> memory budget. Starting a server that would pass it stops the least recently used first.",
+		"memoryOfMachine": "<used>{{used}}</used> of a <budget>{{budget}}</budget> memory budget (this machine has {{machine}}). Starting a server that would pass it stops the least recently used first.",
+		"memoryMeter": "Memory of the language servers",
+		"overBudget": "Language servers are over budget. Open files can keep their servers running.",
+		"logTitle": "{{server}}'s log",
+		"logEmpty": "Nothing yet."
+	},
+	"toolDrawer": {
+		"notFound": "Not found on {{machine}}. Get it with <code>{{hint}}</code>",
+		"about": "About",
+		"program": "Program",
+		"copyPath": "path",
+		"found": "Found",
+		"version": "Version",
+		"versionWithAhab": "{{found}} (Ahab's: {{version}})",
+		"source": "Source",
+		"from": "From",
+		"fromAhab": "Ahab",
+		"fromAhabDefault": "Ahab (a default)",
+		"fromMachine": "Added on this machine",
+		"fromPlugin": "Plugin {{plugin}}",
+		"licence": "Licence",
+		"homePage": "Home page",
+		"edit": "Edit",
+		"removeRecord": "Remove from this machine",
+		"onMachine": "On {{machine}}",
+		"turnOff": "Turn off on this machine",
+		"path": "Path, instead of looking for it",
+		"environment": "Extra environment, one NAME=value per line"
+	},
+	"recordDialog": {
+		"addTitle": "Add a tool",
+		"editTitle": "Edit tool",
+		"description": "A tool of your own on this machine. Ahab finds it on the machine; it never installs it.",
+		"editAs": "Edit as",
+		"form": "Form",
+		"fields": {
+			"id": "ID",
+			"name": "Name",
+			"kind": "Kind",
+			"languages": "Languages",
+			"command": "Command",
+			"rootMarkers": "Root markers",
+			"output": "Output",
+			"reports": "Reports",
+			"pattern": "Pattern",
+			"record": "Record"
+		},
+		"outputs": {
+			"notSet": "Not set",
+			"json": "JSON (map it in JSON)",
+			"pattern": "Line pattern"
+		},
+		"reportsPlaceholder": "build/reports/checkstyle/*.xml (instead of its output)"
+	},
+	"settingErrors": {
+		"envLine": "Line {{line}}: write NAME=value.",
+		"id": "The ID is lower-case letters, digits and dashes.",
+		"name": "Give it a name.",
+		"kind": "The kind is languageServer, formatter, linter or check.",
+		"languages": "Name at least one language.",
+		"command": "Give its command.",
+		"source": "Your own tools have no source: Ahab finds them, never installs them.",
+		"notJson": "Not JSON: {{message}}",
+		"notObject": "A record is one JSON object."
+	},
+	"checkWhen": {
+		"save": "On save",
+		"agentTurn": "After agent turns",
+		"request": "On request"
+	},
+	"machineLsps": {
+		"tools": {
+			"title": "Language tools",
+			"description": "Language servers, formatters, linters and checks: Ahab's own, plugins' and yours, with their state here. Ahab installs into its data folder on this machine, never system-wide.",
+			"add": "Add a tool…"
+		},
+		"servers": {
+			"title": "Running servers",
+			"description": "The language servers running here now, with their root."
+		},
+		"settings": {
+			"title": "Settings for this machine",
+			"description": "Paths, extra environment and tools turned off are set per tool: open a tool's name."
+		},
+		"maxServers": {
+			"label": "Servers at once",
+			"help": "Unused servers make room when another starts. Open files can keep more running. {{value}} by default."
+		},
+		"maxChecks": {
+			"label": "Checks at once",
+			"help": "Check commands running together on this machine; the rest wait their turn. {{value}} by default."
+		},
+		"memoryBudget": {
+			"label": "Memory budget (MiB)",
+			"help": "Ahab stops unused language servers when they exceed this budget. Half the machine’s memory when empty.",
+			"placeholder": "half"
+		},
+		"logTraffic": {
+			"label": "Keep LSP traffic in logs",
+			"help": "Every message to and from each server, in its Logs. For finding problems; off by default."
+		}
+	},
+	"projectLsps": {
+		"intro": "Which language tools {{project}} uses. How each tool behaves stays in the project's own files.",
+		"introUnnamed": "Which language tools this project uses. How each tool behaves stays in the project's own files.",
+		"loadingProject": "Loading the project…",
+		"projectError": "The project cannot be loaded: {{message}}",
+		"settingsError": "The settings cannot be loaded: {{message}}",
+		"shared": "This repository's <code>{{file}}</code> sets these choices for everyone who opens it. What you set here overrides it on this server only.",
+		"noMachine": "The project's machine is not online: its tools are shown by ID, without checks.",
+		"saveError": "Cannot save: {{message}}",
+		"repositories": {
+			"title": "Repositories",
+			"description": "For projects holding many repositories or worktrees. Pin one in Problems or the Git view.",
+			"serversStart": "Language servers start",
+			"serversStartHelp": "Each for the root of a file you open; only in pinned repositories; or never.",
+			"starts": {
+				"open": "When I open a file",
+				"pinned": "Only in pinned repositories",
+				"off": "Off"
+			},
+			"activeDays": "Active for (days)",
+			"activeDaysHelp": "A repository is active this long after a file in it was opened or an agent changed one; Problems shows active and pinned ones. {{value}} by default."
+		},
+		"turnedOff": {
+			"title": "Problems turned off",
+			"description": "Plugins' problems this project does not show (turned off from Problems).",
+			"turnOn": "Turn on"
+		},
+		"environment": {
+			"title": "Environment",
+			"description": "Where the project's tools start.",
+			"direnvHelp": "Tools run under an allowed .envrc. On by default.",
+			"mise": "mise or asdf",
+			"miseHelp": "Tools use .mise.toml or .tool-versions. On by default.",
+			"nix": "Nix dev shell",
+			"nixHelp": "Tools run in the flake's dev shell. Off by default: it can take long to start.",
+			"extra": "Extra environment",
+			"extraHelp": "For every tool of this project, one NAME=value per line."
+		},
+		"languages": {
+			"title": "Languages",
+			"description": "Each language's tools in order of preference: the first that can run wins. Ahab's defaults apply until you change them.",
+			"off": "off",
+			"noTools": "no tools",
+			"byDefault": "{{summary}} (default)",
+			"tools": "{{language}}'s tools",
+			"moveUp": "Move {{tool}} up",
+			"moveDown": "Move {{tool}} down",
+			"remove": "Remove {{tool}}",
+			"addTo": "Add a tool to {{language}}",
+			"add": "Add a tool…",
+			"toolWithKind": "{{tool}} ({{kind}})",
+			"formatOnSave": "Format on save",
+			"asEditor": "As the editor says",
+			"on": "On",
+			"offOption": "Off",
+			"formatter": "Formatter",
+			"firstThatCan": "The first that can",
+			"backToDefaults": "Back to defaults"
+		},
+		"checks": {
+			"title": "Checks",
+			"description": "Whole-project checks, such as cargo clippy and tsc, and when each runs.",
+			"when": "When {{tool}} runs",
+			"asRecord": "As the tool's record says",
+			"asTool": "as the tool says",
+			"default": "Default",
+			"run": "Run {{tool}}"
+		}
+	},
+	"counts": {
+		"errors_one": "{{count}} error",
+		"errors_other": "{{count}} errors",
+		"warnings_one": "{{count}} warning",
+		"warnings_other": "{{count}} warnings",
+		"information_one": "{{count}} info",
+		"information_other": "{{count}} info",
+		"hints_one": "{{count}} hint",
+		"hints_other": "{{count}} hints",
+		"none": "No problems"
+	},
+	"turn": {
+		"newErrors_one": "{{count}} new error",
+		"newErrors_other": "{{count}} new errors",
+		"newWarnings_one": "{{count}} new warning",
+		"newWarnings_other": "{{count}} new warnings",
+		"newNotes_one": "{{count}} new note",
+		"newNotes_other": "{{count}} new notes",
+		"fixed_one": "{{count}} fixed",
+		"fixed_other": "{{count}} fixed",
+		"none": "No change in problems"
+	},
+	"checkLog": {
+		"failed": "Check project failed: {{error}}",
+		"nothing": "Check project: no check commands run on request here.",
+		"summary_one": "Check project: {{count}} check",
+		"summary_other": "Check project: {{count}} checks",
+		"check": "{{name}}: {{outcome}}",
+		"checkIn": "{{name}} in {{root}}: {{outcome}}",
+		"checkFailed": "failed: {{reason}}",
+		"noReason": "no reason given"
+	},
+	"severity": {
+		"error": "error",
+		"warning": "warning",
+		"information": "information",
+		"hint": "hint"
+	},
+	"problemsPanel": {
+		"severities": {
+			"errors": "Errors",
+			"warnings": "Warnings",
+			"infos": "Infos and hints"
+		},
+		"filter": "Filter problems",
+		"filterPlaceholder": "Filter (e.g. text, **/*.ts, !**/test/**)",
+		"filterHelp": "Words in the message, code, tool or path; globs over paths; ! leaves out; commas between",
+		"filterMenu": "Filter by severity and tool",
+		"everyTool": "Every tool",
+		"everyRepository": "Every repository",
+		"checkProject": "Check project",
+		"runChecks": "Run {{project}}'s check commands now",
+		"unavailable": "The project's machine is not available",
+		"expandAll": "Expand all",
+		"collapseAll": "Collapse all",
+		"running": "Running the check commands; this can take a while…",
+		"checksFailed": "The checks could not run.",
+		"notCheckedHelp": "Not used lately, not pinned and without problems: choose which to check",
+		"notChecked_one": "{{count}} repository not checked",
+		"notChecked_other": "{{count}} repositories not checked",
+		"loadFailed": "The problems cannot be loaded.",
+		"empty": "No problems have been detected in the project.",
+		"noResults": "No results found with the filter.",
+		"clearFilter": "Clear the filter",
+		"problemsIn": "Problems in {{project}}",
+		"worktrees_one": "{{count}} worktree",
+		"worktrees_other": "{{count}} worktrees",
+		"outsideRepositories": "outside the repositories",
+		"noProblems": "no problems",
+		"turnOff": "Turn off {{source}} for the project",
+		"dismiss": "Dismiss",
+		"noChecks": "No check commands run on request here.",
+		"checksRun": "Checks run",
+		"check": "<name>{{name}}</name>: {{outcome}}",
+		"checkIn": "<name>{{name}}</name><root> in {{root}}</root>: {{outcome}}",
+		"checkFailed": "failed"
+	},
+	"checkChooser": {
+		"title": "Check which repositories?",
+		"description_one": "{{count}} roots have check commands. The machine runs a few at once; the rest wait their turn.",
+		"description_other": "{{count}} roots have check commands. The machine runs a few at once; the rest wait their turn.",
+		"all": "All",
+		"none": "None",
+		"list": "Repositories to check",
+		"project": "Project",
+		"outsideRepositories": "outside the repositories",
+		"roots_one": "{{count}} root",
+		"roots_other": "{{count}} roots",
+		"submit_one": "Check {{count}} repository ({{roots}})",
+		"submit_other": "Check {{count}} repositories ({{roots}})",
+		"chooseFirst": "Choose what to check"
+	},
+	"pin": {
+		"pin": "Pin {{name}}",
+		"unpin": "Unpin {{name}}",
+		"theProject": "the project",
+		"failed": "It could not be pinned.",
+		"pinHelp": "Pin: always active, checked and shown",
+		"unpinHelp": "Unpin: active again only when used"
+	},
+	"problemRow": {
+		"position": "[Ln {{line}}, Col {{column}}]",
+		"open": "Open {{path}} at line {{line}}"
+	},
+	"problemCounts": {
+		"label": "{{counts}}: show or hide the Problems panel",
+		"labelLoading": "Problems: show or hide the Problems panel",
+		"toggle": "Show or hide the Problems panel",
+		"next": "Next problem in this file",
+		"previous": "Previous problem in this file"
+	},
+	"turnProblems": {
+		"reference": "new problems after the last turn",
+		"section": "Problems after this turn",
+		"sendHelp": "Put the new problems in the composer",
+		"sent": "In the composer",
+		"send": "Send to agent"
+	},
+	"languageStatus": {
+		"environment": "Environment: {{kind}}",
+		"environmentFile": "Environment: {{kind}} ({{file}})",
+		"choicesFrom": "Choices from {{repository}}",
+		"outside": "{{language}} · outside the project",
+		"off": "{{language}} · off",
+		"notStarted": "{{language}} · not started",
+		"starting": "{{language}} · starting…",
+		"issues_one": "{{language}} · {{count}} issue",
+		"issues_other": "{{language}} · {{count}} issues",
+		"ok": "{{language}} ✓",
+		"basic": "{{language}} · basic",
+		"approximateUntil": "Go to definition is approximate until a language server runs.",
+		"approximate": "Go to definition is approximate.",
+		"row": {
+			"starting": "starting…",
+			"notStarted": "not started",
+			"check": "check",
+			"checkOnSave": "check, on save"
+		},
+		"actions": {
+			"restart": "Restart",
+			"install": "Install {{tool}}…",
+			"logs": "Logs",
+			"machine": "LSPs on this machine…",
+			"project": "Project LSPs…"
+		}
+	},
+	"lspErrors": {
+		"disconnected": "The connection to the machine was lost.",
+		"unreachable": "Language tools are not reachable: the machine may be offline, or its Ahab older than this server's (update Ahab on that machine).",
+		"failed": "The language server failed.",
+		"noLanguage": "No language."
+	}
+}

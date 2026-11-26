@@ -1,0 +1,84 @@
+[package]
+name = "ahab-desktop"
+# Ahab's own version: the app ships the `ahab` binary. A test
+# checks it against crates/ahab/Cargo.toml.
+version = "0.1.0-rc.1"
+description = "Ahab for desktop: the server's web app in a window, and Ahab on this computer"
+edition = "2024"
+rust-version = "1.99"
+publish = false
+
+# The app is a workspace of its own: it needs WebKitGTK to build, which
+# Ahab's server and command line do not.
+[workspace]
+
+[lib]
+name = "ahab_desktop"
+path = "src/lib.rs"
+# Android loads the app as a shared library; the desktop binary
+# links the rlib.
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "ahab-desktop"
+path = "src/main.rs"
+
+[dependencies]
+base64 = "0.23.1"
+chacha20poly1305 = "0.11.0"
+gethostname = "1.1.0"
+getrandom = "0.4.3"
+keyring-core = "1.0.1"
+reqwest = { version = "0.13.5", default-features = false, features = ["json", "rustls"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+tauri = { version = "2.12.7", features = ["image-png", "tray-icon"] }
+tauri-plugin-deep-link = "2.6.3"
+tauri-plugin-opener = "2.7.3"
+thiserror = "2.0.21"
+tokio = { version = "1.54.1", features = ["macros", "process", "rt-multi-thread", "time"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
+url = "2.5.8"
+uuid = { version = "1.29.3", features = ["v7"] }
+
+# Desktop only: one instance, the global shortcut, window state and
+# notifications over D-Bus. Android has none of them.
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+notify-rust = "4.19.0"
+tauri-plugin-global-shortcut = "2.4.1"
+tauri-plugin-single-instance = { version = "2.5.5", features = ["deep-link"] }
+tauri-plugin-window-state = "2.5.0"
+
+[target.'cfg(target_os = "linux")'.dependencies]
+webkit2gtk = { version = "2.0.2", features = ["v2_34"] }
+zbus-secret-service-keyring-store = { version = "1.0.1", features = ["crypto-rust"] }
+
+[build-dependencies]
+tauri-build = { version = "2.7.6", features = [] }
+
+[dev-dependencies]
+tempfile = "3.27.0"
+
+[lints.rust]
+unsafe_code = "forbid"
+
+[lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+needless_pass_by_value = "allow"
+assert_is_empty = "allow"
+too_many_lines = "allow"
+allow_attributes = "warn"
+allow_attributes_without_reason = "warn"
+dbg_macro = "warn"
+expect_used = "warn"
+todo = "warn"
+unwrap_used = "warn"
+
+[profile.release]
+lto = "thin"
+strip = true

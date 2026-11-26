@@ -1,0 +1,46 @@
+{
+	"id": "jdtls",
+	"name": "Eclipse JDT Language Server",
+	"kind": "languageServer",
+	"languages": ["java"],
+	"license": "EPL-2.0",
+	"homepage": "https://github.com/eclipse-jdtls/eclipse.jdt.ls",
+	"description": "Java, from Maven and Gradle projects.",
+	"source": {
+		"type": "download",
+		"version": "1.63.0",
+		"assets": {
+			"any": {
+				"url": "https://download.eclipse.org/jdtls/milestones/1.63.0/jdt-language-server-1.63.0-202610191322.tar.gz",
+				"sha256": "b1f2abe0b3cccb462cf64fb4a5587c7d09df60cf8be7748b152cbd89d018bdc4"
+			}
+		}
+	},
+	"requires": [
+		{
+			"runtime": "java",
+			"min": 21
+		},
+		{
+			"runtime": "python",
+			"min": 3
+		}
+	],
+	"bin": {
+		"jdtls": "bin/jdtls"
+	},
+	"run": {
+		"command": ["jdtls", "-data", "${cache}"],
+		"versionArgs": [],
+		"rootMarkers": [
+			"settings.gradle",
+			"settings.gradle.kts",
+			"pom.xml",
+			"build.gradle",
+			"build.gradle.kts",
+			".project"
+		],
+		"settingsFiles": ["pom.xml", "build.gradle", "build.gradle.kts"]
+	},
+	"hint": "brew install jdtls; on Nix, jdt-language-server"
+}

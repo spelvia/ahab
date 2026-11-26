@@ -1,0 +1,671 @@
+[
+	{
+		"id": "bash",
+		"name": "Shell",
+		"tools": ["bash-language-server", "shellcheck", "shfmt"],
+		"files": {
+			"extensions": ["sh", "bash", "zsh", "ksh", "ash", "dash", "ebuild", "eclass"],
+			"names": [
+				".bashrc",
+				".bash_profile",
+				".bash_aliases",
+				".bash_logout",
+				".profile",
+				".zshrc",
+				".zshenv",
+				".zprofile",
+				".zlogin",
+				".envrc",
+				"APKBUILD",
+				"PKGBUILD",
+				"direnvrc"
+			],
+			"shebangs": ["sh", "bash", "zsh", "dash", "ksh", "ash"]
+		},
+		"aliases": ["sh", "shell", "zsh", "console", "shellscript"],
+		"comments": {
+			"line": "#"
+		},
+		"grammar": {
+			"wasm": "grammars/bash.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/bash/highlights.scm",
+			"injections": "queries/bash/injections.scm",
+			"tags": "queries/bash/tags.scm"
+		}
+	},
+	{
+		"id": "c",
+		"name": "C",
+		"tools": ["clangd"],
+		"files": {
+			"extensions": ["c"],
+			"names": [],
+			"shebangs": []
+		},
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/c.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/c/highlights.scm",
+			"injections": "queries/c/injections.scm",
+			"tags": "queries/c/tags.scm"
+		}
+	},
+	{
+		"id": "c-sharp",
+		"name": "C#",
+		"files": {
+			"extensions": ["cs", "csx", "cake"],
+			"names": [],
+			"shebangs": []
+		},
+		"aliases": ["cs", "csharp", "c#"],
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/c-sharp.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/c-sharp/highlights.scm",
+			"injections": "queries/c-sharp/injections.scm",
+			"tags": "queries/c-sharp/tags.scm"
+		}
+	},
+	{
+		"id": "cpp",
+		"name": "C++",
+		"tools": ["clangd"],
+		"files": {
+			"extensions": [
+				"cc",
+				"cpp",
+				"cxx",
+				"c++",
+				"hh",
+				"hpp",
+				"hxx",
+				"h++",
+				"h",
+				"ipp",
+				"tpp",
+				"ino",
+				"cu",
+				"cuh",
+				"inl"
+			],
+			"names": [],
+			"shebangs": []
+		},
+		"aliases": ["c++", "cxx", "cc", "hpp"],
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/cpp.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/cpp/highlights.scm",
+			"injections": "queries/cpp/injections.scm",
+			"tags": "queries/cpp/tags.scm"
+		}
+	},
+	{
+		"id": "css",
+		"name": "CSS",
+		"tools": ["vscode-css-language-server", "biome", "prettier"],
+		"files": {
+			"extensions": ["css"],
+			"names": [],
+			"shebangs": []
+		},
+		"comments": {
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/css.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/css/highlights.scm",
+			"injections": "queries/css/injections.scm"
+		}
+	},
+	{
+		"id": "dockerfile",
+		"name": "Dockerfile",
+		"tools": ["dockerfile-language-server", "hadolint"],
+		"files": {
+			"extensions": ["dockerfile", "containerfile"],
+			"names": ["Dockerfile", "Containerfile", "Dockerfile.*", "Containerfile.*", "*.Dockerfile"],
+			"shebangs": []
+		},
+		"aliases": ["docker", "containerfile"],
+		"comments": {
+			"line": "#"
+		},
+		"grammar": {
+			"wasm": "grammars/dockerfile.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/dockerfile/highlights.scm",
+			"injections": "queries/dockerfile/injections.scm"
+		}
+	},
+	{
+		"id": "go",
+		"name": "Go",
+		"tools": ["gopls", "gofmt"],
+		"files": {
+			"extensions": ["go"],
+			"names": [],
+			"shebangs": []
+		},
+		"aliases": ["golang"],
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/go.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/go/highlights.scm",
+			"injections": "queries/go/injections.scm",
+			"tags": "queries/go/tags.scm"
+		}
+	},
+	{
+		"id": "html",
+		"name": "HTML",
+		"tools": ["vscode-html-language-server", "prettier"],
+		"files": {
+			"extensions": ["html", "htm", "xhtml", "shtml"],
+			"names": [],
+			"shebangs": []
+		},
+		"aliases": ["xhtml"],
+		"comments": {
+			"block": ["<!--", "-->"]
+		},
+		"grammar": {
+			"wasm": "grammars/html.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/html/highlights.scm",
+			"injections": "queries/html/injections.scm"
+		}
+	},
+	{
+		"id": "java",
+		"name": "Java",
+		"tools": ["jdtls", "google-java-format"],
+		"files": {
+			"extensions": ["java", "jav"],
+			"names": [],
+			"shebangs": []
+		},
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/java.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/java/highlights.scm",
+			"injections": "queries/java/injections.scm",
+			"tags": "queries/java/tags.scm"
+		}
+	},
+	{
+		"id": "javascript",
+		"name": "JavaScript",
+		"tools": ["typescript-language-server", "biome", "vscode-eslint-language-server", "prettier"],
+		"files": {
+			"extensions": ["js", "mjs", "cjs", "jsx", "es6"],
+			"names": [],
+			"shebangs": ["node", "bun", "deno"]
+		},
+		"aliases": ["js", "jsx", "node"],
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/javascript.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/javascript/highlights.scm",
+			"injections": "queries/javascript/injections.scm",
+			"tags": "queries/javascript/tags.scm"
+		}
+	},
+	{
+		"id": "json",
+		"name": "JSON",
+		"tools": ["vscode-json-language-server", "biome", "prettier"],
+		"files": {
+			"extensions": [
+				"json",
+				"jsonc",
+				"json5",
+				"jsonl",
+				"ipynb",
+				"geojson",
+				"webmanifest",
+				"code-workspace",
+				"map"
+			],
+			"names": [
+				"flake.lock",
+				".babelrc",
+				".eslintrc",
+				"composer.lock",
+				"deno.lock",
+				"tsconfig.json"
+			],
+			"shebangs": []
+		},
+		"aliases": ["jsonc", "json5", "jsonl"],
+		"grammar": {
+			"wasm": "grammars/json.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/json/highlights.scm",
+			"injections": "queries/json/injections.scm"
+		}
+	},
+	{
+		"id": "kotlin",
+		"name": "Kotlin",
+		"files": {
+			"extensions": ["kt", "kts"],
+			"names": [],
+			"shebangs": []
+		},
+		"aliases": ["kt", "kts"],
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/kotlin.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/kotlin/highlights.scm",
+			"injections": "queries/kotlin/injections.scm",
+			"tags": "queries/kotlin/tags.scm",
+			"folds": "queries/kotlin/folds.scm"
+		}
+	},
+	{
+		"id": "lua",
+		"name": "Lua",
+		"tools": ["lua-language-server", "stylua"],
+		"files": {
+			"extensions": ["lua", "rockspec"],
+			"names": [],
+			"shebangs": ["lua", "luajit"]
+		},
+		"comments": {
+			"line": "--",
+			"block": ["--[[", "]]"]
+		},
+		"grammar": {
+			"wasm": "grammars/lua.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/lua/highlights.scm",
+			"injections": "queries/lua/injections.scm",
+			"tags": "queries/lua/tags.scm",
+			"folds": "queries/lua/folds.scm"
+		}
+	},
+	{
+		"id": "make",
+		"name": "Makefile",
+		"files": {
+			"extensions": ["mk", "mak", "make"],
+			"names": ["Makefile", "makefile", "GNUmakefile"],
+			"shebangs": ["make", "gmake"]
+		},
+		"aliases": ["makefile", "mk"],
+		"comments": {
+			"line": "#"
+		},
+		"grammar": {
+			"wasm": "grammars/make.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/make/highlights.scm",
+			"injections": "queries/make/injections.scm"
+		}
+	},
+	{
+		"id": "markdown",
+		"name": "Markdown",
+		"tools": ["marksman", "prettier"],
+		"files": {
+			"extensions": ["md", "markdown", "mdx", "mkd", "mkdn", "mdwn", "mdown", "livemd"],
+			"names": [],
+			"shebangs": []
+		},
+		"aliases": ["md"],
+		"comments": {
+			"block": ["<!--", "-->"]
+		},
+		"grammar": {
+			"wasm": "grammars/markdown.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/markdown/highlights.scm",
+			"injections": "queries/markdown/injections.scm",
+			"tags": "queries/markdown/tags.scm"
+		}
+	},
+	{
+		"id": "markdown.inline",
+		"name": "Markdown (inline)",
+		"files": {
+			"extensions": [],
+			"names": [],
+			"shebangs": []
+		},
+		"hidden": true,
+		"grammar": {
+			"wasm": "grammars/markdown_inline.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/markdown.inline/highlights.scm",
+			"injections": "queries/markdown.inline/injections.scm"
+		}
+	},
+	{
+		"id": "nix",
+		"name": "Nix",
+		"tools": ["nil", "nixfmt"],
+		"files": {
+			"extensions": ["nix"],
+			"names": [],
+			"shebangs": []
+		},
+		"comments": {
+			"line": "#",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/nix.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/nix/highlights.scm",
+			"injections": "queries/nix/injections.scm",
+			"tags": "queries/nix/tags.scm",
+			"folds": "queries/nix/folds.scm"
+		}
+	},
+	{
+		"id": "php",
+		"name": "PHP",
+		"files": {
+			"extensions": ["php", "phtml", "php4", "php5", "inc"],
+			"names": [],
+			"shebangs": ["php"]
+		},
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/php.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/php/highlights.scm",
+			"injections": "queries/php/injections.scm",
+			"tags": "queries/php/tags.scm"
+		}
+	},
+	{
+		"id": "python",
+		"name": "Python",
+		"tools": ["basedpyright", "ruff"],
+		"files": {
+			"extensions": ["py", "pyi", "pyw", "py3", "pyx", "ipy"],
+			"names": ["SConstruct", "SConscript", ".pythonrc"],
+			"shebangs": ["python", "python3", "python2", "uv"]
+		},
+		"aliases": ["py", "python3", "py3", "gyp"],
+		"comments": {
+			"line": "#"
+		},
+		"grammar": {
+			"wasm": "grammars/python.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/python/highlights.scm",
+			"injections": "queries/python/injections.scm",
+			"tags": "queries/python/tags.scm"
+		}
+	},
+	{
+		"id": "ruby",
+		"name": "Ruby",
+		"files": {
+			"extensions": ["rb", "rake", "gemspec", "ru", "rbi", "rbs", "jbuilder", "podspec"],
+			"names": [
+				"Gemfile",
+				"Rakefile",
+				"Podfile",
+				"Vagrantfile",
+				"Brewfile",
+				"Guardfile",
+				"Capfile",
+				"Fastfile"
+			],
+			"shebangs": ["ruby"]
+		},
+		"aliases": ["rb"],
+		"comments": {
+			"line": "#"
+		},
+		"grammar": {
+			"wasm": "grammars/ruby.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/ruby/highlights.scm",
+			"injections": "queries/ruby/injections.scm",
+			"tags": "queries/ruby/tags.scm"
+		}
+	},
+	{
+		"id": "rust",
+		"name": "Rust",
+		"tools": ["rust-analyzer", "rustfmt", "cargo-clippy"],
+		"files": {
+			"extensions": ["rs"],
+			"names": [],
+			"shebangs": ["rust-script", "cargo"]
+		},
+		"aliases": ["rs"],
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/rust.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/rust/highlights.scm",
+			"injections": "queries/rust/injections.scm",
+			"tags": "queries/rust/tags.scm"
+		}
+	},
+	{
+		"id": "scss",
+		"name": "SCSS",
+		"tools": ["vscode-css-language-server", "prettier"],
+		"files": {
+			"extensions": ["scss"],
+			"names": [],
+			"shebangs": []
+		},
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/scss.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/scss/highlights.scm",
+			"injections": "queries/scss/injections.scm"
+		}
+	},
+	{
+		"id": "sql",
+		"name": "SQL",
+		"files": {
+			"extensions": ["sql", "dsql", "pgsql", "psql", "mysql"],
+			"names": [],
+			"shebangs": []
+		},
+		"aliases": ["pgsql", "postgres", "postgresql", "mysql", "sqlite", "plsql"],
+		"comments": {
+			"line": "--",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/sql.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/sql/highlights.scm"
+		}
+	},
+	{
+		"id": "swift",
+		"name": "Swift",
+		"files": {
+			"extensions": ["swift", "swiftinterface"],
+			"names": [],
+			"shebangs": []
+		},
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/swift.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/swift/highlights.scm",
+			"injections": "queries/swift/injections.scm",
+			"tags": "queries/swift/tags.scm"
+		}
+	},
+	{
+		"id": "toml",
+		"name": "TOML",
+		"tools": ["taplo"],
+		"files": {
+			"extensions": ["toml"],
+			"names": ["Cargo.lock", "uv.lock", "poetry.lock", "pdm.lock", "Pipfile"],
+			"shebangs": []
+		},
+		"comments": {
+			"line": "#"
+		},
+		"grammar": {
+			"wasm": "grammars/toml.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/toml/highlights.scm",
+			"injections": "queries/toml/injections.scm",
+			"tags": "queries/toml/tags.scm"
+		}
+	},
+	{
+		"id": "tsx",
+		"name": "TSX",
+		"tools": [
+			"typescript-language-server",
+			"biome",
+			"vscode-eslint-language-server",
+			"prettier",
+			"tsc"
+		],
+		"files": {
+			"extensions": ["tsx"],
+			"names": [],
+			"shebangs": []
+		},
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/tsx.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/tsx/highlights.scm",
+			"injections": "queries/tsx/injections.scm",
+			"tags": "queries/tsx/tags.scm"
+		}
+	},
+	{
+		"id": "typescript",
+		"name": "TypeScript",
+		"tools": [
+			"typescript-language-server",
+			"biome",
+			"vscode-eslint-language-server",
+			"prettier",
+			"tsc"
+		],
+		"files": {
+			"extensions": ["ts", "mts", "cts"],
+			"names": [],
+			"shebangs": ["deno", "bun", "ts-node", "tsx"]
+		},
+		"aliases": ["ts"],
+		"comments": {
+			"line": "//",
+			"block": ["/*", "*/"]
+		},
+		"grammar": {
+			"wasm": "grammars/typescript.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/typescript/highlights.scm",
+			"injections": "queries/typescript/injections.scm",
+			"tags": "queries/typescript/tags.scm"
+		}
+	},
+	{
+		"id": "yaml",
+		"name": "YAML",
+		"tools": ["yaml-language-server", "prettier"],
+		"files": {
+			"extensions": ["yml", "yaml"],
+			"names": [".clang-format", ".clang-tidy", "yarn.lock", ".prettierrc"],
+			"shebangs": []
+		},
+		"aliases": ["yml"],
+		"comments": {
+			"line": "#"
+		},
+		"grammar": {
+			"wasm": "grammars/yaml.wasm.gz"
+		},
+		"queries": {
+			"highlights": "queries/yaml/highlights.scm",
+			"injections": "queries/yaml/injections.scm"
+		}
+	}
+]

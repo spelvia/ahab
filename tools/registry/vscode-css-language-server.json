@@ -1,0 +1,42 @@
+{
+	"id": "vscode-css-language-server",
+	"name": "CSS language server",
+	"kind": "languageServer",
+	"languages": ["css", "scss"],
+	"license": "MIT",
+	"homepage": "https://github.com/hrsh7th/vscode-langservers-extracted",
+	"description": "CSS and SCSS.",
+	"source": {
+		"type": "npm",
+		"package": "vscode-langservers-extracted",
+		"version": "4.10.0"
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 18
+		}
+	],
+	"bin": {
+		"vscode-css-language-server": "node_modules/.bin/vscode-css-language-server"
+	},
+	"run": {
+		"command": ["vscode-css-language-server", "--stdio"],
+		"versionArgs": [],
+		"initializationOptions": {
+			"provideFormatter": true
+		},
+		"settings": {
+			"css": {
+				"validate": true
+			},
+			"scss": {
+				"validate": true
+			},
+			"less": {
+				"validate": true
+			}
+		}
+	},
+	"hint": "npm install --global vscode-langservers-extracted"
+}

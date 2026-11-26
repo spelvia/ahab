@@ -1,0 +1,36 @@
+{
+	"name": "@ahab/plugin",
+	"version": "0.1.0",
+	"description": "The SDK for Ahab plugins: definitions, the daemon entry's runtime, the web entry's API, and the build.",
+	"license": "MIT",
+	"bin": {
+		"ahab-plugin": "./bin/ahab-plugin.mjs"
+	},
+	"type": "module",
+	"exports": {
+		"./shared": "./src/shared/index.ts",
+		"./node": "./src/node/index.ts",
+		"./web": "./src/web/index.ts",
+		"./theme.css": "./theme.css"
+	},
+	"scripts": {
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@tailwindcss/node": "^4.3.4",
+		"@tailwindcss/oxide": "^4.3.4",
+		"esbuild": "^0.28.2",
+		"tailwindcss": "^4.3.4",
+		"zod": "^4.6.7"
+	},
+	"devDependencies": {
+		"@types/node": "^26.6.6",
+		"@types/react": "^19.3.0",
+		"typescript": "^7.0.2",
+		"vitest": "^5.1.0"
+	},
+	"engines": {
+		"node": ">=24"
+	}
+}

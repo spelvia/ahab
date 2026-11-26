@@ -1,0 +1,53 @@
+{
+	"id": "prettier",
+	"name": "Prettier",
+	"kind": "formatter",
+	"languages": [
+		"javascript",
+		"typescript",
+		"tsx",
+		"json",
+		"css",
+		"scss",
+		"html",
+		"markdown",
+		"yaml"
+	],
+	"license": "MIT",
+	"homepage": "https://prettier.io",
+	"description": "Formats, where the project configures Prettier.",
+	"source": {
+		"type": "npm",
+		"package": "prettier",
+		"version": "3.10.1"
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 18
+		}
+	],
+	"bin": {
+		"prettier": "node_modules/.bin/prettier"
+	},
+	"run": {
+		"command": ["prettier", "--stdin-filepath", "${path}"],
+		"configFiles": [
+			".prettierrc",
+			".prettierrc.json",
+			".prettierrc.yml",
+			".prettierrc.yaml",
+			".prettierrc.json5",
+			".prettierrc.js",
+			".prettierrc.cjs",
+			".prettierrc.mjs",
+			".prettierrc.toml",
+			"prettier.config.js",
+			"prettier.config.cjs",
+			"prettier.config.mjs",
+			"prettier.config.ts"
+		],
+		"settingsFiles": [".prettierrc", ".prettierrc.json"]
+	},
+	"hint": "npm install --save-dev prettier"
+}

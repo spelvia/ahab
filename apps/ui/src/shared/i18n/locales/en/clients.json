@@ -1,0 +1,156 @@
+{
+	"kind": {
+		"local": "This computer's credential",
+		"browser": "Browser",
+		"cli": "Command line",
+		"app": "App",
+		"token": "Token"
+	},
+	"page": {
+		"title": "Clients",
+		"paired_one": "{{count}} paired",
+		"paired_other": "{{count}} paired",
+		"description": "The browsers, phones, command lines and scripts that may use Ahab. Each has its own credential: revoke one and only it is locked out.",
+		"createToken": "Create token",
+		"addClient": "Add client",
+		"loading": "Loading the clients…",
+		"loadError": "The clients cannot be loaded: {{message}}",
+		"tryAgain": "Try again"
+	},
+	"unused": {
+		"notice_one": "{{count}} client hasn't been used for 3 months. Revoke it?",
+		"notice_other": "{{count}} clients haven't been used for 3 months. Revoke them?",
+		"review": "Review",
+		"showAll": "Show all",
+		"revokeAll": "Revoke all unused",
+		"dismiss": "Dismiss",
+		"confirm": {
+			"title_one": "Revoke {{count}} unused client?",
+			"title_other": "Revoke {{count}} unused clients?",
+			"description": "{{names}}. They can no longer reach Ahab; pair them again to use them.",
+			"action": "Revoke all"
+		}
+	},
+	"clientPage": {
+		"breadcrumb": "Breadcrumb",
+		"clients": "Clients",
+		"client": "Client",
+		"notFound": "This client is not paired any more.",
+		"lastUsedAgo": "last used {{ago}}",
+		"neverUsed": "never used",
+		"kind": "Kind",
+		"paired": "Paired",
+		"lastUsed": "Last used",
+		"connection": "Connection",
+		"encrypted": "Last used over HTTPS, this computer or a tailnet.",
+		"userAgent": "Browser",
+		"via": {
+			"local": "this computer's own credential",
+			"link": "with a pairing link or QR code",
+			"code": "with a code typed on it",
+			"request": "it asked, and was approved",
+			"token": "a token for scripts, made by another client"
+		}
+	},
+	"table": {
+		"columns": {
+			"client": "Client",
+			"kind": "Kind",
+			"lastUsed": "Last used",
+			"paired": "Paired",
+			"actions": "Actions"
+		},
+		"thisClient": "This client",
+		"notEncrypted": "Not encrypted",
+		"notEncryptedHint": "Last used over plain HTTP on a network: anyone on it could read what is sent.",
+		"unused": "Not used for 3 months",
+		"neverUsed": "Never",
+		"usedFrom": "from {{address}}",
+		"pairedBy": "by {{name}}",
+		"actionsFor": "Actions for {{name}}",
+		"rename": "Rename",
+		"replaceCredential": "Replace credential",
+		"revoke": "Revoke"
+	},
+	"rename": {
+		"title": "Rename {{name}}",
+		"label": "Name",
+		"action": "Rename"
+	},
+	"revoke": {
+		"title": "Revoke {{name}}?",
+		"titleLocal": "Replace this computer's credential?",
+		"description": "It can no longer reach Ahab, and its open connections close at once. Pair it again to use it.",
+		"descriptionCurrent": "This is the browser you use now: it shows the pairing screen next. Its open connections close at once.",
+		"descriptionLocal": "The server writes a new credential file at once; the command line on the server's computer keeps working. Anything that copied the old one stops working.",
+		"action": "Revoke",
+		"actionLocal": "Replace"
+	},
+	"token": {
+		"create": {
+			"title": "Create a token for a script",
+			"label": "What is it for?",
+			"action": "Create token"
+		},
+		"title": "Your new token",
+		"description": "Copy it now: it is not shown again. Send it as <code>{{header}}</code>, or set <code>{{variable}}</code> for the ahab command.",
+		"copyLabel": "token"
+	},
+	"addClient": {
+		"title": "Add a client",
+		"description": "Scan the code with the new client, or open the link on it. It works once, for 10 minutes.",
+		"paired": "The new client was paired.",
+		"pairedName": "{{name}} was paired.",
+		"failed": "No pairing link can be made: {{message}}",
+		"making": "Making a pairing link…",
+		"qrLabel": "QR code of the pairing link",
+		"copyLabel": "link",
+		"orType": "Or open {{origin}} on the new client and type <code>{{code}}</code>.",
+		"expired": "This link expired at {{time}}.",
+		"again": "Make a new one",
+		"done": "Paired.",
+		"waiting": "Waiting for the new client, until {{time}}."
+	},
+	"prompts": {
+		"label": "Clients asking to be paired",
+		"requestLabel": "{{name}} wants to pair",
+		"hide": "Hide",
+		"wantsToPair": "<name>{{name}}</name> wants to pair",
+		"wantsToPairFrom": "<name>{{name}}</name> wants to pair<address> · {{address}}</address>",
+		"codeLabel": "Code {{code}}",
+		"check": "Approve only if the client shows the same code.",
+		"checkOpened": "Opened from this client's link or QR code. Approve only if it shows the same code.",
+		"failed": "It could not be answered.",
+		"notFound": "It was answered already, or expired.",
+		"approve": "Approve",
+		"deny": "Deny"
+	},
+	"requests": {
+		"heading_one": "{{count}} client asks to be paired",
+		"heading_other": "{{count}} clients ask to be paired",
+		"noneWithCode": "No client waits with code {{code}}: it may have been answered, or expired."
+	},
+	"pairing": {
+		"title": "Your agents, on your machines.",
+		"lead": "Pair this browser from a client that's already paired to start.",
+		"cannotAsk": "Ahab cannot be asked.",
+		"codeFailed": "This code does not work.",
+		"onServer": "On the server's computer: <code>{{approve}}</code>, or <code>{{open}}</code> to open Ahab there already paired.",
+		"problems": {
+			"pairingInvalid": "This code does not work: it may be mistyped, used or expired.",
+			"tooManyAttempts": "Too many tries from here. Wait a minute, then try again.",
+			"insecureConnection": "This connection is plain HTTP from a public address, so Ahab does not pair over it. Reach Ahab over HTTPS, a VPN or your home network."
+		}
+	},
+	"pairPage": {
+		"title": "Pairing this browser",
+		"pairing": "Pairing…",
+		"another": "Pair another way",
+		"problems": {
+			"failed": "This link does not work.",
+			"expired": "This link was used already or expired. Ask for a new one with Add client.",
+			"invalid": "This link does not work. Ask for a new one with Add client.",
+			"noSecret": "This link has no pairing secret. Ask for a new one with Add client."
+		}
+	}
+}

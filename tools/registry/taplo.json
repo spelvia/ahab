@@ -1,0 +1,41 @@
+{
+	"id": "taplo",
+	"name": "Taplo",
+	"kind": "languageServer",
+	"languages": ["toml"],
+	"license": "MIT",
+	"homepage": "https://taplo.tamasfe.dev",
+	"description": "TOML: validation, schemas and formatting.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "tamasfe/taplo",
+		"version": "0.10.0",
+		"assets": {
+			"linux-x64": {
+				"file": "taplo-linux-x86_64.gz",
+				"sha256": "8fe196b894ccf9072f98d4e1013a180306e17d244830b03986ee5e8eabeb6156"
+			},
+			"linux-arm64": {
+				"file": "taplo-linux-aarch64.gz",
+				"sha256": "033681d01eec8376c3fd38fa3703c79316f5e14bb013d859943b60a07bccdcc3"
+			},
+			"darwin-x64": {
+				"file": "taplo-darwin-x86_64.gz",
+				"sha256": "898122cde3a0b1cd1cbc2d52d3624f23338218c91b5ddb71518236a4c2c10ef2"
+			},
+			"darwin-arm64": {
+				"file": "taplo-darwin-aarch64.gz",
+				"sha256": "713734314c3e71894b9e77513c5349835eefbd52908445a0d73b0c7dc469347d"
+			}
+		}
+	},
+	"bin": {
+		"taplo": "taplo"
+	},
+	"run": {
+		"command": ["taplo", "lsp", "stdio"],
+		"rootMarkers": [".taplo.toml", "taplo.toml"],
+		"settingsFiles": [".taplo.toml", "taplo.toml"]
+	},
+	"hint": "cargo install taplo-cli --locked"
+}

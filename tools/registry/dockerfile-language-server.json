@@ -1,0 +1,28 @@
+{
+	"id": "dockerfile-language-server",
+	"name": "Dockerfile language server",
+	"kind": "languageServer",
+	"languages": ["dockerfile"],
+	"license": "MIT",
+	"homepage": "https://github.com/rcjsuen/dockerfile-language-server",
+	"description": "Dockerfiles.",
+	"source": {
+		"type": "npm",
+		"package": "dockerfile-language-server-nodejs",
+		"version": "0.15.0"
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 18
+		}
+	],
+	"bin": {
+		"docker-langserver": "node_modules/.bin/docker-langserver"
+	},
+	"run": {
+		"command": ["docker-langserver", "--stdio"],
+		"versionArgs": []
+	},
+	"hint": "npm install --global dockerfile-language-server-nodejs"
+}
