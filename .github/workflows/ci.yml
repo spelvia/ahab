@@ -64,18 +64,24 @@ jobs:
         run: |
           pnpm install --frozen-lockfile --ignore-scripts
           pnpm --filter './crates/ahab/tests/fixtures/plugins/*' build
+      # The container runs as root, and `ahab up` refuses to start a daemon
+      # as root: Cargo runs as a user of its own.
+      - name: Add a build user
+        run: |
+          useradd --create-home builder
+          chown -R builder "$GITHUB_WORKSPACE" "$CARGO_HOME" "$RUSTUP_HOME"
       - name: Formatting
-        run: cargo fmt --all -- --check
+        run: runuser -u builder -- cargo fmt --all -- --check
       - name: Clippy
-        run: cargo clippy --all-targets --locked -- -D warnings
+        run: runuser -u builder -- cargo clippy --all-targets --locked -- -D warnings
       # Includes the check that openapi.json is current.
       - name: Tests (SQLite)
-        run: cargo test --workspace --locked
+        run: runuser -u builder -- cargo test --workspace --locked
       # The same tests, each on a fresh database on the Postgres service.
       - name: Tests (Postgres)
         env:
           AHAB_TEST_POSTGRES_URL: postgres://ahab:ahab@postgres:5432/ahab
-        run: cargo test --workspace --locked
+        run: runuser -u builder -- cargo test --workspace --locked
       - name: Dependencies (licenses, advisories, sources)
         run: |
           cargo install --locked cargo-deny

@@ -66,16 +66,21 @@ async fn embedded(uri: Uri) -> Response {
         };
         return asset(file, cache);
     }
-    match Assets::get("index.html") {
-        Some(index) => asset(index, "no-cache"),
-        None => page(
-            StatusCode::OK,
-            "The web app was not built",
-            "This build of Ahab does not include the web app. Build it with \
-             <code>pnpm --filter @ahab/ui build</code> before building Ahab, or use \
-             <code>make preview</code>.",
-        ),
+    if let Some(index) = Assets::get("index.html") {
+        return asset(index, "no-cache");
     }
+    let mut response = page(
+        StatusCode::OK,
+        "The web app was not built",
+        "This build of Ahab does not include the web app. Build it with \
+         <code>pnpm --filter @ahab/ui build</code> before building Ahab, or use \
+         <code>make preview</code>.",
+    );
+    // Not kept: once a build has the web app, the browser gets it.
+    response
+        .headers_mut()
+        .insert(CACHE_CONTROL, HeaderValue::from_static("no-cache"));
+    response
 }
 
 fn asset(file: rust_embed::EmbeddedFile, cache: &'static str) -> Response {
