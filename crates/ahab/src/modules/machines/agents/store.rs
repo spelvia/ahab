@@ -62,6 +62,13 @@ impl AgentRepository for DbAgentRepository {
 
     async fn replace(&self, machine: Uuid, agents: &[AgentStatus]) -> Result<(), RepoError> {
         let mut txn = self.db.begin().await?;
+        // One report at a time per machine: the machine's row is locked
+        // first. Without it, on Postgres a second report deletes before the
+        // first commits, misses its rows, and fails on their keys.
+        sqlx::query("UPDATE machines SET id = id WHERE id = $1")
+            .bind(machine.to_string())
+            .execute(&mut *txn)
+            .await?;
         sqlx::query("DELETE FROM machine_agents WHERE machine_id = $1")
             .bind(machine.to_string())
             .execute(&mut *txn)
