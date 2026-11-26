@@ -558,7 +558,11 @@ export function ChatView({
 							}
 						}}
 					>
-						<ConnectionBar link={conversation.link} reconnect={conversation.reconnect} />
+						<ConnectionBar
+							link={conversation.link}
+							retryAt={conversation.retryAt}
+							reconnect={conversation.reconnect}
+						/>
 						{viewing ? (
 							<nav
 								aria-label={t("subagent.breadcrumb")}

@@ -233,6 +233,8 @@
 	"chatView": {
 		"connecting": "Connecting…",
 		"reconnecting": "Reconnecting…",
+		"waiting_one": "Can’t reach Ahab. Trying again in {{count}} second.",
+		"waiting_other": "Can’t reach Ahab. Trying again in {{count}} seconds.",
 		"cannotLoad": "This chat cannot be loaded.",
 		"sendUnconfirmed": "Ahab couldn’t confirm delivery. You can retry this submission safely. Check the conversation before sending it as a new message.",
 		"sendUnconfirmedLegacy": "Ahab couldn’t confirm delivery. Check the conversation before sending this message again.",

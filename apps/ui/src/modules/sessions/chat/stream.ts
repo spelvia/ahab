@@ -49,8 +49,10 @@ export type Link = "connecting" | "open" | "reconnecting";
 export function useConversation(chatId: string) {
 	const [conversation, dispatch] = useReducer(reduce, empty);
 	// Kept with its chat: another chat starts out connecting.
-	const [linked, setLinked] = useState<{ chatId: string; link: Link }>();
+	// `retryAt`: while it waits to try again, when it will.
+	const [linked, setLinked] = useState<{ chatId: string; link: Link; retryAt?: number }>();
 	const link = linked?.chatId === chatId ? linked.link : "connecting";
+	const retryAt = linked?.chatId === chatId ? linked.retryAt : undefined;
 	const refresh = useChatRefresh();
 	const changed = useEffectEvent(() => refresh(chatId));
 	const readHistory = useReadChatHistory();
@@ -72,7 +74,13 @@ export function useConversation(chatId: string) {
 				before: 0,
 				page: empty,
 			};
-		const setLink = (next: Link) => setLinked({ chatId, link: next });
+		const setLink = (next: Link, at?: number) => setLinked({ chatId, link: next, retryAt: at });
+		/** Lost: waits `delay` before `attempt`, saying when it tries again. */
+		const later = (attempt: () => void) => {
+			const delay = retryDelay(connection.failures++);
+			setLink("reconnecting", Date.now() + delay);
+			connection.retry = setTimeout(attempt, delay);
+		};
 		const connection = {
 			last: 0,
 			source: undefined as EventSource | undefined,
@@ -101,6 +109,8 @@ export function useConversation(chatId: string) {
 		};
 		const connect = () => {
 			if (abort.signal.aborted || typeof EventSource === "undefined") return;
+			// Trying again now: no longer waiting.
+			if (connection.wasOpen || connection.failures > 0) setLink("reconnecting");
 			const opened = new EventSource(`/api/v1/chats/${chatId}/stream?after=${connection.last}`);
 			connection.source = opened;
 			opened.addEventListener("open", () => {
@@ -124,8 +134,7 @@ export function useConversation(chatId: string) {
 				if (connection.source !== opened || abort.signal.aborted) return;
 				opened.close();
 				connection.source = undefined;
-				setLink("reconnecting");
-				connection.retry = setTimeout(connect, retryDelay(connection.failures++));
+				later(connect);
 			});
 		};
 		const fetchPage = async (cursor: number) => {
@@ -183,6 +192,7 @@ export function useConversation(chatId: string) {
 		const openRecent = () => {
 			if (connection.opening || abort.signal.aborted) return;
 			connection.opening = true;
+			if (connection.failures > 0) setLink("reconnecting");
 			void fetchPage(0)
 				.then((result) => {
 					connection.opening = false;
@@ -203,8 +213,7 @@ export function useConversation(chatId: string) {
 					if (abort.signal.aborted) return;
 					connection.opening = false;
 					// A transient API failure must not turn opening into an all-history replay.
-					setLink("reconnecting");
-					connection.retry = setTimeout(openRecent, retryDelay(connection.failures++));
+					later(openRecent);
 				});
 		};
 		openRecent();
@@ -214,6 +223,7 @@ export function useConversation(chatId: string) {
 			if (connection.source && !stale) return;
 			clearTimeout(connection.retry);
 			connection.failures = 0;
+			if (!connection.source) setLink("reconnecting");
 			if (connection.source) {
 				connection.source.close();
 				connection.source = undefined;
@@ -240,6 +250,7 @@ export function useConversation(chatId: string) {
 		entries: shown.entries,
 		finished: shown.finished,
 		link,
+		retryAt,
 		reconnect: () => retry.current?.(),
 		hasOlder: Boolean(previous?.before),
 		loadingOlder: loadingChat === chatId,
