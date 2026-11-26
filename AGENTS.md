@@ -109,7 +109,7 @@ nothing is paired. Tests never pair: they use a temporary data folder.
 guide and the technical documentation, in one place. It is the only home for
 documentation; there is no separate knowledge base.
 
-- Pages are Markdown or MDX in `apps/docs/src/content/docs/`; the sidebar is set in
+- Pages are Markdown or MDX in `apps/docs/src/content/docs/docs/`; the sidebar is set in
   `apps/docs/astro.config.ts`.
 - Every page is reviewed by a person before it lands. Add or restructure
   pages only when asked; propose them otherwise.
@@ -124,7 +124,7 @@ documentation; there is no separate knowledge base.
 
 Every release must keep working with what came before: daemons of other
 releases, existing databases, plugins and scripts. The full standard is
-`apps/docs/src/content/docs/development/compatibility.md`; in short:
+`apps/docs/src/content/docs/docs/development/compatibility.md`; in short:
 
 - Within a version, only add: new fields optional with defaults; never
   rename, remove or retype a field, a method, a route, a command, a flag

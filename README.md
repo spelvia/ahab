@@ -77,8 +77,8 @@ under its hostname and opens the web app in your browser, already paired.
 
 On a computer without a desktop, `ahab up` prints a one-time link instead.
 Open it in your browser to pair it. To reach Ahab from another computer, see
-[Configuration](apps/docs/src/content/docs/configuration.md) and
-[Security](apps/docs/src/content/docs/security.md).
+[Configuration](apps/docs/src/content/docs/docs/configuration.md) and
+[Security](apps/docs/src/content/docs/docs/security.md).
 
 ### Start your first agent session
 
@@ -103,20 +103,20 @@ To update, run the install script again, then `ahab up`.
 
 ## Explore Ahab
 
-- [User guide](apps/docs/src/content/docs/index.md) covers projects,
+- [User guide](apps/docs/src/content/docs/docs/index.md) covers projects,
   connected machines, agent sessions, files, terminals, and Git.
-- [Installation](apps/docs/src/content/docs/installation.md) describes the
-  deployment options. [Configuration](apps/docs/src/content/docs/configuration.md)
-  covers server settings, and [Security](apps/docs/src/content/docs/security.md)
+- [Installation](apps/docs/src/content/docs/docs/installation.md) describes the
+  deployment options. [Configuration](apps/docs/src/content/docs/docs/configuration.md)
+  covers server settings, and [Security](apps/docs/src/content/docs/docs/security.md)
   explains client pairing and access.
-- [Plugin quick start](apps/docs/src/content/docs/plugins/quick-start.md)
+- [Plugin quick start](apps/docs/src/content/docs/docs/plugins/quick-start.md)
   walks through building an extension for your workspace.
 
 ## Contributing
 
 The server and CLI live in [crates/ahab](crates/ahab), the React app in
 [apps/ui](apps/ui), and the Playwright tests in [e2e](e2e). Start with the
-[source development guide](apps/docs/src/content/docs/installation/from-source.md).
+[source development guide](apps/docs/src/content/docs/docs/installation/from-source.md).
 Run `make` to list the available tasks. Use `make release` to build a local
 archive for `scripts/install.sh`.
 

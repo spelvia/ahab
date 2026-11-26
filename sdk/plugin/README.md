@@ -1,6 +1,6 @@
 # @ahab/plugin
 
-The SDK for Ahab plugins (see the [Plugin SDK docs](https://useahab.com/docs/plugins/), or `apps/docs/src/content/docs/plugins/` in this repository):
+The SDK for Ahab plugins (see the [Plugin SDK docs](https://useahab.com/docs/plugins/), or `apps/docs/src/content/docs/docs/plugins/` in this repository):
 
 - `@ahab/plugin/shared`: `defineCommand`, `defineEvent`, `defineChannel`
   and zod, for the schemas both entries share.
