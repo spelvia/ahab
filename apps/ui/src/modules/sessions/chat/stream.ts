@@ -2,6 +2,7 @@ import { useEffect, useEffectEvent, useMemo, useReducer, useRef, useState } from
 
 import { useChatRefresh, useReadChatHistory } from "@/modules/sessions/chat/api";
 import { apply, type Conversation, empty, type StreamEvent } from "@/modules/sessions/chat/model";
+import { onResume, retryDelay } from "@/shared/api/resume";
 
 /** Events after which the server's view of the chat (its state, requests) changed. */
 const CHANGES_CHAT = new Set([
@@ -124,8 +125,7 @@ export function useConversation(chatId: string) {
 				opened.close();
 				connection.source = undefined;
 				setLink("reconnecting");
-				const delay = Math.min(30_000, 1_000 * 2 ** connection.failures++);
-				connection.retry = setTimeout(connect, delay * (0.8 + 0.4 * Math.random()));
+				connection.retry = setTimeout(connect, retryDelay(connection.failures++));
 			});
 		};
 		const fetchPage = async (cursor: number) => {
@@ -204,24 +204,30 @@ export function useConversation(chatId: string) {
 					connection.opening = false;
 					// A transient API failure must not turn opening into an all-history replay.
 					setLink("reconnecting");
-					const delay = Math.min(30_000, 1_000 * 2 ** connection.failures++);
-					connection.retry = setTimeout(openRecent, delay * (0.8 + 0.4 * Math.random()));
+					connection.retry = setTimeout(openRecent, retryDelay(connection.failures++));
 				});
 		};
 		openRecent();
-		const online = () => {
-			if (connection.source) return;
+		// Reconnects now: asked to, or back on the page. A stale stream may
+		// look open but be dead, so it is opened again from the last event.
+		const reconnect = (stale = false) => {
+			if (connection.source && !stale) return;
 			clearTimeout(connection.retry);
+			connection.failures = 0;
+			if (connection.source) {
+				connection.source.close();
+				connection.source = undefined;
+			}
 			if (connection.ready) connect();
 			else openRecent();
 		};
-		retry.current = online;
-		window.addEventListener("online", online);
+		retry.current = () => reconnect();
+		const stopResume = onResume(reconnect);
 		return () => {
 			abort.abort();
 			loader.current = undefined;
 			retry.current = undefined;
-			window.removeEventListener("online", online);
+			stopResume();
 			clearTimeout(connection.retry);
 			clearTimeout(connection.background);
 			if (connection.frame !== undefined) cancelAnimationFrame(connection.frame);

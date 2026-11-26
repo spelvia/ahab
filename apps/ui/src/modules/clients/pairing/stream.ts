@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 
 import { useInvalidate } from "@/shared/api/invalidate";
+import { keepOpen } from "@/shared/api/resume";
 
 const NAMES = [
 	"pairing.requested",
@@ -30,12 +31,15 @@ export function useClientEvents(enabled: boolean, onUsed?: (used: PairingUsed) =
 	});
 	useEffect(() => {
 		if (!enabled || typeof EventSource === "undefined") return;
-		const source = new EventSource(`/api/v1/plugin-events?names=${NAMES.join(",")}`);
-		source.addEventListener("message", (message) => {
-			const event = JSON.parse(String(message.data)) as { name: string; data: unknown };
-			latest.current.refresh();
-			if (event.name === "pairing.used") latest.current.onUsed?.(event.data as PairingUsed);
+		const stream = keepOpen(() => {
+			const source = new EventSource(`/api/v1/plugin-events?names=${NAMES.join(",")}`);
+			source.addEventListener("message", (message) => {
+				const event = JSON.parse(String(message.data)) as { name: string; data: unknown };
+				latest.current.refresh();
+				if (event.name === "pairing.used") latest.current.onUsed?.(event.data as PairingUsed);
+			});
+			return source;
 		});
-		return () => source.close();
+		return () => stream.close();
 	}, [enabled]);
 }

@@ -6,6 +6,8 @@
  * shows.
  */
 
+import { onResume, retryDelay } from "@/shared/api/resume";
+
 /** A file's version on disk now: null when it is gone. */
 export type FileListener = (version: string | null) => void;
 
@@ -21,9 +23,6 @@ interface Watch {
 const watches = new Map<string, Watch>();
 /** Before the stream opens again after the set of files changed. */
 const SETTLE = 150;
-/** Before a broken stream is tried again. */
-const RETRY = 2_000;
-const MAX_RETRY = 30_000;
 
 function tell(watch: Watch, path: string, version: string | null) {
 	for (const listener of watch.listeners.get(path) ?? []) listener(version);
@@ -50,8 +49,7 @@ function connect(projectId: string, watch: Watch) {
 		source.close();
 		watch.source = undefined;
 		clearTimeout(watch.timer);
-		const delay = Math.min(MAX_RETRY, RETRY * 2 ** watch.failures++);
-		watch.timer = setTimeout(() => connect(projectId, watch), delay);
+		watch.timer = setTimeout(() => connect(projectId, watch), retryDelay(watch.failures++));
 	};
 	source.addEventListener("message", (message) => {
 		if (watch.source !== source) return;
@@ -74,6 +72,20 @@ function connect(projectId: string, watch: Watch) {
 	source.addEventListener("error", retry);
 }
 
+let stopResume: (() => void) | undefined;
+
+/** Back on the page: every broken (or possibly dead) stream opens again now. */
+function resume(stale: boolean) {
+	for (const [projectId, watch] of watches) {
+		if (watch.source && !stale) continue;
+		clearTimeout(watch.timer);
+		watch.failures = 0;
+		watch.source?.close();
+		watch.source = undefined;
+		connect(projectId, watch);
+	}
+}
+
 function schedule(projectId: string, watch: Watch) {
 	clearTimeout(watch.timer);
 	watch.timer = setTimeout(() => connect(projectId, watch), SETTLE);
@@ -86,6 +98,7 @@ export function watchFile(projectId: string, path: string, listener: FileListene
 		watch = { listeners: new Map(), following: "", failures: 0 };
 		watches.set(projectId, watch);
 	}
+	stopResume ??= onResume(resume);
 	const own = watch;
 	const set = own.listeners.get(path) ?? new Set();
 	set.add(listener);

@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRestartTerminal } from "@/modules/sessions/terminal/api";
 import { ctrlOf, findPaths, forAhab } from "@/modules/sessions/terminal/model";
 import type { Terminal } from "@/shared/api/generated/ahab.schemas";
+import { onResume } from "@/shared/api/resume";
 import { onAppearance, textScale } from "@/shared/appearance";
 import { AddToChat } from "@/shared/chat-context/add-to-chat";
 import { useChatContext } from "@/shared/chat-context/context";
@@ -219,12 +220,23 @@ export function TerminalView({
 				}
 			});
 			opened.addEventListener("close", () => {
-				if (at.stopped) return;
+				if (at.stopped || at.socket !== opened) return;
 				setLink("reconnecting");
 				at.retry = setTimeout(connect, 1_500);
 			});
 		};
 		connect();
+		// Back on the page: a closed (or possibly dead) socket opens again now.
+		const stopResume = onResume((stale) => {
+			const state = at.socket?.readyState;
+			const alive = state === WebSocket.OPEN || state === WebSocket.CONNECTING;
+			if (at.stopped || (alive && !stale)) return;
+			clearTimeout(at.retry);
+			const old = at.socket;
+			at.socket = undefined;
+			old?.close();
+			connect();
+		});
 
 		const send = (data: string) => {
 			if (at.socket?.readyState === WebSocket.OPEN) at.socket.send(encoder.encode(data));
@@ -263,6 +275,7 @@ export function TerminalView({
 
 		return () => {
 			at.stopped = true;
+			stopResume();
 			clearTimeout(at.retry);
 			observer.disconnect();
 			element.removeEventListener("focusin", focused);

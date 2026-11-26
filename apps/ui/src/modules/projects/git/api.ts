@@ -34,6 +34,7 @@ import {
 	useGitUnstage,
 } from "@/shared/api/generated/projects-git/projects-git";
 import { useInvalidate } from "@/shared/api/invalidate";
+import { onResume, retryDelay } from "@/shared/api/resume";
 
 /**
  * Where the project's Git is: the repository its folder is in, or those
@@ -96,6 +97,9 @@ export function useGitWatch(projectId: string, repository: string | undefined, e
 		let retry: ReturnType<typeof setTimeout> | undefined;
 		let on = false;
 		let stopped = false;
+		let failures = 0;
+		/** The machine cannot watch it: polling it is, until the view opens again. */
+		let unwatched = false;
 		const mark = (now: boolean) => {
 			if (now !== on) setWatched(key, now);
 			on = now;
@@ -107,6 +111,7 @@ export function useGitWatch(projectId: string, repository: string | undefined, e
 			source.addEventListener("message", (message) => {
 				const frame = JSON.parse(String(message.data)) as { type: string };
 				if (frame.type === "watching") {
+					failures = 0;
 					mark(true);
 					// Whatever changed before the watch began.
 					changed();
@@ -114,6 +119,7 @@ export function useGitWatch(projectId: string, repository: string | undefined, e
 					changed();
 				} else if (frame.type === "unwatched") {
 					// It cannot be watched: polling it is, until the view opens again.
+					unwatched = true;
 					mark(false);
 					source?.close();
 				}
@@ -121,12 +127,22 @@ export function useGitWatch(projectId: string, repository: string | undefined, e
 			source.addEventListener("error", () => {
 				mark(false);
 				source?.close();
-				retry = setTimeout(connect, 10_000);
+				retry = setTimeout(connect, retryDelay(failures++));
 			});
 		};
 		connect();
+		// Back on the page: a broken (or possibly dead) watch is opened again now.
+		const stopResume = onResume((stale) => {
+			if (stopped || unwatched) return;
+			if (!stale && source && source.readyState !== EventSource.CLOSED) return;
+			clearTimeout(retry);
+			failures = 0;
+			source?.close();
+			connect();
+		});
 		return () => {
 			stopped = true;
+			stopResume();
 			clearTimeout(retry);
 			source?.close();
 			mark(false);

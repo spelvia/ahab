@@ -5,6 +5,7 @@ import {
 	useRefreshProblems,
 	useRefreshTurn,
 } from "@/modules/tools/problems/api";
+import { keepOpen } from "@/shared/api/resume";
 
 /** A project's problems changed (`problems.changed`). */
 interface ProblemsChanged {
@@ -34,24 +35,27 @@ type Listener = (event: ProblemEvent) => void;
 // One connection for every view listening: each finished turn in a chat
 // listens, and a page may show many.
 const listeners = new Set<Listener>();
-let source: EventSource | undefined;
+let stream: { close: () => void } | undefined;
 
 function listen(listener: Listener): () => void {
 	listeners.add(listener);
-	if (!source && typeof EventSource !== "undefined") {
-		source = new EventSource(
-			"/api/v1/plugin-events?names=problems.changed,problems.turn,repositories.activity",
-		);
-		source.addEventListener("message", (message) => {
-			const event = JSON.parse(String(message.data)) as ProblemEvent;
-			for (const each of listeners) each(event);
+	if (!stream && typeof EventSource !== "undefined") {
+		stream = keepOpen(() => {
+			const source = new EventSource(
+				"/api/v1/plugin-events?names=problems.changed,problems.turn,repositories.activity",
+			);
+			source.addEventListener("message", (message) => {
+				const event = JSON.parse(String(message.data)) as ProblemEvent;
+				for (const each of listeners) each(event);
+			});
+			return source;
 		});
 	}
 	return () => {
 		listeners.delete(listener);
 		if (listeners.size === 0) {
-			source?.close();
-			source = undefined;
+			stream?.close();
+			stream = undefined;
 		}
 	};
 }

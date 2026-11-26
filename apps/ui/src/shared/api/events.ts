@@ -3,6 +3,8 @@
  * whole web app, shared by every plugin that listens.
  */
 
+import { onResume, retryDelay } from "@/shared/api/resume";
+
 type Listener = (data: unknown) => void;
 type ConnectionListener = (open: boolean) => void;
 
@@ -12,9 +14,26 @@ let source: EventSource | undefined;
 let retry: ReturnType<typeof setTimeout> | undefined;
 let failures = 0;
 let readyFrame: unknown;
+let stopResume: (() => void) | undefined;
+
+/** Back on the page: reconnects now, instead of after its retry delay. */
+function resume(stale: boolean) {
+	if (listeners.size === 0) return;
+	if (source && !stale) return;
+	clearTimeout(retry);
+	retry = undefined;
+	if (source) {
+		source.close();
+		source = undefined;
+		readyFrame = undefined;
+	}
+	failures = 0;
+	connect();
+}
 
 function connect() {
 	if (source || retry !== undefined || typeof EventSource === "undefined") return;
+	stopResume ??= onResume(resume);
 	const opened = new EventSource("/api/v1/plugin-events?metadata=true");
 	source = opened;
 	opened.addEventListener("open", () => {
@@ -39,14 +58,10 @@ function connect() {
 		source = undefined;
 		readyFrame = undefined;
 		for (const listener of connectionListeners) listener(false);
-		const delay = Math.min(30_000, 1_000 * 2 ** failures++);
-		retry = setTimeout(
-			() => {
-				retry = undefined;
-				connect();
-			},
-			delay * (0.8 + 0.4 * Math.random()),
-		);
+		retry = setTimeout(() => {
+			retry = undefined;
+			connect();
+		}, retryDelay(failures++));
 	});
 }
 
@@ -72,6 +87,8 @@ export function onEvent(name: string, listener: Listener): () => void {
 			source = undefined;
 			readyFrame = undefined;
 			failures = 0;
+			stopResume?.();
+			stopResume = undefined;
 		}
 	};
 }

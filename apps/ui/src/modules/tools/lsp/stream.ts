@@ -28,6 +28,7 @@ import {
 	toTextEdits,
 } from "@/modules/tools/lsp/model";
 import { fetchFileProblems, onProblemsChanged } from "@/modules/tools/problems";
+import { onResume, retryDelay } from "@/shared/api/resume";
 import type {
 	CodeAction,
 	Diagnostic,
@@ -114,7 +115,23 @@ class Channel {
 		socket.addEventListener("message", (message) => {
 			if (typeof message.data === "string") this.receive(JSON.parse(message.data) as Frame);
 		});
-		socket.addEventListener("close", () => this.closed());
+		socket.addEventListener("close", () => {
+			if (this.socket === socket) this.closed();
+		});
+	}
+
+	/** Back on the page: a closed (or possibly dead) channel opens again now. */
+	resume(stale: boolean) {
+		if (!this.files.size || (this.socket && !stale)) return;
+		const old = this.socket;
+		if (old) {
+			this.closed();
+			old.close();
+		}
+		clearTimeout(this.timer);
+		this.failures = 0;
+		this.connect();
+		for (const [path, file] of this.files) this.sendOpen(path, file);
 	}
 
 	private closed() {
@@ -128,7 +145,7 @@ class Channel {
 		if (!this.files.size) return;
 		this.failures = wasReady ? 1 : this.failures + 1;
 		if (this.failures >= 3) void this.explain();
-		const delay = Math.min(30_000, 1000 * 2 ** Math.min(this.failures, 5));
+		const delay = retryDelay(this.failures);
 		clearTimeout(this.timer);
 		this.timer = setTimeout(() => {
 			if (!this.files.size) return;
@@ -239,6 +256,7 @@ class Channel {
 }
 
 const channels = new Map<string, Channel>();
+let stopResume: (() => void) | undefined;
 
 function channelOf(projectId: string): Channel {
 	let channel = channels.get(projectId);
@@ -246,6 +264,9 @@ function channelOf(projectId: string): Channel {
 		channel = new Channel(projectId);
 		channels.set(projectId, channel);
 	}
+	stopResume ??= onResume((stale) => {
+		for (const open of channels.values()) open.resume(stale);
+	});
 	return channel;
 }
 

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 
 import { useRefreshNotifications } from "@/modules/notifications/notification/api";
 import type { Notification as AhabNotification } from "@/shared/api/generated/ahab.schemas";
+import { keepOpen } from "@/shared/api/resume";
 
 type Heard =
 	| { type: "created"; notification: AhabNotification }
@@ -25,17 +26,20 @@ export function useNotificationEvents(
 	});
 	useEffect(() => {
 		if (!enabled || typeof EventSource === "undefined") return;
-		const source = new EventSource("/api/v1/notification-events");
-		source.addEventListener("open", () => latest.current.refresh());
-		source.addEventListener("message", (message) => {
-			const heard = JSON.parse(String(message.data)) as Heard;
-			if (heard.type === "activity") {
-				latest.current.onActivity?.(heard.working);
-				return;
-			}
-			latest.current.refresh();
-			if (heard.type === "created") latest.current.onCreated(heard.notification);
+		const stream = keepOpen(() => {
+			const source = new EventSource("/api/v1/notification-events");
+			source.addEventListener("open", () => latest.current.refresh());
+			source.addEventListener("message", (message) => {
+				const heard = JSON.parse(String(message.data)) as Heard;
+				if (heard.type === "activity") {
+					latest.current.onActivity?.(heard.working);
+					return;
+				}
+				latest.current.refresh();
+				if (heard.type === "created") latest.current.onCreated(heard.notification);
+			});
+			return source;
 		});
-		return () => source.close();
+		return () => stream.close();
 	}, [enabled]);
 }

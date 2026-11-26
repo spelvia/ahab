@@ -35,3 +35,30 @@ it("resubscribes after a rejected watch and delivers the fresh snapshot", () => 
 	vi.advanceTimersByTime(30_000);
 	expect(streams).toHaveLength(2);
 });
+
+it("opens a broken watch again at once when the page is back", () => {
+	vi.useFakeTimers();
+	const streams: EventTarget[] = [];
+	vi.stubGlobal(
+		"EventSource",
+		class extends EventTarget {
+			constructor() {
+				super();
+				streams.push(this);
+			}
+			close() {}
+		},
+	);
+	const stop = watchFile("watch-resume", "main.ts", () => {});
+	vi.advanceTimersByTime(150);
+	// Failing again and again while the phone was locked.
+	for (let i = 0; i < 5; i++) {
+		streams.at(-1)?.dispatchEvent(new Event("error"));
+		vi.advanceTimersByTime(6_000);
+	}
+	streams.at(-1)?.dispatchEvent(new Event("error"));
+	const before = streams.length;
+	document.dispatchEvent(new Event("visibilitychange"));
+	expect(streams).toHaveLength(before + 1);
+	stop();
+});
