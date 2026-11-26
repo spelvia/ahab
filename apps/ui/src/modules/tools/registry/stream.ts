@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 import { useRefreshTools, useShowJob } from "@/modules/tools/registry/api";
 import type { ToolJobEvent } from "@/modules/tools/registry/model";
-import { keepOpen } from "@/shared/api/resume";
+import { onEvent } from "@/shared/api/events";
 
 /**
  * Follows a machine's installs, updates and removals on the server's event
@@ -17,18 +17,14 @@ export function useToolJobs(machineId: string, enabled = true) {
 		latest.current = { show, refresh };
 	});
 	useEffect(() => {
-		if (!enabled || typeof EventSource === "undefined") return;
-		const stream = keepOpen(() => {
-			const source = new EventSource("/api/v1/plugin-events?names=tools.job");
-			source.addEventListener("message", (message) => {
-				const event = JSON.parse(String(message.data)) as { name: string; data: ToolJobEvent };
-				if (event.name !== "tools.job" || event.data.machine !== machineId) return;
-				const { machine: _machine, ...job } = event.data;
-				latest.current.show(job);
-				if (job.state !== "running") latest.current.refresh();
-			});
-			return source;
+		if (!enabled) return;
+		// On the app's one shared event stream (see `@/shared/api/events`).
+		return onEvent("tools.job", (data) => {
+			const event = data as ToolJobEvent;
+			if (event.machine !== machineId) return;
+			const { machine: _machine, ...job } = event;
+			latest.current.show(job);
+			if (job.state !== "running") latest.current.refresh();
 		});
-		return () => stream.close();
 	}, [machineId, enabled]);
 }

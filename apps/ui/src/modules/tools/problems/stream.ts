@@ -5,7 +5,7 @@ import {
 	useRefreshProblems,
 	useRefreshTurn,
 } from "@/modules/tools/problems/api";
-import { keepOpen } from "@/shared/api/resume";
+import { onEvent } from "@/shared/api/events";
 
 /** A project's problems changed (`problems.changed`). */
 interface ProblemsChanged {
@@ -32,31 +32,19 @@ type ProblemEvent =
 
 type Listener = (event: ProblemEvent) => void;
 
-// One connection for every view listening: each finished turn in a chat
-// listens, and a page may show many.
-const listeners = new Set<Listener>();
-let stream: { close: () => void } | undefined;
+const NAMES = ["problems.changed", "problems.turn", "repositories.activity"] as const;
 
+/**
+ * Hears these events on the app's one shared event stream: a browser keeps
+ * only six connections to a server over HTTP/1.1, so a stream of its own
+ * for each kind of event would leave none for requests.
+ */
 function listen(listener: Listener): () => void {
-	listeners.add(listener);
-	if (!stream && typeof EventSource !== "undefined") {
-		stream = keepOpen(() => {
-			const source = new EventSource(
-				"/api/v1/plugin-events?names=problems.changed,problems.turn,repositories.activity",
-			);
-			source.addEventListener("message", (message) => {
-				const event = JSON.parse(String(message.data)) as ProblemEvent;
-				for (const each of listeners) each(event);
-			});
-			return source;
-		});
-	}
+	const stops = NAMES.map((name) =>
+		onEvent(name, (data) => listener({ name, data } as ProblemEvent)),
+	);
 	return () => {
-		listeners.delete(listener);
-		if (listeners.size === 0) {
-			stream?.close();
-			stream = undefined;
-		}
+		for (const stop of stops) stop();
 	};
 }
 
