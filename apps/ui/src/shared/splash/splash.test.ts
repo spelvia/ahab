@@ -3,8 +3,8 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { hideSplash } from "@/shared/splash/splash";
 
 function mount(logoOpacity: string) {
-	document.body.innerHTML = `<div id="splash"><svg></svg><p id="splash-status"></p></div><div id="root"></div>`;
-	const logo = document.querySelector("#splash svg") as SVGElement;
+	document.body.innerHTML = `<div id="splash"><div class="splash-mark"></div><p id="splash-status"></p></div><div id="root"></div>`;
+	const logo = document.querySelector("#splash .splash-mark") as HTMLElement;
 	logo.style.opacity = logoOpacity;
 }
 

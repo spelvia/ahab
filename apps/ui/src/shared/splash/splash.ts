@@ -14,7 +14,7 @@ function reducedMotion() {
 
 /** Whether the splash's logo is showing yet. */
 function logoShown(splash: HTMLElement) {
-	const logo = splash.querySelector("svg");
+	const logo = splash.querySelector(".splash-mark");
 	if (!logo) return false;
 	return Number(window.getComputedStyle(logo).opacity || "0") > 0;
 }
