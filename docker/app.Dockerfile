@@ -14,7 +14,7 @@ COPY apps/ui apps/ui
 COPY crates/ahab/openapi.json crates/ahab/
 RUN pnpm --filter @ahab/ui build
 
-FROM ubuntu:22.04 AS build
+FROM ubuntu:26.04 AS build
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends \

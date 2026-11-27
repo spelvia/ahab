@@ -20,7 +20,7 @@ COPY crates crates
 COPY --from=ui /src/apps/ui/dist apps/ui/dist
 RUN cargo build --release --locked --bin ahab
 
-FROM debian:trixie-20261005-slim
+FROM debian:trixie-20261104-slim
 RUN apt-get update \
     && apt-get install --yes --no-install-recommends ca-certificates tini \
     && rm -rf /var/lib/apt/lists/*
