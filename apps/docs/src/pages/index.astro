@@ -43,7 +43,7 @@ const tabs = [
 	{
 		id: "diffs",
 		label: "Changes",
-		caption: "Every edit as a diff in the conversation, with the file a click away.",
+		caption: "Your changes side by side, staged a hunk or a line at a time, with the commit graph beside them.",
 		dark: diffsDark,
 		light: diffsLight,
 		alt: "An edit the agent made, open as a diff inside the conversation.",
@@ -59,7 +59,7 @@ const tabs = [
 	{
 		id: "terminal",
 		label: "Terminal",
-		caption: "A terminal in the same project, on the same machine as the agent.",
+		caption: "The conversation, the file and a terminal together: a real shell in the same project, on the same machine as the agent.",
 		dark: terminalDark,
 		light: terminalLight,
 		alt: "The conversation, an editor and a terminal side by side.",
@@ -161,10 +161,29 @@ const faq = [
 			<section class="recording" aria-label="Ahab at work">
 				<figure class="desktop-frame">
 					<!-- The poster stands in while the video loads, and for good if it is missing. -->
-					<video autoplay muted loop playsinline preload="metadata" poster="/landing/hero-poster.png" width="2400" height="1500">
-						<source src="/landing/hero.webm" type="video/webm" />
-						<source src="/landing/hero.mp4" type="video/mp4" />
+					<video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="/landing/hero-dark-poster.png" width="1600" height="1000">
+						<source src="/landing/hero-dark.webm" type="video/webm" />
+						<source src="/landing/hero-dark.mp4" type="video/mp4" />
 					</video>
+					<script is:inline>
+						// The recording in the page's theme (dark without this script).
+						(() => {
+							const video = document.getElementById("hero-video");
+							const pick = () => {
+								const theme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+								if (video.dataset.theme === theme) return;
+								video.dataset.theme = theme;
+								video.poster = `/landing/hero-${theme}-poster.png`;
+								const [webm, mp4] = video.querySelectorAll("source");
+								webm.src = `/landing/hero-${theme}.webm`;
+								mp4.src = `/landing/hero-${theme}.mp4`;
+								video.load();
+								video.play().catch(() => {});
+							};
+							pick();
+							new MutationObserver(pick).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+						})();
+					</script>
 				</figure>
 			</section>
 
