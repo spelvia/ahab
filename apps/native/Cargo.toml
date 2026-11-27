@@ -5,6 +5,7 @@ name = "ahab-desktop"
 version = "0.1.0-rc.1"
 description = "Ahab for desktop: the server's web app in a window, and Ahab on this computer"
 edition = "2024"
+license = "Apache-2.0"
 rust-version = "1.99"
 publish = false
 

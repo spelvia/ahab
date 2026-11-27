@@ -213,3 +213,12 @@ Docker builds need any credentials.
 [docs/releases](docs/releases/README.md).
 
 </details>
+
+## License
+
+Ahab is licensed under the [Apache License 2.0](LICENSE). The plugin SDK
+(`sdk/plugin`) is under the [MIT License](sdk/plugin/LICENSE), so plugins can
+use any license.
+
+The Ahab name and logo are not covered by these licenses: please don't use
+them in a way that suggests your project is Ahab or is endorsed by it.

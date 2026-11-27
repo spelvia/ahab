@@ -1,6 +1,7 @@
 {
 	"name": "ahab",
 	"private": true,
+	"license": "Apache-2.0",
 	"scripts": {
 		"prepare": "lefthook install"
 	},
