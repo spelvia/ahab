@@ -1,0 +1,30 @@
+{
+	"id": "typescript-language-server",
+	"name": "typescript-language-server",
+	"kind": "languageServer",
+	"languages": ["javascript", "typescript", "tsx"],
+	"license": "Apache-2.0",
+	"homepage": "https://github.com/typescript-language-server/typescript-language-server",
+	"description": "TypeScript and JavaScript, through TypeScript's tsserver.",
+	"source": {
+		"type": "npm",
+		"package": "typescript-language-server",
+		"version": "6.1.0",
+		"extra": ["typescript@6.0.3"]
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 20
+		}
+	],
+	"bin": {
+		"typescript-language-server": "node_modules/.bin/typescript-language-server"
+	},
+	"run": {
+		"command": ["typescript-language-server", "--stdio"],
+		"rootMarkers": ["tsconfig.json", "jsconfig.json", "package.json"],
+		"settingsFiles": ["tsconfig.json", "jsconfig.json"]
+	},
+	"hint": "npm install --global typescript-language-server typescript"
+}

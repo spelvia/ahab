@@ -1,0 +1,1202 @@
+---
+/**
+ * The landing page, at /. The documentation is Starlight's, under /docs.
+ * Every claim here is one the README or the documentation makes.
+ */
+import Site from "../layouts/site.astro";
+import AgentLogos from "../components/landing/agent-logos.astro";
+import { ACP, NATIVE } from "../components/landing/agents";
+import Icon from "../components/landing/icon.astro";
+import Shot from "../components/landing/shot.astro";
+import Weave from "../components/landing/weave.astro";
+import agentsDark from "../assets/landing/agents-dark.png";
+import agentsLight from "../assets/landing/agents-light.png";
+import diffsDark from "../assets/landing/diffs-dark.png";
+import diffsLight from "../assets/landing/diffs-light.png";
+import editorDark from "../assets/landing/editor-dark.png";
+import editorLight from "../assets/landing/editor-light.png";
+import phoneChatDark from "../assets/landing/phone-chat-dark.png";
+import phoneChatLight from "../assets/landing/phone-chat-light.png";
+import phonePermissionDark from "../assets/landing/phone-permission-dark.png";
+import phonePermissionLight from "../assets/landing/phone-permission-light.png";
+import terminalDark from "../assets/landing/terminal-dark.png";
+import terminalLight from "../assets/landing/terminal-light.png";
+
+const INSTALL = "curl -fsSL https://useahab.com/install.sh | sh";
+const GITHUB = "https://github.com/spelvia/ahab";
+const RELEASES = `${GITHUB}/releases`;
+
+const DESKTOP = { widths: [800, 1400, 2400], sizes: "(min-width: 1200px) 1120px, 100vw" };
+const PHONE = { widths: [390, 780, 1170], sizes: "(min-width: 900px) 260px, 45vw" };
+
+const tabs = [
+	{
+		id: "agents",
+		label: "Agents",
+		caption: "A finished turn: the agent's plan, what it read and changed, and the tests it ran.",
+		dark: agentsDark,
+		light: agentsLight,
+		alt: "An agent session in Ahab: the prompt, the agent's finished plan, the files it read and edited, and the commands it ran.",
+	},
+	{
+		id: "diffs",
+		label: "Changes",
+		caption: "Your changes side by side, staged a hunk or a line at a time, with the commit graph beside them.",
+		dark: diffsDark,
+		light: diffsLight,
+		alt: "An edit the agent made, open as a diff inside the conversation.",
+	},
+	{
+		id: "editor",
+		label: "Editor",
+		caption: "Read and edit the files beside the conversation, in tabs and split panes.",
+		dark: editorDark,
+		light: editorLight,
+		alt: "The conversation beside an editor with the file the agent wrote.",
+	},
+	{
+		id: "terminal",
+		label: "Terminal",
+		caption: "The conversation, the file and a terminal together: a real shell in the same project, on the same machine as the agent.",
+		dark: terminalDark,
+		light: terminalLight,
+		alt: "The conversation, an editor and a terminal side by side.",
+	},
+];
+
+const faq = [
+	{
+		q: "Does my code leave my machines?",
+		a: "Ahab runs on your computers: the server keeps its state in its own database, and agents work in your project folders on your machines. The agents talk to their providers as they do without Ahab.",
+		link: { href: "/docs/security/", label: "Security" },
+	},
+	{
+		q: "Which agents work with it?",
+		a: "Claude Code, Codex, Pi, and any agent that speaks the Agent Client Protocol. Each runs as you installed and signed it in; Ahab shows its models, modes and questions.",
+		link: { href: "/docs/", label: "Introduction" },
+	},
+	{
+		q: "Can I use it from my phone?",
+		a: "Yes: the web app works on phones. Each browser is paired with the server once; reach it over HTTPS, a trusted reverse proxy or your tailnet.",
+		link: { href: "/docs/security/#connections", label: "Connections" },
+	},
+	{
+		q: "How do I add another computer?",
+		a: "Run `ahab machines add you@host`: it installs Ahab on that computer over SSH and joins it to your server, so agents can work in its folders too.",
+		link: { href: "/docs/installation/cli/", label: "The CLI" },
+	},
+	{
+		q: "Is it ready?",
+		a: "It is a release candidate. It works day to day, but data formats may still change before 0.1.0.",
+		link: { href: RELEASES, label: "Releases" },
+	},
+];
+---
+
+<Site
+	title="Ahab: your agents, on your machines"
+	description="A self-hosted workspace for Claude Code, Codex, Pi and any ACP agent, with files, terminals and Git beside them."
+>
+
+		<main>
+			<section class="hero">
+				<div class="hero-text">
+					<a class="pill" href={RELEASES}>0.1.0-rc.1 · release candidate</a>
+					<h1>Your agents, on your machines.</h1>
+					<p class="lead">
+						A self-hosted workspace for Claude Code, Codex, Pi and any ACP agent, with files,
+						terminals and Git beside them. Run it on your computer; use it from your phone.
+					</p>
+					<div class="install" aria-label="Install Ahab">
+						<div class="command">
+							<code><span class="prompt">$</span> {INSTALL}</code>
+							<button type="button" class="copy" data-copy={INSTALL}>Copy</button>
+						</div>
+						<div class="command">
+							<code><span class="prompt">$</span> ahab up</code>
+							<button type="button" class="copy" data-copy="ahab up">Copy</button>
+						</div>
+						<p class="note">Linux (x86_64, arm64) and macOS on Apple silicon. No root needed.</p>
+					</div>
+					<div class="actions">
+						<a class="button primary" href="/docs/">Read the docs</a>
+						<a class="button" href={GITHUB}>View on GitHub</a>
+					</div>
+				</div>
+				<div class="hero-mark">
+					<Weave size={300} />
+				</div>
+			</section>
+
+			<section class="recording" aria-label="Ahab at work">
+				<figure class="desktop-frame enlargeable">
+					<!-- Loaded once near the screen, playing while on it; the script sets the poster for the theme and size. -->
+					<video
+						id="hero-video"
+						muted
+						loop
+						playsinline
+						preload="none"
+						width="1600"
+						height="1000"
+						aria-label="A recording of Ahab: an agent session, its changes, the editor and a terminal."
+					>
+						<source type="video/webm" />
+						<source type="video/mp4" />
+					</video>
+					<button type="button" class="play" hidden aria-label="Play the recording">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+					</button>
+					<button type="button" class="enlarge" data-enlarge aria-label="Enlarge the recording">
+						<span class="enlarge-hint">Tap to enlarge</span>
+					</button>
+					<script is:inline>
+						// The recording in the page's theme and size, loaded near the
+						// screen and playing only while on it; with reduced motion, it
+						// waits for the play button.
+						// The theme and size shown now: the variant to load.
+						const heroVariant = () => {
+							const theme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+							const size = innerWidth < 900 ? "-960" : "";
+							return { theme, size, key: theme + size };
+						};
+						(() => {
+							const video = document.getElementById("hero-video");
+							const play = video.parentElement.querySelector(".play");
+							const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+							let near = false;
+							let seen = false;
+							let started = !still;
+							const pick = () => {
+								const { theme, size, key } = heroVariant();
+								video.poster = `/landing/hero-${theme}-poster${size}.webp`;
+								if (!near || video.dataset.variant === key) return;
+								video.dataset.variant = key;
+								const [webm, mp4] = video.querySelectorAll("source");
+								webm.src = `/landing/hero-${theme}${size}.webm`;
+								mp4.src = `/landing/hero-${theme}${size}.mp4`;
+								video.load();
+								if (seen && started) video.play().catch(() => {});
+							};
+							play.hidden = !still;
+							play.addEventListener("click", () => {
+								started = true;
+								play.hidden = true;
+								near = true;
+								pick();
+								video.play().catch(() => {});
+							});
+							pick();
+							new IntersectionObserver(
+								([entry]) => {
+									if (entry.isIntersecting && !near) {
+										near = true;
+										pick();
+									}
+								},
+								{ rootMargin: "600px 0px" },
+							).observe(video);
+							new IntersectionObserver(
+								([entry]) => {
+									seen = entry.isIntersecting;
+									if (seen && started) video.play().catch(() => {});
+									else video.pause();
+								},
+								{ threshold: 0.15 },
+							).observe(video);
+							new MutationObserver(pick).observe(document.documentElement, {
+								attributes: true,
+								attributeFilter: ["data-theme"],
+							});
+							matchMedia("(max-width: 899px)").addEventListener("change", pick);
+						})();
+					</script>
+				</figure>
+			</section>
+
+			<section class="showcase" aria-labelledby="features-heading">
+				<h2 id="features-heading" class="center">A closer look</h2>
+				<div class="tabs" role="tablist" aria-label="Features">
+					{
+						tabs.map((tab, i) => (
+							<button
+								type="button"
+								role="tab"
+								id={`tab-${tab.id}`}
+								aria-controls={`panel-${tab.id}`}
+								aria-selected={i === 0 ? "true" : "false"}
+								tabindex={i === 0 ? 0 : -1}
+							>
+								{tab.label}
+							</button>
+						))
+					}
+					<button
+						type="button"
+						role="tab"
+						id="tab-phone"
+						aria-controls="panel-phone"
+						aria-selected="false"
+						tabindex="-1"
+					>
+						Phone
+					</button>
+				</div>
+				{
+					tabs.map((tab, i) => (
+						<div
+							class="panel"
+							role="tabpanel"
+							id={`panel-${tab.id}`}
+							aria-labelledby={`tab-${tab.id}`}
+							hidden={i !== 0}
+						>
+							<div class="stage">
+								<figure class="desktop-frame enlargeable">
+									<button
+										type="button"
+										class="enlarge"
+										data-enlarge
+										aria-label={`Enlarge the screenshot: ${tab.alt}`}
+									>
+										<span class="enlarge-hint">Tap to enlarge</span>
+									</button>
+									<Shot
+										dark={tab.dark}
+										light={tab.light}
+										alt={tab.alt}
+										eager={i === 0}
+										{...DESKTOP}
+									/>
+								</figure>
+								{i === 0 && (
+									<figure class="phone-frame floating">
+										<Shot
+											dark={phoneChatDark}
+											light={phoneChatLight}
+											alt="The same session on a phone."
+											eager
+											{...PHONE}
+										/>
+									</figure>
+								)}
+							</div>
+							<p class="caption">{tab.caption}</p>
+						</div>
+					))
+				}
+				<div class="panel" role="tabpanel" id="panel-phone" aria-labelledby="tab-phone" hidden>
+					<div class="phones">
+						<figure class="phone-frame">
+							<Shot
+								dark={phoneChatDark}
+								light={phoneChatLight}
+								alt="An agent session on a phone."
+								{...PHONE}
+							/>
+						</figure>
+						<figure class="phone-frame">
+							<Shot
+								dark={phonePermissionDark}
+								light={phonePermissionLight}
+								alt="An agent asking to run git push, with Allow and Reject, on a phone."
+								{...PHONE}
+							/>
+						</figure>
+					</div>
+					<p class="caption">
+						The same sessions on your phone: follow a turn, and answer when an agent asks.
+					</p>
+				</div>
+			</section>
+
+			<section class="trust" aria-label="In short">
+				<ul>
+					<li>Open source, Apache 2.0</li>
+					<li>Runs on your machines</li>
+					<li>Only paired browsers get in</li>
+					<li>SQLite or Postgres</li>
+					<li>The agents you already use</li>
+				</ul>
+			</section>
+
+			<section class="block agents">
+				<h2>Bring the agents you have.</h2>
+				<p>
+					Ahab drives the coding agents you already installed and signed in to. Each keeps its own
+					models, modes, skills and permissions; Ahab shows them, and answers their questions
+					in the conversation.
+				</p>
+				<AgentLogos agents={NATIVE} large />
+				<h3>And every agent in the ACP registry</h3>
+				<p class="small">
+					{ACP.length} agents that speak the Agent Client Protocol, from the registry Ahab ships with,
+					or any other with its own command.
+				</p>
+				<AgentLogos agents={ACP} />
+			</section>
+
+			<section class="block how">
+				<h2>How it works</h2>
+				<p>
+					The <strong>server</strong> keeps Ahab's state and serves the web app. A{" "}
+					<strong>daemon</strong> on each machine runs the agents, files and terminals in its project
+					folders. Browsers and phones are paired with the server; machines connect out to it.
+				</p>
+				<div class="setups">
+					<article class="setup">
+						<h3>The easy way: everything on your laptop</h3>
+						<div class="diagram" aria-hidden="true">
+							<div class="node">
+								<Icon name="smartphone" />
+								<span class="node-title">Your phone</span>
+								<span class="node-detail">paired</span>
+							</div>
+							<div class="link"></div>
+							<div class="node strong">
+								<Icon name="laptop" />
+								<span class="node-title">Your laptop</span>
+								<span class="node-detail">server · daemon · agents</span>
+							</div>
+						</div>
+						<p class="command-line"><code>ahab up</code></p>
+						<p class="small">
+							Runs the server and this computer's daemon as a login service, and opens the web app,
+							already paired. Pair your phone with the QR code under Settings → Clients.
+						</p>
+					</article>
+					<article class="setup">
+						<h3>Always on: a server at home</h3>
+						<div class="diagram" aria-hidden="true">
+							<div class="node-stack">
+								<div class="node">
+									<Icon name="laptop" />
+									<span class="node-title">Laptop</span>
+								</div>
+								<div class="node">
+									<Icon name="smartphone" />
+									<span class="node-title">Phone</span>
+								</div>
+							</div>
+							<div class="link"></div>
+							<div class="node strong">
+								<Icon name="server" />
+								<span class="node-title">Home server</span>
+								<span class="node-detail">server · daemon</span>
+							</div>
+							<div class="link"></div>
+							<div class="node">
+								<Icon name="monitor" />
+								<span class="node-title">Workstation</span>
+								<span class="node-detail">daemon · agents</span>
+							</div>
+						</div>
+						<p class="command-line"><code>ahab login ssh://you@homelab</code></p>
+						<p class="command-line"><code>ahab machines add you@workstation</code></p>
+						<p class="small">
+							Installs and starts the server on a homelab box or an always-on PC over SSH, and pairs
+							your command line; then joins the computers your agents should work on. Reach it from
+							your laptop and phone.
+						</p>
+					</article>
+				</div>
+				<a class="text-link" href="/docs/installation/">More about servers and machines →</a>
+			</section>
+
+			<section class="block plugins">
+				<div>
+					<h2>Make it yours.</h2>
+					<p>
+						Ahab's core is small. Agents, files, terminals and Git are bundled plugins, and yours use
+						the same contracts: views, commands, settings, and code that runs on each machine.
+					</p>
+					<a class="text-link" href="/docs/plugins/quick-start/">Build a plugin in the quick start →</a>
+				</div>
+				<pre class="code"><code><span class="c">// src/shared/index.ts: a command both entries use</span>
+<span class="k">export const</span> hello = defineCommand(&#123;
+	name: <span class="s">"hello"</span>,
+	target: <span class="s">"machine"</span>,
+	input: z.object(&#123; name: z.string().default(<span class="s">"world"</span>) &#125;),
+	output: z.object(&#123; text: z.string() &#125;),
+&#125;);
+
+<span class="c">// src/daemon/index.ts: answered on each machine</span>
+<span class="k">export default</span> definePlugin((ahab) =&gt; &#123;
+	ahab.commands.handle(hello, (&#123; name &#125;) =&gt; (&#123;
+		text: <span class="s">`Hello, $&#123;name&#125;, from $&#123;ahab.machine&#125;.`</span>,
+	&#125;));
+&#125;);</code></pre>
+			</section>
+
+			<section class="block faq">
+				<h2>Questions</h2>
+				{
+					faq.map((item) => (
+						<details>
+							<summary>{item.q}</summary>
+							<p>
+								{item.a.split("`").map((part, i) => (i % 2 ? <code>{part}</code> : part))}{" "}
+								<a href={item.link.href}>{item.link.label} →</a>
+							</p>
+						</details>
+					))
+				}
+			</section>
+
+			<section class="closing">
+				<Weave size={120} />
+				<h2>Start on your computer.</h2>
+				<div class="command">
+					<code><span class="prompt">$</span> {INSTALL}</code>
+					<button type="button" class="copy" data-copy={INSTALL}>Copy</button>
+				</div>
+				<a class="button primary" href="/docs/installation/">Installation guide</a>
+			</section>
+		</main>
+
+
+		<script is:inline>
+			// Tabs: click, or arrow keys between them.
+			const tabs = [...document.querySelectorAll('[role="tab"]')];
+			const select = (tab) => {
+				for (const other of tabs) {
+					const on = other === tab;
+					other.setAttribute("aria-selected", String(on));
+					other.tabIndex = on ? 0 : -1;
+					document.getElementById(other.getAttribute("aria-controls")).hidden = !on;
+				}
+			};
+			for (const tab of tabs) {
+				tab.addEventListener("click", () => select(tab));
+				tab.addEventListener("keydown", (event) => {
+					const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+					if (!step) return;
+					const next = tabs[(tabs.indexOf(tab) + step + tabs.length) % tabs.length];
+					select(next);
+					next.focus();
+				});
+			}
+			// Copy buttons.
+			for (const button of document.querySelectorAll("[data-copy]")) {
+				button.addEventListener("click", async () => {
+					await navigator.clipboard.writeText(button.dataset.copy);
+					button.textContent = "Copied";
+					setTimeout(() => (button.textContent = "Copy"), 1500);
+				});
+			}
+		</script>
+		<dialog id="viewer" aria-label="Enlarged view">
+			<div class="viewer-scroll"></div>
+			<button type="button" class="viewer-close" aria-label="Close">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+				</svg>
+			</button>
+		</dialog>
+		<script is:inline>
+			// One viewer for every screenshot and the recording: a modal dialog
+			// (it keeps focus inside and closes on Esc), closed by its button or
+			// the backdrop, with the page still behind it.
+			(() => {
+				const viewer = document.getElementById("viewer");
+				const scroll = viewer.querySelector(".viewer-scroll");
+				let opener = null;
+				const close = () => viewer.close();
+				for (const button of document.querySelectorAll("[data-enlarge]")) {
+					button.addEventListener("click", () => {
+						const frame = button.closest("figure");
+						const video = frame.querySelector("video");
+						scroll.replaceChildren();
+						if (video) {
+							const large = document.createElement("video");
+							for (const name of ["muted", "loop", "playsInline", "controls"]) large[name] = true;
+							// The full-size recording, in the page's theme.
+							const theme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+							large.poster = `/landing/hero-${theme}-poster.webp`;
+							for (const type of ["webm", "mp4"]) {
+								const source = document.createElement("source");
+								source.src = `/landing/hero-${theme}.${type}`;
+								source.type = `video/${type}`;
+								large.append(source);
+							}
+							large.setAttribute("aria-label", video.getAttribute("aria-label"));
+							scroll.append(large);
+							video.pause();
+							large.play().catch(() => {});
+						} else {
+							const shown = [...frame.querySelectorAll("img")].find((img) => img.offsetParent);
+							const large = document.createElement("img");
+							large.src = shown.currentSrc || shown.src;
+							large.alt = shown.alt;
+							scroll.append(large);
+						}
+						opener = button;
+						document.documentElement.classList.add("viewing");
+						viewer.showModal();
+						scroll.scrollLeft = 0;
+					});
+				}
+				viewer.querySelector(".viewer-close").addEventListener("click", close);
+				// A click on the backdrop lands on the dialog or its scroll area, not the media.
+				viewer.addEventListener("click", (event) => {
+					if (event.target === viewer || event.target === scroll) close();
+				});
+				viewer.addEventListener("close", () => {
+					scroll.replaceChildren();
+					document.documentElement.classList.remove("viewing");
+					opener?.focus();
+					const hero = document.getElementById("hero-video");
+					if (hero.dataset.variant && hero.getBoundingClientRect().top < innerHeight) hero.play().catch(() => {});
+				});
+			})();
+		</script>
+</Site>
+
+<style is:global>
+	.hero {
+		display: grid;
+		grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+		align-items: center;
+		gap: 40px;
+		padding: 72px 0 56px;
+	}
+	.pill {
+		display: inline-block;
+		padding: 3px 11px;
+		border: 1px solid var(--hairline);
+		border-radius: 999px;
+		color: var(--muted);
+		font-size: 13px;
+		text-decoration: none;
+	}
+	h1 {
+		margin: 20px 0 0;
+		color: var(--strong);
+		font-size: clamp(40px, 6vw, 68px);
+		font-weight: 720;
+		line-height: 1.02;
+		letter-spacing: -0.035em;
+		text-wrap: balance;
+	}
+	.lead {
+		max-width: 560px;
+		margin: 22px 0 0;
+		font-size: 18px;
+		text-wrap: pretty;
+	}
+	.install {
+		max-width: 620px;
+		margin-top: 30px;
+	}
+	.command {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		margin-top: 8px;
+		padding: 10px 10px 10px 14px;
+		border: 1px solid var(--hairline);
+		border-radius: 10px;
+		background: var(--bg-raised);
+	}
+	.command code {
+		flex: 1;
+		min-width: 0;
+		overflow-x: auto;
+		color: var(--strong);
+		font-size: 13.5px;
+		white-space: nowrap;
+		scrollbar-width: none;
+	}
+	.prompt {
+		color: var(--muted);
+		user-select: none;
+	}
+	.copy {
+		flex: none;
+		padding: 4px 10px;
+		border: 1px solid var(--hairline);
+		border-radius: 6px;
+		background: transparent;
+		color: var(--muted);
+		font: 500 12px var(--sans);
+		cursor: pointer;
+	}
+	.copy:hover {
+		color: var(--strong);
+	}
+	.note {
+		margin: 10px 0 0;
+		color: var(--muted);
+		font-size: 13px;
+	}
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+		margin-top: 26px;
+	}
+	.button {
+		display: inline-flex;
+		align-items: center;
+		height: 42px;
+		padding: 0 18px;
+		border: 1px solid var(--hairline);
+		border-radius: 10px;
+		color: var(--strong);
+		font-weight: 550;
+		font-size: 15px;
+		text-decoration: none;
+	}
+	.button.primary {
+		border-color: var(--accent);
+		background: var(--accent);
+		color: var(--accent-text);
+	}
+	.hero-mark {
+		display: flex;
+		justify-content: center;
+	}
+
+	/* Showcase */
+	.showcase {
+		padding: 24px 0 8px;
+	}
+	.tabs {
+		display: flex;
+		justify-content: center;
+		gap: 4px;
+		margin: 0 auto 26px;
+		padding: 4px;
+		width: fit-content;
+		max-width: 100%;
+		overflow-x: auto;
+		border: 1px solid var(--hairline);
+		border-radius: 12px;
+		background: var(--bg-raised);
+	}
+	[role="tab"] {
+		padding: 7px 14px;
+		border: 0;
+		border-radius: 8px;
+		background: transparent;
+		color: var(--muted);
+		font: 500 14px var(--sans);
+		white-space: nowrap;
+		cursor: pointer;
+	}
+	[role="tab"][aria-selected="true"] {
+		background: var(--surface);
+		color: var(--strong);
+		box-shadow: 0 0 0 1px var(--hairline);
+	}
+	.stage {
+		position: relative;
+		padding-right: 90px;
+	}
+	figure {
+		margin: 0;
+	}
+	.desktop-frame,
+	.phone-frame {
+		overflow: hidden;
+		border: 1px solid var(--hairline);
+		background: var(--surface);
+		box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.55);
+	}
+	.desktop-frame {
+		border-radius: 14px;
+	}
+	.phone-frame {
+		width: 240px;
+		border: 6px solid var(--surface);
+		outline: 1px solid var(--hairline);
+		border-radius: 34px;
+	}
+	.phone-frame.floating {
+		position: absolute;
+		right: 0;
+		bottom: -40px;
+		width: 230px;
+	}
+	.phones {
+		display: flex;
+		justify-content: center;
+		gap: 40px;
+	}
+	.phones .phone-frame {
+		width: 280px;
+	}
+	.caption {
+		margin: 56px auto 0;
+		max-width: 620px;
+		color: var(--muted);
+		font-size: 15px;
+		text-align: center;
+	}
+
+	/* Trust strip */
+	.trust ul {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 8px 28px;
+		margin: 72px 0 0;
+		padding: 22px 0;
+		border-top: 1px solid var(--hairline);
+		border-bottom: 1px solid var(--hairline);
+		list-style: none;
+		color: var(--strong);
+		font-size: 15px;
+	}
+	.trust li::before {
+		content: "·";
+		margin-right: 28px;
+		color: var(--muted);
+	}
+	.trust li:first-child::before {
+		content: none;
+	}
+
+	/* Blocks */
+	.block {
+		padding: 88px 0 0;
+	}
+	h2 {
+		margin: 0;
+		color: var(--strong);
+		font-size: clamp(28px, 3.4vw, 38px);
+		font-weight: 700;
+		line-height: 1.12;
+		letter-spacing: -0.025em;
+	}
+	.block > p,
+	.block > div > p {
+		max-width: 640px;
+		margin: 16px 0 0;
+		font-size: 17px;
+	}
+	/* Enlarging: every desktop shot and the recording open in the viewer. */
+	.enlargeable {
+		position: relative;
+	}
+	.enlarge {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+		padding: 10px;
+		border: 0;
+		background: transparent;
+		cursor: zoom-in;
+	}
+	.enlarge-hint {
+		display: none;
+		padding: 4px 9px;
+		border-radius: 999px;
+		background: rgb(0 0 0 / 0.65);
+		color: #f2f2f0;
+		font: 500 12px var(--sans);
+	}
+	@media (hover: none) and (pointer: coarse) {
+		.enlarge-hint {
+			display: inline-block;
+		}
+	}
+	/* Not through the viewer's backdrop. */
+	:global(.viewing) .enlarge-hint {
+		visibility: hidden;
+	}
+	.play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 64px;
+		height: 64px;
+		margin: -32px 0 0 -32px;
+		border: 0;
+		border-radius: 50%;
+		background: rgb(0 0 0 / 0.7);
+		color: #f2f2f0;
+		cursor: pointer;
+	}
+	.play[hidden] {
+		display: none;
+	}
+	.play svg {
+		width: 28px;
+		height: 28px;
+		margin-left: 3px;
+	}
+	html.viewing {
+		overflow: hidden;
+	}
+	#viewer {
+		width: 100vw;
+		max-width: none;
+		height: 100dvh;
+		max-height: none;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+	}
+	#viewer::backdrop {
+		background: rgb(0 0 0 / 0.85);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+	}
+	.viewer-scroll {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		padding: 56px 4vw 24px;
+		overscroll-behavior: contain;
+	}
+	.viewer-scroll img,
+	.viewer-scroll video {
+		display: block;
+		flex: none;
+		max-width: 100%;
+		max-height: 100%;
+		margin: auto;
+		border-radius: 10px;
+	}
+	/* Narrow screens: the shot at a readable height, panned sideways. */
+	@media (max-width: 899px) {
+		.viewer-scroll {
+			padding: 56px 12px 24px;
+		}
+		.viewer-scroll img {
+			width: auto;
+			max-width: none;
+			height: min(72dvh, 820px);
+			max-height: none;
+			margin: auto 0;
+		}
+		.viewer-scroll video {
+			width: 100%;
+		}
+	}
+	@media (max-width: 899px) and (orientation: landscape) {
+		.viewer-scroll img {
+			width: 100%;
+			height: auto;
+		}
+	}
+	.viewer-close {
+		position: fixed;
+		top: 12px;
+		right: 12px;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border: 1px solid rgb(255 255 255 / 0.2);
+		border-radius: 50%;
+		background: rgb(0 0 0 / 0.6);
+		color: #f2f2f0;
+		cursor: pointer;
+	}
+	.viewer-close svg {
+		width: 20px;
+		height: 20px;
+	}
+
+	/* The recording */
+	.recording {
+		padding: 8px 0 0;
+	}
+	.recording video {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 10;
+		object-fit: cover;
+		background: var(--surface);
+	}
+	.center {
+		text-align: center;
+	}
+	.showcase h2 {
+		margin: 96px 0 22px;
+	}
+	h3 {
+		margin: 44px 0 0;
+		color: var(--strong);
+		font-size: 19px;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+	}
+	.block p.small,
+	p.small {
+		max-width: 640px;
+		margin: 8px 0 18px;
+		color: var(--muted);
+		font-size: 15px;
+	}
+	.agents .agent-logos.large {
+		margin-top: 28px;
+	}
+
+	/* How it works */
+	.setups {
+		display: grid;
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		gap: 20px;
+		margin-top: 36px;
+	}
+	.setup {
+		padding: 26px;
+		border: 1px solid var(--hairline);
+		border-radius: 16px;
+		background: var(--bg-raised);
+	}
+	.setup h3 {
+		margin: 0 0 22px;
+		font-size: 17px;
+	}
+	.diagram {
+		display: flex;
+		align-items: center;
+		margin-bottom: 22px;
+	}
+	.node {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		min-width: 0;
+		padding: 14px 10px;
+		border: 1px solid var(--hairline);
+		border-radius: 12px;
+		background: var(--bg);
+		text-align: center;
+	}
+	.node.strong {
+		border-color: var(--muted);
+	}
+	.node-stack {
+		display: grid;
+		flex: 1;
+		gap: 8px;
+	}
+	.node-stack .node {
+		padding: 8px;
+	}
+	.node .icon {
+		width: 26px;
+		height: 26px;
+		color: var(--strong);
+	}
+	.node-stack .icon {
+		width: 20px;
+		height: 20px;
+	}
+	.node-title {
+		color: var(--strong);
+		font-weight: 600;
+		font-size: 14px;
+	}
+	.node-detail {
+		color: var(--muted);
+		font-size: 12px;
+	}
+	.link {
+		flex: 0 0 22px;
+		height: 1px;
+		background: var(--muted);
+	}
+	.command-line {
+		margin: 6px 0 0;
+	}
+	.command-line code {
+		display: inline-block;
+		padding: 5px 10px;
+		border: 1px solid var(--hairline);
+		border-radius: 8px;
+		background: var(--bg);
+		color: var(--strong);
+		font-size: 13px;
+	}
+	.setup .small {
+		margin: 14px 0 0;
+	}
+	.how > .text-link {
+		margin-top: 22px;
+	}
+
+	/* Plugins */
+	.plugins {
+		display: grid;
+		grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+		align-items: center;
+		gap: 44px;
+	}
+	.text-link {
+		display: inline-block;
+		margin-top: 18px;
+		color: var(--strong);
+		font-weight: 550;
+		text-decoration: none;
+	}
+	.code {
+		margin: 0;
+		padding: 20px 22px;
+		overflow-x: auto;
+		border: 1px solid var(--hairline);
+		border-radius: 12px;
+		background: var(--bg-raised);
+		color: var(--strong);
+		font-size: 13px;
+		line-height: 1.65;
+		tab-size: 2;
+	}
+	.code .k {
+		color: var(--code-k);
+	}
+	.code .s {
+		color: var(--code-s);
+	}
+	.code .c {
+		color: var(--code-c);
+	}
+
+	/* FAQ */
+	.faq {
+		max-width: 760px;
+	}
+	.faq h2 {
+		margin-bottom: 18px;
+	}
+	details {
+		border-bottom: 1px solid var(--hairline);
+	}
+	summary {
+		padding: 18px 0;
+		color: var(--strong);
+		font-weight: 600;
+		font-size: 16.5px;
+		cursor: pointer;
+		list-style: none;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	summary::after {
+		content: "+";
+		float: right;
+		color: var(--muted);
+		font-weight: 400;
+	}
+	details[open] summary::after {
+		content: "−";
+	}
+	details p {
+		margin: 0 0 18px;
+		max-width: 680px;
+	}
+	details p code {
+		color: var(--strong);
+		font-size: 14px;
+	}
+
+	/* Closing */
+	.closing {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 22px;
+		margin-top: 110px;
+		padding: 56px 24px;
+		border: 1px solid var(--hairline);
+		border-radius: 18px;
+		background: var(--bg-raised);
+		text-align: center;
+	}
+	.closing .command {
+		width: 100%;
+		max-width: 640px;
+		text-align: left;
+	}
+
+	/* Footer */
+	@media (max-width: 960px) {
+		.hero {
+			grid-template-columns: minmax(0, 1fr);
+			padding-top: 40px;
+		}
+		.hero-mark {
+			order: -1;
+			justify-content: flex-start;
+		}
+		.hero-mark .weave-mark {
+			--weave-size: 150px !important;
+			--weave-scale: 1.63 !important;
+		}
+		.stage {
+			padding-right: 0;
+		}
+		.phone-frame.floating {
+			display: none;
+		}
+		.setups {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.plugins {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+
+	/* Phones */
+	@media (max-width: 600px) {
+		.phone-frame.floating {
+			display: block;
+			position: static;
+			width: 62%;
+			margin: 24px auto 0;
+		}
+		.lead {
+			font-size: 16.5px;
+		}
+		.tabs {
+			flex-wrap: wrap;
+			justify-content: center;
+			overflow: visible;
+		}
+		.setup {
+			padding: 18px;
+		}
+		.node-detail {
+			display: none;
+		}
+		.phones {
+			gap: 14px;
+		}
+		.phones .phone-frame {
+			width: 50%;
+			border-width: 4px;
+			border-radius: 24px;
+		}
+		.trust li::before {
+			content: none;
+		}
+		.trust ul {
+			flex-direction: column;
+			align-items: center;
+		}
+		.closing {
+			padding: 40px 18px;
+		}
+	}
+</style>

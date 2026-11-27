@@ -1,0 +1,36 @@
+{
+	"id": "nil",
+	"name": "nil",
+	"kind": "languageServer",
+	"languages": ["nix"],
+	"license": "MIT OR Apache-2.0",
+	"homepage": "https://github.com/oxalica/nil",
+	"description": "The Nix language server; it formats with nixfmt.",
+	"source": {
+		"type": "cargo",
+		"crate": "nil",
+		"version": "2026-07-23",
+		"git": "https://github.com/oxalica/nil"
+	},
+	"requires": [
+		{
+			"runtime": "rust",
+			"min": 1
+		}
+	],
+	"bin": {
+		"nil": "bin/nil"
+	},
+	"run": {
+		"command": ["nil"],
+		"rootMarkers": ["flake.nix", "default.nix", "shell.nix"],
+		"settings": {
+			"nil": {
+				"formatting": {
+					"command": ["nixfmt"]
+				}
+			}
+		}
+	},
+	"hint": "nix profile install nixpkgs#nil"
+}

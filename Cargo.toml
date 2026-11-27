@@ -1,0 +1,62 @@
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[workspace.package]
+license = "Apache-2.0"
+edition = "2024"
+rust-version = "1.99"
+publish = false
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+# Pedantic lints that do not suit an application: errors and panics are
+# described where they matter, return values are rarely ignorable by
+# mistake here, long handlers and settings structs are fine as they are.
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+must_use_candidate = "allow"
+return_self_not_must_use = "allow"
+too_many_lines = "allow"
+struct_excessive_bools = "allow"
+struct_field_names = "allow"
+similar_names = "allow"
+# Maps here always use the standard hasher.
+implicit_hasher = "allow"
+# `write!` into a String needs its Result handled; `push_str(&format!())`
+# reads better in output code where the cost does not matter.
+format_push_string = "allow"
+# Counting newlines does not need the bytecount crate.
+naive_bytecount = "allow"
+# Error converters and helpers passed to `map_err` take their argument by
+# value; `assert!(x.is_empty())` reads plainly in tests.
+needless_pass_by_value = "allow"
+assert_is_empty = "allow"
+allow_attributes = "warn"
+allow_attributes_without_reason = "warn"
+dbg_macro = "warn"
+expect_used = "warn"
+self_named_module_files = "warn"
+todo = "warn"
+unwrap_used = "warn"
+
+# Development builds keep line tables for backtraces and no debug info for
+# dependencies: full debug info made `target/` grow by hundreds of GB.
+[profile.dev]
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+debug = false
+
+# `ahab machines add` hashes the ahab binary; unoptimised, that takes
+# seconds in development and tests.
+[profile.dev.package.sha2]
+opt-level = 3
+
+[profile.release]
+lto = "thin"
+strip = true

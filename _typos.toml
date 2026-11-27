@@ -1,0 +1,25 @@
+# Spelling in code, comments and docs (typos), checked by `make lint`,
+# the pre-commit hook and CI.
+[files]
+extend-exclude = [
+	"crates/ahab/openapi.json",
+	"apps/ui/src/shared/api/generated/",
+	"apps/ui/src/routeTree.gen.ts",
+	"pnpm-lock.yaml",
+	"Cargo.lock",
+	"*.svg",
+	# Upstream's queries and licence texts, as they are.
+	"apps/ui/languages/queries/",
+	"apps/ui/public/licenses/",
+	"THIRD_PARTY.md",
+]
+
+[default.extend-words]
+# "Hel" + "lo": text streamed in pieces, in tests.
+Hel = "Hel"
+# A Makefile extension.
+mak = "mak"
+# In RFC 8291's example keys (base64url), in the Web Push tests.
+Nto = "Nto"
+# siGit Code's id in the ACP registry, on the landing page.
+sigit = "sigit"

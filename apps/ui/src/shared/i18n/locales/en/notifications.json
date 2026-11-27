@@ -1,0 +1,114 @@
+{
+	"alerts": {
+		"askPhone": "Tell me when an agent is finished or needs me",
+		"allow": "Allow",
+		"open": "Open"
+	},
+	"bell": {
+		"label": "Notifications",
+		"labelUnread_one": "Notifications, {{count}} unread",
+		"labelUnread_other": "Notifications, {{count}} unread"
+	},
+	"inbox": {
+		"label": "Notifications",
+		"title": "Notifications",
+		"unread_one": "· {{count}} unread",
+		"unread_other": "· {{count}} unread",
+		"unreadCount_one": "{{count}} unread",
+		"unreadCount_other": "{{count}} unread",
+		"markAllRead": "Mark all read",
+		"clearRead": "Clear read",
+		"settings": "Notification settings",
+		"emptyTitle": "No notifications",
+		"emptyDescription": "Ahab tells you here when an agent finishes, needs you or stops.",
+		"unreadMark": "Unread",
+		"today": "Today",
+		"yesterday": "Yesterday"
+	},
+	"page": {
+		"loadError": "These settings cannot be loaded.",
+		"title": "Notifications",
+		"description": "What Ahab tells you about: an agent that finishes, needs you or stops. They are kept in the inbox (the bell in the top bar), and shown on every client paired with this server.",
+		"enabled": {
+			"title": "Notifications",
+			"description": "Everything below; off sends none at all."
+		},
+		"outside": {
+			"heading": "Outside Ahab",
+			"title": "Show them outside the app",
+			"phone": "As the phone's notifications, while agents work, with Ahab closed too.",
+			"desktop": "As the desktop's notifications, while this app runs (also in the tray).",
+			"browser": "As this browser's notifications: while a tab is open, or even when Ahab is closed once this browser gets them."
+		},
+		"keeping": {
+			"heading": "Keeping them",
+			"title": "Read notifications",
+			"description": "Unread ones are always kept. Read ones are deleted after this long, once a day.",
+			"label": "Keep read notifications",
+			"days_one": "For {{count}} day",
+			"days_other": "For {{count}} days",
+			"forever": "Keep them"
+		},
+		"saveError": "The change was not saved.",
+		"kind": {
+			"everywhere": "Everywhere",
+			"inside": "In Ahab only",
+			"off": "Off"
+		},
+		"sound": {
+			"heading": "Sound",
+			"title": "Play a sound",
+			"description": "As a notification arrives, on this device. Kept in this browser or app.",
+			"tone": "Which sound",
+			"toneDescription": "And how loud.",
+			"volume": "Volume",
+			"play": "Play",
+			"tones": {
+				"chime": "Chime",
+				"ping": "Ping",
+				"soft": "Soft"
+			}
+		}
+	},
+	"phone": {
+		"title": "This phone",
+		"connected": "Connected: notifications arrive while agents work, with Ahab closed too.",
+		"allowed": "Allowed: Ahab connects while agents work, and checks every 15 minutes.",
+		"blocked": "Blocked: allow Ahab's notifications in Android's settings.",
+		"notAllowed": "Not allowed yet.",
+		"openSettings": "Open settings",
+		"allow": "Allow",
+		"stayConnected": {
+			"title": "Stay connected even when nothing runs",
+			"description": "Tells you at once about everything, with an ongoing notification; uses a little more battery."
+		},
+		"late": {
+			"title": "Notifications come late?",
+			"description": "Some phones stop apps in the background to save battery. Let Ahab run unrestricted in its battery settings.",
+			"action": "Battery settings"
+		}
+	},
+	"push": {
+		"title": "This browser",
+		"insecureAllowed": "While a tab is open. Notifications when Ahab is closed need HTTPS (or localhost).",
+		"insecure": "Notifications when Ahab is closed need HTTPS (or localhost); while a tab is open, this browser can still show them.",
+		"tabOnly": "While a tab is open: this browser cannot get them when Ahab is closed.",
+		"unsupported": "This browser cannot show notifications.",
+		"blocked": "Blocked: allow notifications for this site in the browser's settings.",
+		"testSent": "On. A test is on its way.",
+		"testFailed": "On, but the test did not reach the browser's push service.",
+		"on": "On: notifications arrive even when Ahab is closed.",
+		"off": "Off: notifications show only while a tab is open.",
+		"sendTest": "Send a test",
+		"turnOff": "Turn off",
+		"turnOn": "Turn on",
+		"allow": "Allow",
+		"other": "{{where}} · {{lastUsed}}",
+		"thisDevice": "This device, another browser",
+		"anotherDevice": "Another device",
+		"neverUsed": "No notification yet",
+		"lastUsed": "Last told {{when}}",
+		"browser": "A browser",
+		"browserOn": "{{browser}} on {{system}}"
+	}
+}

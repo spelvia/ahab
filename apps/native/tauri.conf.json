@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.tauri.app/config/2",
+	"productName": "Ahab",
+	"mainBinaryName": "ahab-desktop",
+	"identifier": "dev.ahab.native",
+	"build": {
+		"frontendDist": "../ui/dist",
+		"devUrl": "http://localhost:5183",
+		"beforeDevCommand": "pnpm --filter @ahab/ui dev",
+		"beforeBuildCommand": "pnpm --filter @ahab/ui build"
+	},
+	"app": {
+		"withGlobalTauri": false,
+		"windows": [],
+		"security": {
+			"csp": "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; script-src 'self'; connect-src ipc: http://ipc.localhost"
+		}
+	},
+	"bundle": {
+		"active": true,
+		"category": "DeveloperTool",
+		"shortDescription": "Ahab: a self-hosted agentic workspace",
+		"longDescription": "Ahab for desktop: runs Ahab on this computer, or connects to an Ahab server elsewhere, and shows its web app in a window of its own.",
+		"icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.png"]
+	},
+	"plugins": {
+		"deep-link": {
+			"desktop": {
+				"schemes": ["ahab"]
+			}
+		}
+	}
+}

@@ -1,0 +1,243 @@
+{
+	"settings": {
+		"title": "Settings",
+		"back": "Back to your project",
+		"overview": {
+			"title": "Overview",
+			"ahab": "Ahab",
+			"version": "Version {{version}}",
+			"projects_one": "{{count}} project",
+			"projects_other": "{{count}} projects",
+			"machines_one": "{{count}} machine",
+			"machines_other": "{{count}} machines",
+			"offline_one": "{{count}} offline",
+			"offline_other": "{{count}} offline",
+			"behind_one": "{{count}} behind the server",
+			"behind_other": "{{count}} behind the server",
+			"waiting_one": "{{count}} waiting for approval",
+			"waiting_other": "{{count}} waiting for approval",
+			"clients_one": "{{count}} client paired",
+			"clients_other": "{{count}} clients paired",
+			"unused_one": "{{count}} unused for 3 months",
+			"unused_other": "{{count}} unused for 3 months",
+			"plugins_one": "{{count}} plugin, {{enabled}} on",
+			"plugins_other": "{{count}} plugins, {{enabled}} on"
+		},
+		"about": {
+			"title": "About",
+			"intro": "The Ahab each part runs. Machines behind the server keep working; update them to use everything the server offers.",
+			"server": "Server",
+			"desktopApp": "This app",
+			"phoneApp": "This phone app",
+			"machines": "Machines",
+			"noMachines": "No machines yet.",
+			"behind": "behind the server",
+			"unknown": "unknown"
+		},
+		"groups": {
+			"ahab": "Ahab",
+			"browser": "This browser",
+			"app": "This app",
+			"phone": "This phone"
+		},
+		"sections": {
+			"overview": "Overview",
+			"about": "About",
+			"projects": "Projects",
+			"machines": "Machines",
+			"clients": "Clients",
+			"notifications": "Notifications",
+			"plugins": "Plugins",
+			"features": "Features",
+			"appearance": "Appearance",
+			"editor": "Editor",
+			"agentEditor": "Agent editor",
+			"keyboard": "Keyboard"
+		}
+	},
+	"backToProjects": "Back to your projects",
+	"backToSessions": "Back to the sessions",
+	"notFound": {
+		"title": "There is no such page"
+	},
+	"bottomPanel": {
+		"label": "Panel",
+		"resize": "Resize the panel",
+		"tabs": {
+			"problems": "Problems",
+			"output": "Output"
+		},
+		"maximise": "Maximise the panel",
+		"restore": "Restore the panel's size",
+		"close": "Close the panel"
+	},
+	"output": {
+		"label": "Output",
+		"groups": {
+			"languageServers": "Language servers",
+			"plugins": "Plugins"
+		},
+		"checkRuns": "Check runs",
+		"source": "Output source",
+		"follow": "Follow new lines",
+		"clear": "Clear the output",
+		"clearTitle": "Clear the output (here; the log itself is kept)",
+		"copy": "Copy the output",
+		"unreadable": "The log cannot be read.",
+		"machineUnavailable": "The project's machine is not available.",
+		"noChecks": "No checks run from here yet: Check project (▶ in Problems) runs them.",
+		"cleared": "Cleared. New lines show here.",
+		"empty": "Nothing logged yet."
+	},
+	"serverSwitcher": {
+		"label": "Switch server",
+		"newWindow": "Open in new window",
+		"add": "Add a server…"
+	},
+	"sessionHeader": {
+		"rename": "Rename",
+		"unarchive": "Unarchive",
+		"where": "{{project}} · {{machine}}",
+		"archived": "Archived · ",
+		"archivedWhere": "Archived · {{project}} · {{machine}}",
+		"tabs_one": "Tabs: {{count}} open",
+		"tabs_other": "Tabs: {{count}} open",
+		"actions": "Session actions",
+		"windows": "Windows",
+		"isArchived": "This session is archived.",
+		"closeTab": "Close {{title}}",
+		"noTabs": "No tabs open.",
+		"newSession": "New session",
+		"newTerminal": "New terminal",
+		"terminalLater": "Open terminals from a computer for now"
+	},
+	"statusBar": {
+		"label": "Status bar",
+		"where": "Machine and branch",
+		"file": "This file",
+		"plugins": "From plugins",
+		"status": "Project status",
+		"sheet": "Project status",
+		"problems_one": "{{count}} problem",
+		"problems_other": "{{count}} problems"
+	},
+	"tabTooltip": {
+		"onMachine": "{{what}} — {{machine}}",
+		"external": "{{name}} (outside the project)",
+		"externalUnnamed": "A file (outside the project)",
+		"shell": "Shell",
+		"terminalTitled": "{{command}} ({{title}})",
+		"terminalIn": "{{command}} in {{path}}",
+		"terminalTitledIn": "{{command}} ({{title}}) in {{path}}",
+		"diff": "{{title}}: {{file}}",
+		"otherIn": "{{title}} in {{project}} — {{machine}}"
+	},
+	"windows": {
+		"newSession": "New session",
+		"sessionGone": "This session is gone.",
+		"terminalGone": "This terminal is gone.",
+		"noConversation": "This session has no conversation.",
+		"add": {
+			"label": "Open a window",
+			"title": "New agent session or terminal",
+			"agent": "New agent session",
+			"terminal": "New terminal"
+		}
+	},
+	"tab": {
+		"keepOpen": "Keep open",
+		"closeOthers": "Close others",
+		"closeToRight": "Close to the right",
+		"closeAll": "Close all",
+		"moveRight": "Move to the right",
+		"moveDown": "Move down",
+		"context_one": "{{count}} piece of context in its composer",
+		"context_other": "{{count}} pieces of context in its composer",
+		"unsaved": "Unsaved changes",
+		"addFileTo": "Add file to “{{title}}”",
+		"addFileToChat": "Add file to chat…",
+		"copyPath": "Copy path",
+		"copyRelativePath": "Copy relative path",
+		"showInFiles": "Show in Files"
+	},
+	"views": {
+		"sessions": "Sessions",
+		"files": "Files",
+		"git": "Git",
+		"search": "Search",
+		"needYou_one": "{{label}}, {{count}} need you",
+		"needYou_other": "{{label}}, {{count}} need you",
+		"hide": "Hide {{label}} (right-click or drag to move)",
+		"show": "{{label}} (right-click or drag to move)",
+		"left": "Left views",
+		"right": "Right views",
+		"moveLeft": "Move to the left sidebar",
+		"moveRight": "Move to the right sidebar",
+		"resizeLeft": "Resize the left sidebar",
+		"resizeRight": "Resize the right sidebar"
+	},
+	"workbench": {
+		"projectNotFound": "There is no such project",
+		"projectUnloadable": "This project cannot be loaded",
+		"folderGone": "This folder is gone from its machine.",
+		"machineOffline": "{{machine}} is offline.",
+		"findingRepository": "Looking for the repository…",
+		"views": "Views",
+		"more": "More",
+		"backToFiles": "Back to the files",
+		"search": "Search projects and commands",
+		"toggleLeft": "Toggle the left sidebar",
+		"toggleRight": "Toggle the right sidebar",
+		"phoneList": "Sessions and files",
+		"runCommand": {
+			"title": "Run a command",
+			"label": "Command",
+			"action": "Run"
+		},
+		"openFolder": {
+			"title": "Open folder",
+			"description": "Opens the folder's project, or creates one named after it.",
+			"action": "Open"
+		}
+	},
+	"commands": {
+		"groups": {
+			"session": "Session",
+			"project": "Project",
+			"view": "View",
+			"files": "Files",
+			"window": "Window",
+			"action": "Action",
+			"settings": "Settings",
+			"plugins": "Plugins"
+		},
+		"newSession": "New session",
+		"newTerminal": "New terminal",
+		"runCommand": "Run a command…",
+		"sessions": "Sessions",
+		"showProblems": "Show Problems",
+		"showOutput": "Show Output",
+		"nextProblem": "Go to the next problem in this file",
+		"previousProblem": "Go to the previous problem in this file",
+		"togglePanel": "Toggle the panel",
+		"files": "Files",
+		"goToFile": "Go to file…",
+		"switchBranch": "Switch branch…",
+		"search": "Search",
+		"findInFiles": "Find in files",
+		"plainIcons": "File icons: use plain icons",
+		"materialIcons": "File icons: use Material Icon Theme",
+		"closeTab": "Close tab",
+		"reopenTab": "Reopen closed tab",
+		"nextTab": "Next tab",
+		"previousTab": "Previous tab",
+		"splitTab": "Move tab to the right",
+		"toggleLeft": "Toggle the left sidebar",
+		"toggleRight": "Toggle the right sidebar",
+		"openFolder": "Open folder…",
+		"manageProjects": "Manage projects",
+		"machines": "Machines",
+		"features": "Features",
+		"keyboard": "Keyboard shortcuts"
+	}
+}

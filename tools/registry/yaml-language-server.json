@@ -1,0 +1,41 @@
+{
+	"id": "yaml-language-server",
+	"name": "YAML language server",
+	"kind": "languageServer",
+	"languages": ["yaml"],
+	"license": "MIT",
+	"homepage": "https://github.com/redhat-developer/yaml-language-server",
+	"description": "YAML: schemas, validation and formatting.",
+	"source": {
+		"type": "npm",
+		"package": "yaml-language-server",
+		"version": "2.0.0"
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 18
+		}
+	],
+	"bin": {
+		"yaml-language-server": "node_modules/.bin/yaml-language-server"
+	},
+	"run": {
+		"command": ["yaml-language-server", "--stdio"],
+		"versionArgs": [],
+		"settings": {
+			"yaml": {
+				"format": {
+					"enable": true
+				},
+				"keyOrdering": false
+			},
+			"redhat": {
+				"telemetry": {
+					"enabled": false
+				}
+			}
+		}
+	},
+	"hint": "npm install --global yaml-language-server"
+}

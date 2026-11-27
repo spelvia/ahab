@@ -1,0 +1,72 @@
+{
+	"id": "shellcheck",
+	"name": "ShellCheck",
+	"kind": "linter",
+	"languages": ["bash"],
+	"license": "GPL-3.0-only",
+	"homepage": "https://www.shellcheck.net",
+	"description": "Finds bugs in shell scripts.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "koalaman/shellcheck",
+		"version": "0.11.0",
+		"tag": "v${version}",
+		"assets": {
+			"linux-x64": {
+				"file": "shellcheck-v${version}.linux.x86_64.tar.gz",
+				"bin": {
+					"shellcheck": "shellcheck-v${version}/shellcheck"
+				},
+				"sha256": "b7af85e41cc99489dcc21d66c6d5f3685138f06d34651e6d34b42ec6d54fe6f6"
+			},
+			"linux-arm64": {
+				"file": "shellcheck-v${version}.linux.aarch64.tar.gz",
+				"bin": {
+					"shellcheck": "shellcheck-v${version}/shellcheck"
+				},
+				"sha256": "68a8133197a50beb8803f8d42f9908d1af1c5540d4bb05fdfca8c1fa47decefc"
+			},
+			"darwin-x64": {
+				"file": "shellcheck-v${version}.darwin.x86_64.tar.gz",
+				"bin": {
+					"shellcheck": "shellcheck-v${version}/shellcheck"
+				},
+				"sha256": "c2c15e08df0e8fbc374c335b230a7ee958c313fa5714817a59aa59f1aa594f51"
+			},
+			"darwin-arm64": {
+				"file": "shellcheck-v${version}.darwin.aarch64.tar.gz",
+				"bin": {
+					"shellcheck": "shellcheck-v${version}/shellcheck"
+				},
+				"sha256": "339b930feb1ea764467013cc1f72d09cd6b869ebf1013296ba9055ab2ffbd26f"
+			}
+		}
+	},
+	"bin": {
+		"shellcheck": "shellcheck"
+	},
+	"run": {
+		"command": ["shellcheck", "--format=json1", "${path}"],
+		"output": {
+			"format": "json",
+			"json": {
+				"each": "comments[]",
+				"path": "file",
+				"line": "line",
+				"column": "column",
+				"endLine": "endLine",
+				"endColumn": "endColumn",
+				"severity": "level",
+				"code": "code",
+				"message": "message",
+				"severities": {
+					"error": "error",
+					"warning": "warning",
+					"info": "information",
+					"style": "hint"
+				}
+			}
+		}
+	},
+	"hint": "apt install shellcheck, or brew install shellcheck"
+}

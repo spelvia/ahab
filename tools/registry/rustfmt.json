@@ -1,0 +1,17 @@
+{
+	"id": "rustfmt",
+	"name": "rustfmt",
+	"kind": "formatter",
+	"languages": ["rust"],
+	"license": "MIT OR Apache-2.0",
+	"homepage": "https://github.com/rust-lang/rustfmt",
+	"description": "Rust's formatter, from rustup.",
+	"source": {
+		"type": "system"
+	},
+	"run": {
+		"command": ["rustfmt", "--emit", "stdout"],
+		"settingsFiles": ["rustfmt.toml", ".rustfmt.toml"]
+	},
+	"hint": "rustup component add rustfmt"
+}

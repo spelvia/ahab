@@ -1,0 +1,204 @@
+---
+/**
+ * The website's pages outside the documentation (the landing page, the
+ * changelog): their head, the theme the docs remember, the header and the
+ * footer, and the styles they share.
+ */
+import "@fontsource-variable/inter";
+import "@fontsource-variable/jetbrains-mono";
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+const GITHUB = "https://github.com/spelvia/ahab";
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<script is:inline>
+			// The theme the docs remember (Starlight's), else the system's.
+			const saved = localStorage.getItem("starlight-theme");
+			const light = saved ? saved === "light" : matchMedia("(prefers-color-scheme: light)").matches;
+			document.documentElement.dataset.theme = light ? "light" : "dark";
+		</script>
+	</head>
+	<body>
+		<header class="top">
+			<a class="brand" href="/">
+				<img class="mark mark-dark" src="/ahab-mark-white.svg" alt="" />
+				<img class="mark mark-light" src="/ahab-mark.svg" alt="" />
+				Ahab
+			</a>
+			<nav aria-label="Main">
+				<a href="/docs/">Docs</a>
+				<a href="/docs/plugins/">Plugin SDK</a>
+				<a href="/changelog/">Changelog</a>
+				<a href={GITHUB}>GitHub</a>
+			</nav>
+		</header>
+		<slot />
+		<footer class="bottom">
+			<span>Ahab · <a href={`${GITHUB}/blob/main/LICENSE`}>Apache 2.0</a></span>
+			<nav aria-label="Footer">
+				<a href="/docs/">Docs</a>
+				<a href="/docs/plugins/">Plugin SDK</a>
+				<a href="/docs/security/">Security</a>
+				<a href="/changelog/">Changelog</a>
+				<a href={`${GITHUB}/releases`}>Releases</a>
+				<a href={GITHUB}>GitHub</a>
+			</nav>
+		</footer>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--bg: #171716;
+		--bg-raised: #1d1d1c;
+		--surface: #232322;
+		--hairline: #30302e;
+		--text: #c1c1bd;
+		--strong: #f2f2f0;
+		--muted: #989894;
+		--accent: #eeeeea;
+		--accent-text: #171716;
+		--code-k: #c9b18a;
+		--code-s: #9fc3a5;
+		--code-c: #7b7b76;
+		--sans: "Inter Variable", system-ui, sans-serif;
+		--mono: "JetBrains Mono Variable", ui-monospace, monospace;
+		color-scheme: dark;
+	}
+	:root[data-theme="light"] {
+		--bg: #fafaf7;
+		--bg-raised: #f5f5f0;
+		--surface: #efefe9;
+		--hairline: #ddddd5;
+		--text: #444440;
+		--strong: #20201e;
+		--muted: #62625c;
+		--accent: #242421;
+		--accent-text: #fafaf7;
+		--code-k: #8a5a1c;
+		--code-s: #3c7048;
+		--code-c: #92928a;
+		color-scheme: light;
+	}
+	* {
+		box-sizing: border-box;
+	}
+	html {
+		background: var(--bg);
+	}
+	body {
+		margin: 0;
+		background: var(--bg);
+		color: var(--text);
+		font: 400 16px/1.6 var(--sans);
+		-webkit-font-smoothing: antialiased;
+	}
+	a {
+		color: inherit;
+	}
+	code,
+	pre {
+		font-family: var(--mono);
+	}
+	::selection {
+		color: var(--accent-text);
+		background: var(--accent);
+	}
+	:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	/* Header */
+	.top,
+	main,
+	.bottom {
+		max-width: 1180px;
+		margin: 0 auto;
+		padding: 0 24px;
+	}
+	.top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		height: 68px;
+	}
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		color: var(--strong);
+		font-weight: 650;
+		font-size: 17px;
+		text-decoration: none;
+	}
+	.mark {
+		height: 20px;
+	}
+	:root[data-theme="light"] .mark-dark,
+	:root:not([data-theme="light"]) .mark-light {
+		display: none;
+	}
+	.top nav {
+		display: flex;
+		gap: 22px;
+		font-size: 14px;
+	}
+	.top nav a,
+	.bottom nav a {
+		color: var(--muted);
+		text-decoration: none;
+	}
+	.top nav a:hover,
+	.bottom nav a:hover {
+		color: var(--strong);
+	}
+
+	/* Hero */
+	.bottom {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		margin-top: 64px;
+		padding-top: 28px;
+		padding-bottom: 40px;
+		border-top: 1px solid var(--hairline);
+		color: var(--muted);
+		font-size: 14px;
+	}
+	.bottom nav {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 20px;
+	}
+
+	/* Tablets */
+	@media (max-width: 600px) {
+		.top nav a:not(:first-child):not(:last-child) {
+			display: none;
+		}
+		.top,
+		main,
+		.bottom {
+			padding: 0 18px;
+		}
+		.bottom {
+			padding-bottom: 32px;
+		}
+	}
+</style>

@@ -1,0 +1,82 @@
+# Optional services. Ahab uses SQLite by default, so development needs none of
+# these. `make db` starts Postgres for running the server on it, and
+# `make test-postgres` its throwaway twin for the tests. The `app` profile runs
+# the Ahab image the way production does, on SQLite in a volume:
+#   docker compose -f docker/compose.yaml --profile app up --build
+name: ahab
+
+services:
+  postgres:
+    image: postgres:18.6-trixie
+    environment:
+      POSTGRES_USER: ahab
+      POSTGRES_PASSWORD: ahab
+      POSTGRES_DB: ahab
+    ports:
+      - "127.0.0.1:55442:5432"
+    volumes:
+      - postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=ahab --dbname=ahab"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  # For the tests only: in memory and without fsync, so the many test
+  # databases are quick to create, and the dev database stays untouched.
+  # Each test drops its database when it ends. With minimal WAL, copying
+  # template1 for a new database writes no WAL; local connections are
+  # trusted, so dropping a database never waits on one still logging in
+  # (crates/ahab/tests/support/database.rs).
+  postgres-test:
+    image: postgres:18.6-trixie
+    command:
+      - postgres
+      - -c
+      - fsync=off
+      - -c
+      - synchronous_commit=off
+      - -c
+      - full_page_writes=off
+      - -c
+      - max_connections=300
+      - -c
+      - wal_level=minimal
+      - -c
+      - max_wal_senders=0
+      - -c
+      - max_wal_size=256MB
+      - -c
+      - authentication_timeout=5s
+    environment:
+      POSTGRES_USER: ahab
+      POSTGRES_PASSWORD: ahab
+      POSTGRES_DB: ahab
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "127.0.0.1:55443:5432"
+    tmpfs:
+      - /var/lib/postgresql:size=2g
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=ahab --dbname=ahab"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  ahab:
+    profiles: [app]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      # The key that can read github.com/spelvia/stubb.
+      ssh: ["default=${AHAB_SSH_KEY:-${HOME}/.ssh/id_ed25519}"]
+    # For Postgres instead, start the postgres service and set
+    # DATABASE_URL: postgres://ahab:ahab@postgres:5432/ahab
+    ports:
+      - "127.0.0.1:8181:8080"
+    volumes:
+      - data:/data
+
+volumes:
+  postgres:
+  data:

@@ -1,0 +1,47 @@
+{
+	"id": "basedpyright",
+	"name": "basedpyright",
+	"kind": "languageServer",
+	"languages": ["python"],
+	"license": "MIT",
+	"homepage": "https://docs.basedpyright.com",
+	"description": "Python types and navigation (Pyright's fork, with Node inside its package).",
+	"source": {
+		"type": "pypi",
+		"package": "basedpyright",
+		"version": "1.40.2"
+	},
+	"requires": [
+		{
+			"runtime": "python",
+			"min": 3
+		}
+	],
+	"bin": {
+		"basedpyright-langserver": "venv/bin/basedpyright-langserver",
+		"basedpyright": "venv/bin/basedpyright"
+	},
+	"run": {
+		"command": ["basedpyright-langserver", "--stdio"],
+		"versionArgs": [],
+		"rootMarkers": [
+			"pyproject.toml",
+			"pyrightconfig.json",
+			"setup.py",
+			"setup.cfg",
+			"requirements.txt",
+			"Pipfile"
+		],
+		"settingsFiles": ["pyproject.toml", "pyrightconfig.json"],
+		"settings": {
+			"basedpyright": {
+				"analysis": {
+					"autoSearchPaths": true,
+					"useLibraryCodeForTypes": true,
+					"diagnosticMode": "openFilesOnly"
+				}
+			}
+		}
+	},
+	"hint": "pip install basedpyright"
+}

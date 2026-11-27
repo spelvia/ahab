@@ -1,0 +1,11 @@
+# Links in the repository's Markdown (lychee). `make lint` and CI check
+# links between files offline (`--offline`); `make links` also checks the
+# web addresses.
+root_dir = "apps/docs/src/content/docs"
+fallback_extensions = ["md", "mdx"]
+index_files = ["index.md", "index.mdx", "."]
+include_fragments = "full"
+exclude_path = ["node_modules", "target", "e2e/test-results", "e2e/playwright-report"]
+no_progress = true
+# Placeholders and local addresses in examples.
+exclude = ['^https?://(localhost|127\.0\.0\.1|ahab\.example\.internal)']

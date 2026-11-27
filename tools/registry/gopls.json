@@ -1,0 +1,29 @@
+{
+	"id": "gopls",
+	"name": "gopls",
+	"kind": "languageServer",
+	"languages": ["go"],
+	"license": "BSD-3-Clause",
+	"homepage": "https://go.dev/gopls",
+	"description": "The Go language server.",
+	"source": {
+		"type": "go",
+		"module": "golang.org/x/tools/gopls",
+		"version": "v0.24.0"
+	},
+	"requires": [
+		{
+			"runtime": "go",
+			"min": 1
+		}
+	],
+	"bin": {
+		"gopls": "gopls"
+	},
+	"run": {
+		"command": ["gopls"],
+		"rootMarkers": ["go.work", "go.mod"],
+		"versionArgs": ["version"]
+	},
+	"hint": "go install golang.org/x/tools/gopls@latest"
+}

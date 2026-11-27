@@ -1,0 +1,13 @@
+.git
+.env
+data
+target
+**/node_modules
+apps/ui/dist
+ui/.tanstack
+docs
+e2e
+apps/native/dist
+apps/native/target
+apps/native/binaries
+apps/native/gen

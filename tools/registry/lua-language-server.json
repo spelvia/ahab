@@ -1,0 +1,48 @@
+{
+	"id": "lua-language-server",
+	"name": "Lua language server",
+	"kind": "languageServer",
+	"languages": ["lua"],
+	"license": "MIT",
+	"homepage": "https://luals.github.io",
+	"description": "Lua.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "LuaLS/lua-language-server",
+		"version": "3.19.2",
+		"assets": {
+			"linux-x64": {
+				"file": "lua-language-server-${version}-linux-x64.tar.gz",
+				"sha256": "93ad326b10f6c00911dd8c450fa098332dbd8f9f45d1052f5636a2d54479b947"
+			},
+			"linux-arm64": {
+				"file": "lua-language-server-${version}-linux-arm64.tar.gz",
+				"sha256": "17b8e401a874440adeb649e5024c364f2bb9d15156c74a40e56d1ae9a1b2e4f2"
+			},
+			"darwin-x64": {
+				"file": "lua-language-server-${version}-darwin-x64.tar.gz",
+				"sha256": "6f2174ece5ec63bcd9d5b22b2c902445c1cd9045fafe48c62602448ebf4c09cc"
+			},
+			"darwin-arm64": {
+				"file": "lua-language-server-${version}-darwin-arm64.tar.gz",
+				"sha256": "79149584320a23bd5fcd5bc31f47a1975acd8a4560a0e89036bb1016fa61687f"
+			}
+		}
+	},
+	"bin": {
+		"lua-language-server": "bin/lua-language-server"
+	},
+	"run": {
+		"command": ["lua-language-server"],
+		"rootMarkers": [
+			".luarc.json",
+			".luarc.jsonc",
+			".luacheckrc",
+			".stylua.toml",
+			"stylua.toml",
+			"selene.toml"
+		],
+		"settingsFiles": [".luarc.json", ".luarc.jsonc"]
+	},
+	"hint": "brew install lua-language-server"
+}

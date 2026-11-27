@@ -1,0 +1,13 @@
+packages:
+  - apps/ui
+  - e2e
+  - apps/docs
+  - sdk/*
+  - crates/ahab/tests/fixtures/plugins/*
+
+allowBuilds:
+  esbuild: false
+  lefthook: false
+
+minimumReleaseAgeExclude:
+  - "@astrojs/starlight@0.42.9"

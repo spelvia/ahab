@@ -1,0 +1,61 @@
+version: 2
+updates:
+  - package-ecosystem: cargo
+    directory: /
+    target-branch: main
+    schedule:
+      interval: weekly
+      day: monday
+    # New releases wait a week, as pnpm's minimumReleaseAge does.
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      compatible-updates:
+        update-types: [minor, patch]
+    commit-message:
+      prefix: chore(deps)
+  - package-ecosystem: npm
+    directory: /
+    target-branch: main
+    schedule:
+      interval: weekly
+      day: monday
+    # New releases wait a week, as pnpm's minimumReleaseAge does.
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      compatible-updates:
+        update-types: [minor, patch]
+    commit-message:
+      prefix: chore(deps)
+  - package-ecosystem: docker
+    directories: [/docker]
+    target-branch: main
+    schedule:
+      interval: weekly
+      day: monday
+    # New releases wait a week, as pnpm's minimumReleaseAge does.
+    cooldown:
+      default-days: 7
+    groups:
+      images:
+        patterns: ["*"]
+    commit-message:
+      prefix: chore(deps)
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: main
+    schedule:
+      interval: weekly
+      day: monday
+    # New releases wait a week, as pnpm's minimumReleaseAge does.
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: chore(ci)

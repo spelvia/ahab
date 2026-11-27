@@ -1,0 +1,127 @@
+/* Syntax highlighting: Tree-sitter captures, shown as classes
+   (`function.method` → `tok-function tok-function-method`), coloured from
+   the --syntax-* tokens the light and dark themes define in globals.css. A
+   plugin theme changes the tokens, not these rules. More general captures
+   come first, so the more specific ones win. */
+
+.tok-variable,
+.tok-punctuation {
+	color: var(--syntax-plain);
+}
+.tok-punctuation,
+.tok-punctuation-delimiter,
+.tok-punctuation-bracket {
+	color: var(--syntax-punctuation);
+}
+.tok-operator {
+	color: var(--syntax-operator);
+}
+.tok-comment {
+	color: var(--syntax-comment);
+	font-style: italic;
+}
+.tok-keyword,
+.tok-keyword-storage,
+.tok-keyword-function,
+.tok-keyword-operator,
+.tok-keyword-directive {
+	color: var(--syntax-keyword);
+}
+.tok-keyword-control,
+.tok-special {
+	color: var(--syntax-control);
+}
+.tok-string,
+.tok-markup-raw,
+.tok-markup-link-text,
+.tok-markup-link-label {
+	color: var(--syntax-string);
+}
+.tok-string-regexp,
+.tok-string-special {
+	color: var(--syntax-regexp);
+}
+.tok-constant,
+.tok-constant-builtin,
+.tok-constant-character {
+	color: var(--syntax-constant);
+}
+.tok-constant-numeric {
+	color: var(--syntax-number);
+}
+.tok-constant-character-escape {
+	color: var(--syntax-escape);
+}
+.tok-function,
+.tok-function-method,
+.tok-function-builtin,
+.tok-function-macro,
+.tok-function-special {
+	color: var(--syntax-function);
+}
+.tok-function-macro {
+	color: var(--syntax-macro);
+}
+.tok-type,
+.tok-type-builtin,
+.tok-type-enum,
+.tok-constructor,
+.tok-namespace {
+	color: var(--syntax-type);
+}
+.tok-type-enum-variant {
+	color: var(--syntax-constant);
+}
+.tok-variable-builtin {
+	color: var(--syntax-keyword);
+}
+.tok-variable-parameter {
+	color: var(--syntax-parameter);
+}
+.tok-variable-other-member {
+	color: var(--syntax-property);
+}
+.tok-attribute {
+	color: var(--syntax-attribute);
+}
+.tok-tag,
+.tok-tag-builtin {
+	color: var(--syntax-tag);
+}
+.tok-label {
+	color: var(--syntax-label);
+}
+.tok-markup-heading {
+	color: var(--syntax-heading);
+	font-weight: 600;
+}
+.tok-markup-heading-marker,
+.tok-markup-list,
+.tok-markup-quote {
+	color: var(--syntax-keyword);
+}
+.tok-markup-quote {
+	font-style: italic;
+}
+.tok-markup-bold {
+	font-weight: 600;
+}
+.tok-markup-italic {
+	font-style: italic;
+}
+.tok-markup-strikethrough {
+	text-decoration: line-through;
+}
+.tok-markup-link-url {
+	color: var(--syntax-link);
+	text-decoration: underline;
+}
+.tok-diff-plus {
+	color: var(--success);
+}
+.tok-diff-minus {
+	color: var(--destructive);
+}
+.tok-diff-delta {
+	color: var(--warning);
+}

@@ -1,0 +1,41 @@
+{
+	"id": "stylua",
+	"name": "StyLua",
+	"kind": "formatter",
+	"languages": ["lua"],
+	"license": "MPL-2.0",
+	"homepage": "https://github.com/JohnnyMorganz/StyLua",
+	"description": "Formats Lua, where the project configures StyLua.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "JohnnyMorganz/StyLua",
+		"version": "2.6.0",
+		"tag": "v${version}",
+		"assets": {
+			"linux-x64": {
+				"file": "stylua-linux-x86_64.zip",
+				"sha256": "a485f72bbfa22e4642e77a84b5edc2611a5cab7477b34e2e709dd8f78e919895"
+			},
+			"linux-arm64": {
+				"file": "stylua-linux-aarch64.zip",
+				"sha256": "8e67539e5fdf7a81cd03cf592b0df18d3bb96ee17a5ea5d9bf67b86387b903b0"
+			},
+			"darwin-x64": {
+				"file": "stylua-macos-x86_64.zip",
+				"sha256": "90779aa873837b2dff8eb3361bd27950303914c24265a59cae0a0d0629d71585"
+			},
+			"darwin-arm64": {
+				"file": "stylua-macos-aarch64.zip",
+				"sha256": "dab9b66d340ca5ffc8225211f1dcf89b84783e09b8cbec8c518497eba81f3c42"
+			}
+		}
+	},
+	"bin": {
+		"stylua": "stylua"
+	},
+	"run": {
+		"command": ["stylua", "--stdin-filepath", "${path}", "-"],
+		"configFiles": ["stylua.toml", ".stylua.toml"]
+	},
+	"hint": "cargo install stylua"
+}

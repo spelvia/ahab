@@ -1,0 +1,35 @@
+{
+	"id": "vscode-html-language-server",
+	"name": "HTML language server",
+	"kind": "languageServer",
+	"languages": ["html"],
+	"license": "MIT",
+	"homepage": "https://github.com/hrsh7th/vscode-langservers-extracted",
+	"description": "HTML, with its CSS and JavaScript.",
+	"source": {
+		"type": "npm",
+		"package": "vscode-langservers-extracted",
+		"version": "4.10.0"
+	},
+	"requires": [
+		{
+			"runtime": "node",
+			"min": 18
+		}
+	],
+	"bin": {
+		"vscode-html-language-server": "node_modules/.bin/vscode-html-language-server"
+	},
+	"run": {
+		"command": ["vscode-html-language-server", "--stdio"],
+		"versionArgs": [],
+		"initializationOptions": {
+			"provideFormatter": true,
+			"embeddedLanguages": {
+				"css": true,
+				"javascript": true
+			}
+		}
+	},
+	"hint": "npm install --global vscode-langservers-extracted"
+}

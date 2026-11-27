@@ -1,0 +1,209 @@
+{
+	"actions": {
+		"cancel": "Cancel",
+		"close": "Close",
+		"save": "Save",
+		"saving": "Saving…",
+		"delete": "Delete",
+		"remove": "Remove",
+		"retry": "Retry",
+		"undo": "Undo"
+	},
+	"state": {
+		"loading": "Loading…"
+	},
+	"withKey": "{{label}} ({{key}})",
+	"clipboard": {
+		"copied": "Copied",
+		"failed": "Cannot copy here"
+	},
+	"codeBlock": { "scroll": "Scroll horizontally to see the rest" },
+	"copyButton": {
+		"copy": "Copy {{label}}",
+		"copied": "{{label}} copied",
+		"failed": "Cannot copy the {{label}}: select it and press Ctrl+C"
+	},
+	"picker": {
+		"chosen": "{{label}}: {{value}}",
+		"none": "none"
+	},
+	"time": {
+		"short": {
+			"now": "now",
+			"minutes": "{{value}}m",
+			"hours": "{{value}}h",
+			"days": "{{value}}d",
+			"years": "{{value}}y"
+		},
+		"justNow": "just now",
+		"minutesAgo_one": "{{count}} min ago",
+		"minutesAgo_other": "{{count}} min ago",
+		"hoursAgo_one": "{{count}} h ago",
+		"hoursAgo_other": "{{count}} h ago"
+	},
+	"size": {
+		"bytes": "{{value}} B",
+		"kilobytes": "{{value}} KB",
+		"megabytes": "{{value}} MB"
+	},
+	"errors": {
+		"status": "The server answered with status {{status}}.",
+		"requestTimeout": "The Ahab server took too long to answer.",
+		"serverUnreachable": "Could not reach the Ahab server.",
+		"invalidResponse": "The Ahab server returned an unreadable response.",
+		"machineOffline": "The machine is offline.",
+		"folderMissing": "The folder is gone from its machine.",
+		"permissionDenied": "Ahab may not read this.",
+		"projectUnknown": "The machine is still loading this project.",
+		"unavailableProjectLink": "Link unavailable in this project",
+		"outsideFolder": "That is outside the project's folder."
+	},
+	"pairing": {
+		"denied": "The request was denied on the paired client.",
+		"cannotAsk": "Ahab cannot be asked.",
+		"askAgain": "Ask again",
+		"approve": "Approve this code on a paired client",
+		"code": "Pairing code",
+		"waiting": "Waiting for approval…",
+		"asking": "Asking…",
+		"qr": "QR code to approve this client",
+		"scan": "Or scan it with a phone that's already paired",
+		"typeCode": "Or type the code Add client shows on a paired client",
+		"pair": "Pair"
+	},
+	"chatContext": {
+		"addTo": "Add to “{{title}}”",
+		"addToChat": "Add to chat…",
+		"chooseForThis": "Choose a chat for this",
+		"choose": "Choose the chat",
+		"references": {
+			"diff": "Diff {{lines}}",
+			"terminal": "Terminal: {{label}}",
+			"terminalOutput": "Terminal output",
+			"search": "Search: {{label}}",
+			"searchResults": "Search results",
+			"history": "Chat history: {{label}}",
+			"chatHistory": "Chat history"
+		}
+	},
+	"editor": {
+		"loading": "Loading the editor…",
+		"noExternalFiles": "Nothing reads files outside the project.",
+		"spaces": "Spaces: {{size}}",
+		"tabSize": "Tab Size: {{size}}",
+		"cursor": "Ln {{line}}, Col {{column}}",
+		"selections_one": "Ln {{line}}, Col {{column}} ({{count}} selections)",
+		"selections_other": "Ln {{line}}, Col {{column}} ({{count}} selections)",
+		"selected_one": "Ln {{line}}, Col {{column}} ({{count}} selected)",
+		"selected_other": "Ln {{line}}, Col {{column}} ({{count}} selected)",
+		"vim": {
+			"modes": {
+				"normal": "NORMAL",
+				"insert": "INSERT",
+				"visual": "VISUAL",
+				"visualLine": "VISUAL LINE",
+				"visualBlock": "VISUAL BLOCK",
+				"replace": "REPLACE"
+			},
+			"modeShown": "-- {{mode}} --",
+			"mode": "Vim mode: {{mode}}",
+			"modeWithKeys": "Vim mode: {{mode}}, keys typed: {{keys}}"
+		},
+		"severity": {
+			"error": "error",
+			"warning": "warning",
+			"info": "info",
+			"hint": "hint"
+		},
+		"fixes": {
+			"looking": "Looking for fixes…",
+			"none": "No quick fixes available",
+			"readOnly_one": "{{count}} quick fix: edit the file to apply it",
+			"readOnly_other": "{{count}} quick fixes: edit the file to apply them",
+			"title": "Fixes",
+			"offered": "What the language tools offer here.",
+			"nothing": "Nothing to fix here."
+		},
+		"language": {
+			"tools": "Language tools: {{label}}",
+			"nothingConfigured": "Nothing is configured for this language: highlighting only. Nothing is wrong."
+		},
+		"rename": {
+			"title": "Rename {{name}}",
+			"everywhere": "Every place the language server knows of changes.",
+			"newName": "New name",
+			"preview": "Preview",
+			"apply": "Rename",
+			"changes_one": "{{count}} change in {{files}}",
+			"changes_other": "{{count}} changes in {{files}}",
+			"files_one": "{{count}} file",
+			"files_other": "{{count}} files",
+			"done": "Renamed: {{summary}}"
+		}
+	},
+	"keymap": {
+		"groups": {
+			"general": "General",
+			"windows": "Windows",
+			"files": "Files",
+			"editor": "Editor",
+			"chat": "Chat"
+		},
+		"actions": {
+			"palette": "Command palette",
+			"leftSidebar": "Toggle the left sidebar",
+			"rightSidebar": "Toggle the right sidebar",
+			"togglePanel": "Toggle the panel",
+			"showProblems": "Show Problems",
+			"showOutput": "Show Output",
+			"newSession": "New session",
+			"newTerminal": "New terminal",
+			"closeWindow": "Close the window",
+			"reopenWindow": "Reopen the closed window",
+			"nextWindow": "Next window",
+			"previousWindow": "Previous window",
+			"splitWindow": "Split the window",
+			"goToFile": "Go to file",
+			"findInFiles": "Find in files",
+			"editor": {
+				"save": "Save the file",
+				"toggleEdit": "Switch between viewing and editing",
+				"find": "Find and replace in the file",
+				"goToLine": "Go to line",
+				"selectNextOccurrence": "Add the next occurrence to the selection",
+				"deleteLine": "Delete the line",
+				"moveLineUp": "Move the line up",
+				"moveLineDown": "Move the line down",
+				"copyLineUp": "Duplicate the line above",
+				"copyLineDown": "Duplicate the line below",
+				"toggleComment": "Comment or uncomment the line",
+				"goToDefinition": "Go to definition",
+				"goToTypeDefinition": "Go to type definition",
+				"goToImplementation": "Go to implementation",
+				"goToReferences": "Find references",
+				"showHover": "Show the hover",
+				"rename": "Rename the symbol",
+				"codeActions": "Quick fixes",
+				"format": "Format the file",
+				"nextProblem": "Next problem",
+				"previousProblem": "Previous problem"
+			},
+			"switchProject": "Switch to project {{number}}",
+			"chat": {
+				"allow": "Allow or approve the focused request",
+				"deny": "Deny or decline the focused request"
+			}
+		}
+	},
+	"imageViewer": {
+		"open": "Open the image: {{label}}",
+		"openUnnamed": "Open the image",
+		"title": "Image",
+		"zoomIn": "Zoom in (+)",
+		"zoomOut": "Zoom out (−)",
+		"zoom": "{{value}}%",
+		"actualSize": "Switch between fitted and actual size",
+		"fit": "Fit to the window (0)",
+		"openOriginal": "Open the image in a new tab"
+	}
+}

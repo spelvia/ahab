@@ -1,0 +1,7 @@
+# Test runs: `make test` (SQLite) and `make test-postgres`. Each test gets its
+# own fresh database; see crates/ahab/tests/support/database.rs.
+
+nextest-version = { recommended = "0.9.143", required = "0.9.59" }
+
+[profile.default]
+slow-timeout = { period = "60s", terminate-after = 5 }

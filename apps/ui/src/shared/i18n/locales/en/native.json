@@ -1,0 +1,201 @@
+{
+	"splash": {
+		"connecting": "Connecting to {{name}}…",
+		"adding": "Adding this computer…",
+		"addingTo": "Adding this computer to {{name}}…",
+		"pairing": "Pairing…",
+		"starting": "Starting Ahab on this computer…",
+		"opening": "Opening Ahab…"
+	},
+	"screens": {
+		"back": "Back",
+		"servers": "Servers",
+		"tryAgain": "Try again",
+		"pairAgain": "Pair again",
+		"noSuchServer": "There is no such server",
+		"addThisComputer": "Add this computer",
+		"startHere": "Start Ahab on this computer"
+	},
+	"connect": {
+		"known": {
+			"title": "This app is paired with {{name}}",
+			"open": "Open it"
+		},
+		"title": "Connect to an Ahab server",
+		"lead": "The address you open Ahab at, such as https://ahab.example or http://192.168.1.20:8180.",
+		"address": "Server address",
+		"continue": "Continue"
+	},
+	"pairing": {
+		"title": "Pair with {{host}}",
+		"lead": "Ahab {{version}} at {{url}}.",
+		"notPairingLink": "This is not a pairing link.",
+		"openApproval": "Open approval in my browser",
+		"onServer": "Or on the server's computer: <code>{{command}}</code>"
+	},
+	"join": {
+		"failed": "Cannot join",
+		"title": "Add this computer as a machine of {{name}}?",
+		"lead": "Agents can then work in folders on this computer. Ahab's daemon runs here in the background, as your user, connected to that server; its approval shows on the server as any machine's does.",
+		"runsServer": "This computer is set up to run its own Ahab server. After joining, only its daemon runs here, connected to {{name}}; the server here stops, and its data stays where it is.",
+		"notNow": "Not now"
+	},
+	"link": {
+		"broken": "This link does not work",
+		"pair": {
+			"title": "Pair this app with a server?",
+			"lead": "A link asks to pair this app with:",
+			"warning": "Pair only with a server you know: it is shown in this window and can send you notifications.",
+			"action": "Pair"
+		},
+		"join": {
+			"title": "Add this computer as a machine?",
+			"lead": "A link asks to join this computer to a server, so its agents can work in folders here:",
+			"fingerprint": "Server key <code>{{fingerprint}}</code>; joining fails if the server shows another.",
+			"noFingerprint": "The link does not say the server's key fingerprint, so this computer trusts the key the server shows."
+		},
+		"unknown": {
+			"title": "This app is not paired with that server",
+			"action": "Pair with it"
+		}
+	},
+	"opening": {
+		"unpaired": {
+			"title": "{{name}} no longer knows this app",
+			"lead": "This app was revoked there as a client, or the server was set up again. Pair again to use it."
+		},
+		"unreachable": {
+			"title": "{{name}} does not answer",
+			"stopped": "Ahab is stopped on this computer.",
+			"otherServers": "Other servers"
+		}
+	},
+	"running": {
+		"failed": {
+			"run": "Ahab did not start",
+			"existing": "Ahab on this computer does not answer"
+		},
+		"title": "Setting up Ahab",
+		"ready": "Ahab is ready.",
+		"steps": "Setting up Ahab",
+		"starting": "Starting Ahab on this computer",
+		"connecting": "Connecting to Ahab on this computer",
+		"running": "Ahab is running",
+		"runningOn": "Ahab is running on {{machine}}",
+		"machine": "This computer is ready for agents",
+		"looking": "Looking for agents…",
+		"found": "Agents found",
+		"none": "No agents found yet",
+		"opening": "Opening Ahab",
+		"mark": {
+			"done": "Done: ",
+			"active": "Now: ",
+			"waiting": "Next: "
+		},
+		"agent": {
+			"ready": "ready",
+			"notSignedIn": "sign in",
+			"needsLook": "needs a look"
+		}
+	},
+	"servers": {
+		"title": "Servers",
+		"leadKeychain": "Each is paired with this app, with its own credential in the system keychain.",
+		"leadEncryptedFile": "Each is paired with this app, with its own credential (in an encrypted file: no keychain answered).",
+		"none": "This app is not paired with a server yet.",
+		"name": "Name",
+		"local": "on this computer",
+		"open": "Open",
+		"remove": {
+			"question": "Remove {{name}}?",
+			"detail": "This app is revoked there as a client when it answers, and its credential is forgotten here. Nothing on the server is deleted."
+		},
+		"newWindow": "New window",
+		"rename": "Rename",
+		"add": "Add a server",
+		"settings": "App settings"
+	},
+	"settings": {
+		"title": "App settings",
+		"role": {
+			"running": "Runs Ahab.",
+			"runningAt": "Runs Ahab at {{url}}.",
+			"stopped": "Ahab is set up here but stopped.",
+			"machine": "A machine of {{server}}.",
+			"machineStopped": "A machine of {{server}} (stopped).",
+			"machineElsewhere": "A machine of another server.",
+			"machineElsewhereStopped": "A machine of another server (stopped).",
+			"none": "Neither runs Ahab nor is a machine of a server."
+		},
+		"computer": {
+			"heading": "This computer",
+			"installed": "Installed ahab",
+			"bundled": "In this app",
+			"service": "Service",
+			"machine": "As a machine",
+			"nothing": "none",
+			"managedService": "{{manager}}, managed by your system configuration",
+			"noServiceManager": "no service manager here",
+			"managed": "Your system configuration (such as Home Manager) runs Ahab here: start and stop it there.",
+			"stop": {
+				"question": "Stop Ahab on this computer?",
+				"question_daemon": "Stop this computer's daemon on this computer?",
+				"detail": "Agents and terminals on this computer stop, and it no longer starts when you log in. Nothing is deleted; start it again here or with `ahab up`.",
+				"yes": "Stop",
+				"busy": "Stopping Ahab…",
+				"busy_daemon": "Stopping this computer's daemon…",
+				"action": "Stop Ahab on this computer",
+				"action_daemon": "Stop this computer's daemon on this computer"
+			},
+			"start": {
+				"busy": "Starting Ahab…",
+				"busy_daemon": "Starting this computer's daemon…",
+				"action": "Start Ahab on this computer",
+				"action_daemon": "Start this computer's daemon on this computer"
+			},
+			"leave": {
+				"question": "Leave {{server}}?",
+				"questionUnknown": "Leave the server?",
+				"detail": "This computer's daemon stops, and agents can no longer work here. Its key stays; remove the machine on the server under Settings → Machines.",
+				"yes": "Leave",
+				"busy": "Leaving…",
+				"action": "Leave {{server}}"
+			},
+			"runHere": "Run Ahab here",
+			"addAsMachine": "Add as a machine of {{name}}"
+		},
+		"app": {
+			"heading": "The app",
+			"tray": {
+				"title": "Keep in the tray when the last window closes",
+				"detail": "Quitting never stops Ahab's service. By default on when Ahab runs on this computer.",
+				"label": "Keep in the tray"
+			},
+			"notifications": {
+				"title": "Notifications",
+				"detail": "Native notifications for what Ahab tells you while its window is in the background."
+			},
+			"updates": "Check for updates",
+			"shortcut": {
+				"label": "Global shortcut to bring Ahab forward",
+				"placeholder": "Off; for example CommandOrControl+Shift+A"
+			},
+			"keychain": "Credentials are kept in the system keychain.",
+			"encryptedFile": "Credentials are kept in an encrypted file in the app's data folder.",
+			"version": "Ahab for desktop {{version}}.",
+			"quit": "Quit the app"
+		}
+	},
+	"welcome": {
+		"title": "Your agents, on your machines.",
+		"lead": "Ahab runs the coding agents you already use, in folders on this computer and on every machine you add.",
+		"noAhab": "This app has no Ahab to run on this computer.",
+		"noServiceManager": "This computer has no service manager to keep Ahab running in the background.",
+		"connect": "Connect to an Ahab server",
+		"haveServer": "I already have an Ahab server →",
+		"phone": {
+			"lead": "Connect this phone to your Ahab server, and follow your agents from anywhere.",
+			"connect": "Connect to your Ahab server"
+		}
+	}
+}

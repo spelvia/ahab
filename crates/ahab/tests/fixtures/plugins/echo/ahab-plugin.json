@@ -1,0 +1,29 @@
+{
+	"id": "echo",
+	"name": "Echo",
+	"version": "0.1.0",
+	"description": "Answers what it is given: Ahab's test plugin.",
+	"ahab": ">=0.1.0 <0.2.0",
+	"entries": {
+		"web": "dist/web.js",
+		"daemon": "dist/daemon.js"
+	},
+	"dependsOn": {},
+	"secrets": [],
+	"hooks": ["terminals.create", "notifications.send"],
+	"machines": "all",
+	"settings": "dist/settings.json",
+	"notifications": [
+		{
+			"kind": "said",
+			"title": "Echo said something",
+			"description": "When Echo's notify command runs."
+		}
+	],
+	"destinations": [
+		{
+			"id": "memory",
+			"name": "Echo's memory"
+		}
+	]
+}

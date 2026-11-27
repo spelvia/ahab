@@ -1,0 +1,13 @@
+{
+	"type": "hello",
+	"protocol": 1,
+	"publicKey": "iojj3XQJ8ZX9UtstPLpdcspnCb8dlBIb83SIAbQPb1w=",
+	"signature": "9TGZ2Ej6fUuJ1hc1Yf6PfuOD3Zk4bLHkQiS8oRSbpdcBM6mDmwXeVRgnjNnL7plQe0YwJwJ6YMz6nB5HcV6gDw==",
+	"facts": {
+		"os": "linux",
+		"arch": "x86_64",
+		"hostname": "atlas",
+		"version": "0.1.0"
+	},
+	"challenge": "zgCbZcNpsG0w3xNwH3mPbtyzhkWzXv1Pg8wn1yZt3E4="
+}

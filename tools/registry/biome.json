@@ -1,0 +1,43 @@
+{
+	"id": "biome",
+	"name": "Biome",
+	"kind": "languageServer",
+	"languages": ["javascript", "typescript", "tsx", "json", "css"],
+	"license": "MIT OR Apache-2.0",
+	"homepage": "https://biomejs.dev",
+	"description": "Formatting and linting, where the project configures Biome.",
+	"source": {
+		"type": "githubRelease",
+		"repo": "biomejs/biome",
+		"version": "2.6.8",
+		"tag": "@biomejs/biome@${version}",
+		"assets": {
+			"linux-x64": {
+				"file": "biome-linux-x64",
+				"sha256": "fc1cb7c6664d6fa315144f58bd03096ee5d035e641538840a80262d59203d5dd"
+			},
+			"linux-arm64": {
+				"file": "biome-linux-arm64",
+				"sha256": "3e5b3bf3ff21c4beecfef424fd429d6937c5e04fe5d332ad69d45806349ce20c"
+			},
+			"darwin-x64": {
+				"file": "biome-darwin-x64",
+				"sha256": "81fe7e521e010117fe6ef85f96ec4609e316059e630850084ac49a2e5a7b665a"
+			},
+			"darwin-arm64": {
+				"file": "biome-darwin-arm64",
+				"sha256": "16c2a522889a679768bafe463523aded030c51f17004cf5c579750422443fcc4"
+			}
+		}
+	},
+	"bin": {
+		"biome": "biome"
+	},
+	"run": {
+		"command": ["biome", "lsp-proxy"],
+		"rootMarkers": ["biome.json", "biome.jsonc", "package.json"],
+		"configFiles": ["biome.json", "biome.jsonc"],
+		"settingsFiles": ["biome.json", "biome.jsonc"]
+	},
+	"hint": "npm install --save-dev @biomejs/biome"
+}

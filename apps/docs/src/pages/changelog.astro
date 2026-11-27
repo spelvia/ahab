@@ -1,0 +1,155 @@
+---
+/**
+ * The changelog, at /changelog: every release's notes, newest first. The
+ * notes are docs/releases/<version>.md, the same text as each GitHub
+ * Release.
+ */
+import { getCollection, render } from "astro:content";
+
+import Site from "../layouts/site.astro";
+
+const GITHUB = "https://github.com/spelvia/ahab";
+
+/** A version's numbers, and its pre-release part (`rc.1`) if any. */
+function parse(version: string) {
+	const [core = "", pre] = version.split("-", 2);
+	return { parts: core.split(".").map(Number), pre };
+}
+
+/** Sorts versions newest first; a release candidate comes before its release. */
+function compare(a: string, b: string): number {
+	const x = parse(a);
+	const y = parse(b);
+	for (let i = 0; i < 3; i += 1) {
+		const diff = (y.parts[i] ?? 0) - (x.parts[i] ?? 0);
+		if (diff) return diff;
+	}
+	if (x.pre === y.pre) return 0;
+	if (!x.pre) return -1;
+	if (!y.pre) return 1;
+	return y.pre.localeCompare(x.pre, "en", { numeric: true });
+}
+
+const releases = (await getCollection("releases")).toSorted((a, b) => compare(a.id, b.id));
+const entries = await Promise.all(
+	releases.map(async (release) => {
+		const { Content } = await render(release);
+		return { version: release.id, Content };
+	}),
+);
+---
+
+<Site title="Changelog · Ahab" description="What changed in each release of Ahab.">
+	<main class="changelog">
+		<h1>Changelog</h1>
+		<p class="lead">
+			What changed in each release, and how to adapt.{" "}
+			Downloads are on <a href={`${GITHUB}/releases`}>GitHub</a>.
+		</p>
+		{
+			entries.map(({ version, Content }) => (
+				<article class="release" id={version}>
+					<header>
+						<h2>
+							<a href={`#${version}`}>{version}</a>
+						</h2>
+						{version.includes("-") ? <span class="tag">Release candidate</span> : null}
+						<a class="on-github" href={`${GITHUB}/releases/tag/v${version}`}>
+							On GitHub
+						</a>
+					</header>
+					<div class="notes">
+						<Content />
+					</div>
+				</article>
+			))
+		}
+	</main>
+</Site>
+
+<style>
+	.changelog {
+		max-width: 760px;
+		margin: 0 auto;
+		padding: 48px 24px 0;
+	}
+	h1 {
+		margin: 0;
+		color: var(--strong);
+		font-size: clamp(36px, 5vw, 48px);
+		letter-spacing: -0.025em;
+	}
+	.lead {
+		margin: 12px 0 40px;
+		font-size: 17px;
+	}
+	.release {
+		padding: 32px 0;
+		border-top: 1px solid var(--hairline);
+		scroll-margin-top: 24px;
+	}
+	.release header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 10px 14px;
+		margin-bottom: 16px;
+	}
+	.release h2 {
+		margin: 0;
+		font: 600 24px/1.2 var(--mono);
+		letter-spacing: -0.01em;
+	}
+	.release h2 a {
+		color: var(--strong);
+		text-decoration: none;
+	}
+	.tag {
+		padding: 2px 9px;
+		border: 1px solid var(--hairline);
+		border-radius: 999px;
+		color: var(--muted);
+		font-size: 12px;
+	}
+	.on-github {
+		margin-left: auto;
+		font-size: 13px;
+	}
+	.notes {
+		font-size: 15.5px;
+		line-height: 1.65;
+	}
+	.notes :global(h2) {
+		margin: 28px 0 10px;
+		color: var(--strong);
+		font-size: 18px;
+	}
+	.notes :global(h3) {
+		margin: 22px 0 8px;
+		color: var(--strong);
+		font-size: 16px;
+	}
+	.notes :global(ul) {
+		padding-left: 20px;
+	}
+	.notes :global(li) {
+		margin: 6px 0;
+	}
+	.notes :global(code) {
+		padding: 1px 5px;
+		border-radius: 5px;
+		background: var(--surface);
+		font: 0.9em var(--mono);
+	}
+	.notes :global(pre) {
+		padding: 14px 16px;
+		overflow-x: auto;
+		border: 1px solid var(--hairline);
+		border-radius: 10px;
+		background: var(--surface);
+	}
+	.notes :global(pre code) {
+		padding: 0;
+		background: none;
+	}
+</style>

@@ -1,0 +1,16 @@
+{
+	"name": "ahab-plugin-echo",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "ahab-plugin build"
+	},
+	"dependencies": {
+		"@ahab/plugin": "workspace:*"
+	},
+	"devDependencies": {
+		"@types/react": "^19.3.0",
+		"react": "^19.3.1"
+	}
+}

@@ -1,0 +1,71 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "unicorn", "react", "oxc", "import", "vitest"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn",
+		"perf": "warn"
+	},
+	"rules": {
+		"react/react-in-jsx-scope": "off",
+		"typescript/no-explicit-any": "error",
+		"import/no-default-export": "error",
+		"unicorn/filename-case": [
+			"error",
+			{
+				"case": "kebabCase"
+			}
+		],
+		"no-console": "warn",
+		"import/no-unassigned-import": [
+			"warn",
+			{
+				"allow": ["**/*.css", "@fontsource-variable/*", "@testing-library/jest-dom/vitest"]
+			}
+		]
+	},
+	"overrides": [
+		{
+			"files": ["**/*.config.ts"],
+			"rules": {
+				"import/no-default-export": "off"
+			}
+		},
+		{
+			"files": ["apps/ui/src/routes/**"],
+			"rules": {
+				"unicorn/filename-case": "off"
+			}
+		},
+		{
+			"files": ["apps/ui/scripts/**", "scripts/*.mjs"],
+			"rules": {
+				"no-console": "off",
+				"no-await-in-loop": "off"
+			}
+		},
+		{
+			"files": ["**/src/web/index.tsx", "**/src/daemon/index.ts", "**/src/server/index.ts"],
+			"rules": {
+				"import/no-default-export": "off"
+			}
+		},
+		{
+			"files": ["sdk/plugin/bin/**"],
+			"rules": {
+				"no-console": "off",
+				"no-await-in-loop": "off"
+			}
+		}
+	],
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"ignorePatterns": [
+		"**/dist/**",
+		"apps/docs/.astro/**",
+		"apps/ui/src/routeTree.gen.ts",
+		"apps/ui/src/shared/api/generated/**"
+	]
+}

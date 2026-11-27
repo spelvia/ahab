@@ -1,0 +1,173 @@
+{
+	"states": {
+		"receiving": "Receiving",
+		"starting": "Starting",
+		"running": "Running",
+		"restarting": "Restarting",
+		"failed": "Failed",
+		"unavailable": "Unavailable",
+		"stopped": "Stopped"
+	},
+	"statesInline": {
+		"receiving": "receiving",
+		"starting": "starting",
+		"running": "running",
+		"restarting": "restarting",
+		"failed": "failed",
+		"unavailable": "unavailable",
+		"stopped": "stopped"
+	},
+	"kind": {
+		"dev": "Dev",
+		"git": "Git",
+		"local": "Local"
+	},
+	"toggle": {
+		"enable": "Enable {{name}}",
+		"disable": "Disable {{name}}"
+	},
+	"list": {
+		"title": "Plugins",
+		"intro": "Plugins add views, windows and commands to Ahab, and run on your machines as you. Install only plugins you trust.",
+		"add": "Add plugin",
+		"empty": {
+			"title": "No plugins yet",
+			"text": "Add one by its folder on the server's machine or its Git URL, or with <command>ahab plugins add</command>."
+		},
+		"builtIn": "Sessions, Terminal, Files, Git and Search are part of Ahab, not plugins: switch them on or off in <features>Features</features>.",
+		"machineState": "{{machine}} · {{state}}",
+		"browserFailed": "This browser could not load it"
+	},
+	"add": {
+		"title": "Add a plugin",
+		"intro": "A folder on the server's machine (built), or a Git URL (the server clones and builds it). It starts disabled.",
+		"location": "Plugin folder or Git URL",
+		"placeholder": "/home/you/ahab-docker  or  https://github.com/you/ahab-docker",
+		"submit": "Add",
+		"adding": "Adding…"
+	},
+	"page": {
+		"breadcrumb": "Breadcrumb",
+		"breadcrumbPlugins": "Plugins",
+		"unknownName": "Plugin",
+		"missing": "There is no such plugin: it may have been removed.",
+		"enabled": "Enabled",
+		"disabled": "Disabled",
+		"more": "More",
+		"updateFromRepository": "Update from its repository",
+		"updateFromFolder": "Update from its folder",
+		"remove": "Remove…",
+		"manifestWarnings": "Its manifest should fix:",
+		"updating": "Updating…",
+		"removeConfirm": "Remove {{name}}? Its files go from the server and every machine; its settings go too."
+	},
+	"details": {
+		"title": "Details",
+		"id": "ID",
+		"installedFrom": "Installed from",
+		"location": "location",
+		"build": "Build",
+		"buildHint": "SHA-256 of its files",
+		"installed": "Installed",
+		"updated": "Updated",
+		"never": "–"
+	},
+	"enable": {
+		"title": "Enable {{name}}?",
+		"intro": "It runs with your access, like a package you install. It:",
+		"machines": "On which machines?",
+		"submit": "Enable",
+		"notNow": "Not now"
+	},
+	"parts": {
+		"web": "Adds to this web app",
+		"daemon": "Runs on your machines, as you",
+		"server": "Runs next to the server"
+	},
+	"capabilities": {
+		"hook": "May change or refuse <hook>{{hook}}</hook>",
+		"secrets": "Asks for {{secrets}}",
+		"uses": "Uses {{plugins}}"
+	},
+	"about": {
+		"title": "About"
+	},
+	"settings": {
+		"title": "Settings",
+		"other": "Other settings"
+	},
+	"whatItDoes": {
+		"title": "What it can do",
+		"parts": "Parts",
+		"runsOn": "Runs on",
+		"everyMachine": "Every machine",
+		"noMachine": "No machine yet",
+		"hooks": "Hooks",
+		"hooksHint": "Runs in order with other plugins' hooks",
+		"position": "{{position}} of {{total}}",
+		"earlier": "Earlier",
+		"later": "Later",
+		"secrets": "Secrets",
+		"uses": "Uses"
+	},
+	"machines": {
+		"title": "Machines",
+		"disabled": "It runs nowhere while disabled.",
+		"noneOnline": "No machine it runs on is online.",
+		"since": "{{state}} since {{time}}",
+		"showLogs": "Logs",
+		"hideLogs": "Hide logs",
+		"noLogs": "Nothing logged yet."
+	},
+	"changelog": {
+		"title": "Changelog",
+		"missing": "{{name}} has no changelog yet: a <file>CHANGELOG.md</file> beside its manifest shows here."
+	},
+	"machine": {
+		"title": "Plugins",
+		"description": "The plugins with a part that runs on this machine, and how it is doing here.",
+		"loading": "Loading the plugins…",
+		"empty": "No enabled plugin runs a part here.",
+		"notStarted": "Not started",
+		"offline": "Machine offline"
+	},
+	"glance": {
+		"label": "Plugins running",
+		"value": "{{running}} of {{total}}",
+		"pending": "…",
+		"none": "None run a part here",
+		"link": "Plugins"
+	},
+	"settingsForm": {
+		"scopes": {
+			"label": "Where these settings apply",
+			"server": "Everywhere",
+			"machine": "A machine",
+			"project": "A project"
+		},
+		"which": {
+			"machine": "Which machine",
+			"project": "Which project"
+		},
+		"serverNote": "Narrower settings win over these.",
+		"setHere": "Set here",
+		"reset": "Reset",
+		"fromWider": "From wider settings",
+		"fromWiderValue": "From wider settings: {{value}}",
+		"default": "Default",
+		"defaultValue": "Default: {{value}}",
+		"none": "none",
+		"save": "Save changes",
+		"discard": "Discard"
+	},
+	"runtime": {
+		"failedHere": "The plugin {{plugin}} failed here.",
+		"failedToLoad": "The plugin {{plugin}} failed to load: {{error}}",
+		"needsPlugin": "This window needs the {{plugin}} plugin.",
+		"closeWindow": "Close it",
+		"terminalGone": "This terminal is gone.",
+		"noDefaultExport": "Its web entry has no default export (definePlugin).",
+		"connectionLost": "The connection to the plugin was lost.",
+		"noProject": "Open a project first: terminals start in one."
+	}
+}
