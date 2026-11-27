@@ -73,7 +73,7 @@ export function toolTarget(detail: Detail) {
 }
 
 /** Provider file paths are literal names. Only open paths belonging to the chat project. */
-function projectPath(path: string, root?: string): string | undefined {
+export function projectPath(path: string, root?: string): string | undefined {
 	if (!path || path.includes("\0") || path.startsWith("//")) return undefined;
 	const base = root?.replace(/\/$/, "");
 	if (path.startsWith("/") && (base === undefined || !path.startsWith(base + "/")))

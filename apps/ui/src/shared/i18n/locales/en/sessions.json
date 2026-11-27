@@ -731,5 +731,16 @@
 		"waiting_other": "{{count}} need you",
 		"working_one": "{{count}} working",
 		"working_other": "{{count}} working"
+	},
+	"turnChanges": {
+		"section": "Files changed in this turn",
+		"showMore_one": "Show {{count}} more",
+		"showMore_other": "Show {{count}} more",
+		"lines": "{{added}} lines added, {{removed}} removed",
+		"kind": {
+			"add": "Added",
+			"update": "Edited",
+			"delete": "Deleted"
+		}
 	}
 }

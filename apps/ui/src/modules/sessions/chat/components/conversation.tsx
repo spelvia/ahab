@@ -44,15 +44,18 @@ import {
 	ToolFile,
 	toolTarget,
 } from "@/modules/sessions/chat/components/tool-detail";
+import { TurnChanges } from "@/modules/sessions/chat/components/turn-changes";
 import { TurnFooter } from "@/modules/sessions/chat/components/turn-footer";
 import { useRevealedMessage } from "@/modules/sessions/chat/hooks";
 import {
 	type Entry,
+	addTurnChange,
 	type FinishedTurn,
 	type Item,
 	isVisibleEntry,
 	itemText,
 	type ToolCallItem,
+	type TurnChange,
 	tokens as tokenCount,
 } from "@/modules/sessions/chat/model";
 import { SentReferences, splitReferences } from "@/modules/sessions/reference";
@@ -183,15 +186,15 @@ export function ConversationView({
 		return groups;
 	}, [visible, finishedByEntry]);
 	const turnDetails = useMemo(() => {
-		const result = new Map<string, { message?: string; paths: [string, boolean][] }>();
+		const result = new Map<string, { message?: string; changes: TurnChange[] }>();
 		let message: string | undefined;
-		let paths = new Map<string, boolean>();
+		let changes = new Map<string, TurnChange>();
 		for (const row of entries) {
 			if (row.kind === "item" && row.item.type === "userMessage") {
 				const original = itemText(row);
 				// Older command echoes have no stable skill or MCP invocation ID.
 				message = original.startsWith("/") ? undefined : original;
-				paths = new Map();
+				changes = new Map();
 			}
 			if (
 				row.kind === "item" &&
@@ -200,10 +203,11 @@ export function ConversationView({
 				row.item.detail.kind === "fileChange"
 			) {
 				for (const file of row.item.detail.changes)
-					paths.set(
-						(file.kind.type === "update" && file.kind.movePath) || file.path,
-						file.kind.type !== "delete",
-					);
+					addTurnChange(changes, {
+						path: (file.kind.type === "update" && file.kind.movePath) || file.path,
+						kind: file.kind.type,
+						diff: file.diff,
+					});
 			}
 			if (
 				row.kind === "item" &&
@@ -211,11 +215,11 @@ export function ConversationView({
 				row.item.status === "completed" &&
 				row.item.detail.kind === "notebookEdit"
 			)
-				paths.set(row.item.detail.path, true);
+				addTurnChange(changes, { path: row.item.detail.path, kind: "update" });
 			if (row.kind === "turnEnd" || finishedByEntry.has(row.key)) {
-				result.set(row.key, { message, paths: [...paths] });
+				result.set(row.key, { message, changes: [...changes.values()] });
 				message = undefined;
-				paths = new Map();
+				changes = new Map();
 			}
 		}
 		return result;
@@ -293,11 +297,10 @@ export function ConversationView({
 												onAddContext={onAddContext}
 												onOpenFile={onOpenFile}
 											/>
-											{turnDetails.get(entry.key)?.paths.map(([path, exists]) => (
-												<div className="text-muted-foreground text-xs" key={path}>
-													<ToolFile path={path} open={exists ? onOpenFile : undefined} />
-												</div>
-											))}
+											<TurnChanges
+												changes={turnDetails.get(entry.key)?.changes ?? []}
+												onOpenFile={onOpenFile}
+											/>
 											<TurnFooter
 												answer={turn.answer}
 												durationMs={turn.durationMs}

@@ -1341,3 +1341,44 @@ export function hasArrived(
 		)
 	);
 }
+
+/** A file a turn changed: what happened to it, and its lines added and removed. */
+export interface TurnChange {
+	path: string;
+	kind: "add" | "update" | "delete";
+	/** Whether it is still there to open. */
+	exists: boolean;
+	added: number;
+	removed: number;
+}
+
+/** Lines a unified diff adds and removes (its file headers aside). */
+export function diffStat(diff: string): { added: number; removed: number } {
+	let added = 0;
+	let removed = 0;
+	for (const line of diff.split("\n")) {
+		if (line.startsWith("+++") || line.startsWith("---")) continue;
+		if (line.startsWith("+")) added += 1;
+		else if (line.startsWith("-")) removed += 1;
+	}
+	return { added, removed };
+}
+
+/**
+ * Adds one change to a turn's: a file changed twice is one row, its lines
+ * summed; created then edited stays created, and deleted last is deleted.
+ */
+export function addTurnChange(
+	changes: Map<string, TurnChange>,
+	change: { path: string; kind: TurnChange["kind"]; diff?: string | null },
+) {
+	const { added, removed } = diffStat(change.diff ?? "");
+	const before = changes.get(change.path);
+	changes.set(change.path, {
+		path: change.path,
+		kind: change.kind === "delete" ? "delete" : before?.kind === "add" ? "add" : change.kind,
+		exists: change.kind !== "delete",
+		added: (before?.added ?? 0) + added,
+		removed: (before?.removed ?? 0) + removed,
+	});
+}
