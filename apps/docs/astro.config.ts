@@ -1,5 +1,31 @@
+import { copyFile, readFile } from "node:fs/promises";
+
 import starlight from "@astrojs/starlight";
+import type { AstroIntegration } from "astro";
 import { defineConfig } from "astro/config";
+
+/**
+ * The install script at /install.sh (`curl -fsSL https://useahab.com/install.sh | sh`),
+ * from scripts/install.sh: copied into the build, served in development.
+ * It still downloads Ahab from GitHub's releases.
+ */
+const INSTALL_SCRIPT = new URL("../../scripts/install.sh", import.meta.url);
+function installScript(): AstroIntegration {
+	return {
+		name: "ahab-install-script",
+		hooks: {
+			"astro:server:setup": ({ server }) => {
+				server.middlewares.use("/install.sh", async (_request, response) => {
+					response.setHeader("content-type", "text/x-shellscript; charset=utf-8");
+					response.end(await readFile(INSTALL_SCRIPT));
+				});
+			},
+			"astro:build:done": async ({ dir }) => {
+				await copyFile(INSTALL_SCRIPT, new URL("install.sh", dir));
+			},
+		},
+	};
+}
 
 export default defineConfig({
 	site: "https://useahab.com",
@@ -16,6 +42,7 @@ export default defineConfig({
 			.filter(Boolean),
 	},
 	integrations: [
+		installScript(),
 		starlight({
 			title: "Ahab",
 			description:

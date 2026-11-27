@@ -6,6 +6,9 @@
 import "@fontsource-variable/inter";
 import "@fontsource-variable/jetbrains-mono";
 
+import AgentLogos from "../components/landing/AgentLogos.astro";
+import { ACP, NATIVE } from "../components/landing/agents";
+import Icon from "../components/landing/Icon.astro";
 import Shot from "../components/landing/Shot.astro";
 import Weave from "../components/landing/Weave.astro";
 import agentsDark from "../assets/landing/agents-dark.png";
@@ -21,7 +24,7 @@ import phonePermissionLight from "../assets/landing/phone-permission-light.png";
 import terminalDark from "../assets/landing/terminal-dark.png";
 import terminalLight from "../assets/landing/terminal-light.png";
 
-const INSTALL = "curl -fsSL https://github.com/spelvia/ahab/releases/latest/download/install.sh | sh";
+const INSTALL = "curl -fsSL https://useahab.com/install.sh | sh";
 const GITHUB = "https://github.com/spelvia/ahab";
 const RELEASES = `${GITHUB}/releases`;
 
@@ -155,8 +158,19 @@ const faq = [
 				</div>
 			</section>
 
-			<section class="showcase" aria-label="Ahab, as it looks">
-				<div class="tabs" role="tablist" aria-label="Views">
+			<section class="recording" aria-label="Ahab at work">
+				<figure class="desktop-frame">
+					<!-- The poster stands in while the video loads, and for good if it is missing. -->
+					<video autoplay muted loop playsinline preload="metadata" poster="/landing/hero-poster.png" width="2400" height="1500">
+						<source src="/landing/hero.webm" type="video/webm" />
+						<source src="/landing/hero.mp4" type="video/mp4" />
+					</video>
+				</figure>
+			</section>
+
+			<section class="showcase" aria-labelledby="features-heading">
+				<h2 id="features-heading" class="center">A closer look</h2>
+				<div class="tabs" role="tablist" aria-label="Features">
 					{
 						tabs.map((tab, i) => (
 							<button
@@ -258,12 +272,13 @@ const faq = [
 					models, modes, skills and permissions; Ahab shows them, and answers their questions
 					in the conversation.
 				</p>
-				<ul class="agent-list">
-					<li>Claude Code</li>
-					<li>Codex</li>
-					<li>Pi</li>
-					<li>Agent Client Protocol agents</li>
-				</ul>
+				<AgentLogos agents={NATIVE} large />
+				<h3>And every agent in the ACP registry</h3>
+				<p class="small">
+					{ACP.length} agents that speak the Agent Client Protocol, from the registry Ahab ships with,
+					or any other with its own command.
+				</p>
+				<AgentLogos agents={ACP} />
 			</section>
 
 			<section class="block how">
@@ -271,44 +286,66 @@ const faq = [
 				<p>
 					The <strong>server</strong> keeps Ahab's state and serves the web app. A{" "}
 					<strong>daemon</strong> on each machine runs the agents, files and terminals in its project
-					folders. Your browsers and phones are paired with the server.
+					folders. Browsers and phones are paired with the server; machines connect out to it.
 				</p>
-				<div class="diagram" aria-hidden="true">
-					<div class="node">
-						<span class="node-title">Browser and phone</span>
-						<span class="node-detail">paired with the server</span>
-					</div>
-					<div class="link"></div>
-					<div class="node strong">
-						<span class="node-title">Server</span>
-						<span class="node-detail">state, the web app</span>
-					</div>
-					<div class="link"></div>
-					<div class="node-stack">
-						<div class="node">
-							<span class="node-title">This computer</span>
-							<span class="node-detail">daemon · agents · files · terminals</span>
+				<div class="setups">
+					<article class="setup">
+						<h3>The easy way: everything on your laptop</h3>
+						<div class="diagram" aria-hidden="true">
+							<div class="node">
+								<Icon name="smartphone" />
+								<span class="node-title">Your phone</span>
+								<span class="node-detail">paired</span>
+							</div>
+							<div class="link"></div>
+							<div class="node strong">
+								<Icon name="laptop" />
+								<span class="node-title">Your laptop</span>
+								<span class="node-detail">server · daemon · agents</span>
+							</div>
 						</div>
-						<div class="node">
-							<span class="node-title">Another machine</span>
-							<span class="node-detail">daemon, joined over SSH</span>
+						<p class="command-line"><code>ahab up</code></p>
+						<p class="small">
+							Runs the server and this computer's daemon as a login service, and opens the web app,
+							already paired. Pair your phone with the QR code under Settings → Clients.
+						</p>
+					</article>
+					<article class="setup">
+						<h3>Always on: a server at home</h3>
+						<div class="diagram" aria-hidden="true">
+							<div class="node-stack">
+								<div class="node">
+									<Icon name="laptop" />
+									<span class="node-title">Laptop</span>
+								</div>
+								<div class="node">
+									<Icon name="smartphone" />
+									<span class="node-title">Phone</span>
+								</div>
+							</div>
+							<div class="link"></div>
+							<div class="node strong">
+								<Icon name="server" />
+								<span class="node-title">Home server</span>
+								<span class="node-detail">server · daemon</span>
+							</div>
+							<div class="link"></div>
+							<div class="node">
+								<Icon name="monitor" />
+								<span class="node-title">Workstation</span>
+								<span class="node-detail">daemon · agents</span>
+							</div>
 						</div>
-					</div>
+						<p class="command-line"><code>ahab login ssh://you@homelab</code></p>
+						<p class="command-line"><code>ahab machines add you@workstation</code></p>
+						<p class="small">
+							Installs and starts the server on a homelab box or an always-on PC over SSH, and pairs
+							your command line; then joins the computers your agents should work on. Reach it from
+							your laptop and phone.
+						</p>
+					</article>
 				</div>
-				<dl class="commands">
-					<div>
-						<dt><code>ahab up</code></dt>
-						<dd>Starts the server and this computer's daemon, and opens the web app, paired.</dd>
-					</div>
-					<div>
-						<dt><code>ahab machines add you@host</code></dt>
-						<dd>Installs Ahab on another computer over SSH, so agents can work there too.</dd>
-					</div>
-					<div>
-						<dt><code>ahab up</code> on a server</dt>
-						<dd>Prints a one-time link instead; open it in your browser to pair it.</dd>
-					</div>
-				</dl>
+				<a class="text-link" href="/docs/installation/">More about servers and machines →</a>
 			</section>
 
 			<section class="block plugins">
@@ -736,74 +773,128 @@ const faq = [
 		margin: 16px 0 0;
 		font-size: 17px;
 	}
-	.agent-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-		margin: 28px 0 0;
-		padding: 0;
-		list-style: none;
+	/* The recording */
+	.recording {
+		padding: 8px 0 0;
 	}
-	.agent-list li {
-		padding: 10px 16px;
-		border: 1px solid var(--hairline);
-		border-radius: 10px;
-		background: var(--bg-raised);
+	.recording video {
+		display: block;
+		width: 100%;
+		height: auto;
+		aspect-ratio: 16 / 10;
+		object-fit: cover;
+		background: var(--surface);
+	}
+	.center {
+		text-align: center;
+	}
+	.showcase h2 {
+		margin: 96px 0 22px;
+	}
+	h3 {
+		margin: 44px 0 0;
 		color: var(--strong);
-		font-weight: 550;
+		font-size: 19px;
+		font-weight: 650;
+		letter-spacing: -0.01em;
+	}
+	.block p.small,
+	p.small {
+		max-width: 640px;
+		margin: 8px 0 18px;
+		color: var(--muted);
 		font-size: 15px;
+	}
+	.agents .agent-logos.large {
+		margin-top: 28px;
 	}
 
 	/* How it works */
-	.diagram {
+	.setups {
 		display: grid;
-		grid-template-columns: 1fr 48px 1fr 48px 1.3fr;
-		align-items: center;
+		grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+		gap: 20px;
 		margin-top: 36px;
+	}
+	.setup {
+		padding: 26px;
+		border: 1px solid var(--hairline);
+		border-radius: 16px;
+		background: var(--bg-raised);
+	}
+	.setup h3 {
+		margin: 0 0 22px;
+		font-size: 17px;
+	}
+	.diagram {
+		display: flex;
+		align-items: center;
+		margin-bottom: 22px;
 	}
 	.node {
 		display: flex;
+		flex: 1;
 		flex-direction: column;
-		gap: 2px;
-		padding: 16px 18px;
+		align-items: center;
+		gap: 4px;
+		min-width: 0;
+		padding: 14px 10px;
 		border: 1px solid var(--hairline);
 		border-radius: 12px;
-		background: var(--bg-raised);
+		background: var(--bg);
+		text-align: center;
 	}
 	.node.strong {
 		border-color: var(--muted);
 	}
 	.node-stack {
 		display: grid;
-		gap: 10px;
+		flex: 1;
+		gap: 8px;
+	}
+	.node-stack .node {
+		padding: 8px;
+	}
+	.node .icon {
+		width: 26px;
+		height: 26px;
+		color: var(--strong);
+	}
+	.node-stack .icon {
+		width: 20px;
+		height: 20px;
 	}
 	.node-title {
 		color: var(--strong);
 		font-weight: 600;
-		font-size: 15px;
+		font-size: 14px;
 	}
 	.node-detail {
 		color: var(--muted);
-		font-size: 13px;
+		font-size: 12px;
 	}
 	.link {
+		flex: 0 0 22px;
 		height: 1px;
 		background: var(--muted);
 	}
-	.commands {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 20px;
-		margin: 36px 0 0;
-	}
-	.commands dt code {
-		color: var(--strong);
-		font-size: 14px;
-	}
-	.commands dd {
+	.command-line {
 		margin: 6px 0 0;
-		color: var(--muted);
-		font-size: 14px;
+	}
+	.command-line code {
+		display: inline-block;
+		padding: 5px 10px;
+		border: 1px solid var(--hairline);
+		border-radius: 8px;
+		background: var(--bg);
+		color: var(--strong);
+		font-size: 13px;
+	}
+	.setup .small {
+		margin: 14px 0 0;
+	}
+	.how > .text-link {
+		margin-top: 22px;
 	}
 
 	/* Plugins */
@@ -940,16 +1031,9 @@ const faq = [
 		.phone-frame.floating {
 			display: none;
 		}
-		.diagram {
-			grid-template-columns: 1fr;
-			gap: 0;
+		.setups {
+			grid-template-columns: minmax(0, 1fr);
 		}
-		.link {
-			width: 1px;
-			height: 28px;
-			margin: 0 auto;
-		}
-		.commands,
 		.plugins {
 			grid-template-columns: minmax(0, 1fr);
 		}
@@ -975,7 +1059,15 @@ const faq = [
 			font-size: 16.5px;
 		}
 		.tabs {
-			justify-content: flex-start;
+			flex-wrap: wrap;
+			justify-content: center;
+			overflow: visible;
+		}
+		.setup {
+			padding: 18px;
+		}
+		.node-detail {
+			display: none;
 		}
 		.phones {
 			gap: 14px;

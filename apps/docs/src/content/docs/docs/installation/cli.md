@@ -26,10 +26,15 @@ The install script puts the `ahab` binary in `~/.local/bin` (or
 no root, and starts nothing:
 
 ```sh
-curl -fsSL https://github.com/spelvia/ahab/releases/latest/download/install.sh | sh   # the latest release
-AHAB_VERSION=v0.1.0-rc.1 sh install.sh                        # a given release
-sh scripts/install.sh target/dist/ahab-linux-x86_64.tar.gz   # an archive from `make release`
+curl -fsSL https://useahab.com/install.sh | sh                          # the latest release
+curl -fsSL https://useahab.com/install.sh | AHAB_VERSION=v0.1.0-rc.1 sh # a given release
+sh scripts/install.sh target/dist/ahab-linux-x86_64.tar.gz             # an archive from `make release`
 ```
+
+The script comes from useahab.com; Ahab itself comes from the
+[GitHub releases](https://github.com/spelvia/ahab/releases), checked against
+each archive's SHA-256. `AHAB_RELEASE_URL` downloads the archives from
+another address instead.
 
 While the repository is private, download the script and the archive with
 `gh release download --repo spelvia/ahab --pattern install.sh

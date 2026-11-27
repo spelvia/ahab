@@ -18,7 +18,7 @@ Ahab runs on Linux (x86_64 and arm64, glibc 2.36 or newer) and macOS
 needs no root:
 
 ```sh
-curl -fsSL https://github.com/spelvia/ahab/releases/latest/download/install.sh | sh
+curl -fsSL https://useahab.com/install.sh | sh
 ```
 
 The script downloads the archive for your system, checks its SHA-256, puts
@@ -45,11 +45,14 @@ sh install.sh ahab-linux-x86_64.tar.gz
 ```
 
 Use `ahab-linux-aarch64` or `ahab-macos-aarch64` for other systems. The
-script also reads these settings:
+script always downloads from GitHub's releases (useahab.com only serves the
+script), and reads these settings, such as
+`curl -fsSL https://useahab.com/install.sh | AHAB_VERSION=v0.1.0-rc.1 sh`:
 
 | Setting                    | What it does                                      |
 | -------------------------- | ------------------------------------------------- |
 | `AHAB_VERSION=v0.1.0-rc.1` | Installs that release instead of the latest one   |
+| `AHAB_RELEASE_URL=<url>`   | Downloads the archives from there, not GitHub     |
 | `AHAB_INSTALL_DIR=/path`   | Installs to that folder instead of `~/.local/bin` |
 | `AHAB_NO_MODIFY_PATH=1`    | Leaves your shell's startup file alone            |
 
