@@ -80,14 +80,13 @@ export function NotificationAlerts() {
 				outside &&
 				(settings.data?.kinds.find((kind) => kind.id === notification.kind)?.outside ?? true);
 			const open = () => openTarget(notification.target);
-			const message = notification.body
-				? t("alerts.withBody", { title: notification.title, body: notification.body })
-				: notification.title;
 			// In the desktop app, a toast in a window in the background is shown
 			// natively too (shared/ui/toast).
 			const place = placeOf(notification);
-			toast(message, {
+			toast(notification.title, {
+				body: notification.body ?? undefined,
 				detail: place,
+				tone: notification.level,
 				native: goesOutside,
 				action: { label: t("alerts.open"), run: open },
 				duration: 6000,

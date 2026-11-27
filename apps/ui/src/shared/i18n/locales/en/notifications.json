@@ -2,7 +2,6 @@
 	"alerts": {
 		"askPhone": "Tell me when an agent is finished or needs me",
 		"allow": "Allow",
-		"withBody": "{{title}}: {{body}}",
 		"open": "Open"
 	},
 	"bell": {

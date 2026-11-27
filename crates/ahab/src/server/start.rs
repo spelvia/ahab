@@ -490,6 +490,7 @@ pub async fn listen(
             chats: Arc::clone(&state.chats),
             projects: Arc::clone(&state.projects),
             sessions: Arc::clone(&state.sessions),
+            agents: Arc::clone(&state.agents),
         });
     state.push.spawn();
     state.plugin_notifications.spawn();

@@ -175,14 +175,21 @@ impl Settings {
     }
 }
 
-/// An agent's name as people know it.
+/// An agent's name as people know it; for an ACP or custom one whose name
+/// is unknown here, its ID, capitalised.
 pub fn agent_label(agent: &str) -> String {
     let named = crate::modules::machines::agent_label(agent);
-    named
+    let Some(id) = named
         .strip_prefix("acp:")
         .or_else(|| named.strip_prefix("custom:"))
-        .unwrap_or(named)
-        .to_owned()
+    else {
+        return named.to_owned();
+    };
+    let mut chars = id.chars();
+    chars
+        .next()
+        .map(|first| first.to_uppercase().chain(chars).collect())
+        .unwrap_or_default()
 }
 
 fn machine_target(machine: Uuid) -> Value {
@@ -371,8 +378,14 @@ fn short(text: &str, limit: usize) -> String {
     format!("{}…", cut.trim_end())
 }
 
-pub fn from_transition(chat: &Chat, transition: &Transition, place: &ChatPlace) -> NewNotification {
-    let agent = agent_label(&chat.agent);
+/// `agent`: the name the chat's agent was added under, when known.
+pub fn from_transition(
+    chat: &Chat,
+    transition: &Transition,
+    place: &ChatPlace,
+    agent: Option<&str>,
+) -> NewNotification {
+    let agent = agent.map_or_else(|| agent_label(&chat.agent), str::to_owned);
     let (kind, level, title, body) = match transition {
         Transition::Finished => (
             FINISHED,
@@ -518,6 +531,7 @@ mod tests {
     #[test]
     fn agents_are_named_as_people_know_them() {
         assert_eq!(agent_label("claude-code"), "Claude Code");
-        assert_eq!(agent_label("acp:gemini"), "gemini");
+        assert_eq!(agent_label("acp:gemini"), "Gemini");
+        assert_eq!(agent_label("custom:my-agent"), "My-agent");
     }
 }

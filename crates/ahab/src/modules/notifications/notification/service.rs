@@ -7,7 +7,7 @@ use std::time::Duration;
 use tokio::sync::broadcast;
 use uuid::Uuid;
 
-use crate::modules::machines::{MachineService, Presence};
+use crate::modules::machines::{AgentService, MachineService, Presence};
 use crate::modules::notifications::notification::model::ChatPlace;
 use crate::modules::notifications::notification::model::{
     self, NewNotification, Notification, Settings,
@@ -53,6 +53,7 @@ pub struct ChatSources {
     pub chats: Arc<ChatService>,
     pub projects: Arc<ProjectService>,
     pub sessions: Arc<SessionService>,
+    pub agents: Arc<AgentService>,
 }
 
 impl ChatSources {
@@ -66,6 +67,21 @@ impl ChatSources {
             project: project.ok().map(|project| project.name.to_string()),
             session: session.ok().map(|session| session.title),
         }
+    }
+
+    /// The name `chat`'s agent was added under (an ACP or custom one), if
+    /// it can be read.
+    async fn agent_name(&self, chat: &crate::modules::sessions::Chat) -> Option<String> {
+        if !(chat.agent.starts_with("acp:") || chat.agent.starts_with("custom:")) {
+            return None;
+        }
+        self.agents
+            .added(chat.machine_id)
+            .await
+            .ok()?
+            .into_iter()
+            .find(|added| added.agent == chat.agent)
+            .map(|added| added.name)
     }
 }
 
@@ -443,9 +459,14 @@ impl NotificationService {
                 return Ok(());
             }
         }
-        let place = sources.place(&chat).await;
-        self.send(model::from_transition(&chat, transition, &place))
-            .await?;
+        let (place, agent) = tokio::join!(sources.place(&chat), sources.agent_name(&chat));
+        self.send(model::from_transition(
+            &chat,
+            transition,
+            &place,
+            agent.as_deref(),
+        ))
+        .await?;
         Ok(())
     }
 }
