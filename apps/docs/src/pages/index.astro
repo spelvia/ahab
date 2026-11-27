@@ -950,6 +950,10 @@ const faq = [
 			display: inline-block;
 		}
 	}
+	/* Not through the viewer's backdrop. */
+	:global(.viewing) .enlarge-hint {
+		visibility: hidden;
+	}
 	.play {
 		position: absolute;
 		top: 50%;
