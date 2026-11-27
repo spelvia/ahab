@@ -1,33 +1,63 @@
 # Agent logos
 
-The landing page's agent logos, from [Simple Icons](https://simpleicons.org)
-16.38.1 (`https://cdn.jsdelivr.net/npm/simple-icons@16.38.1/icons/<slug>.svg`).
-Simple Icons releases its data under CC0; the logos stay their owners'
-trademarks, shown here only to name the agents Ahab works with. Where an
-agent is made by a company without a mark of its own in Simple Icons, the
-company's mark is used and named below.
+The landing page's agent logos are the agents' own icons from the official
+[ACP registry](https://github.com/agentclientprotocol/registry) (Apache-2.0),
+at commit `72697f65e971`: one `icon.svg` per agent, drawn in
+`currentColor` so the page tints them. The logos stay their owners'
+trademarks, shown only to name the agents Ahab works with. The list of
+agents is Stubb's bundled registry.
 
-| File                | Used for                       | Simple Icons title | Source the icon cites                                                                                          | Licence noted                                                                          |
-| ------------------- | ------------------------------ | ------------------ | -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `claude.svg`        | Claude Code, Claude Agent      | Claude             | https://claude.ai                                                                                              | CC0 (Simple Icons)                                                                     |
-| `cline.svg`         | Cline                          | Cline              | https://cline.bot/assets/branding/logos/cline-wordmark-black.svg                                               | CC0 (Simple Icons)                                                                     |
-| `cursor.svg`        | Cursor                         | Cursor             | https://cursor.com/brand                                                                                       | CC0 (Simple Icons)                                                                     |
-| `githubcopilot.svg` | GitHub Copilot                 | GitHub Copilot     | https://primer.style/foundations/icons/copilot-24                                                              | MIT                                                                                    |
-| `googlegemini.svg`  | Gemini CLI                     | Google Gemini      | https://gemini.google.com                                                                                      | CC0 (Simple Icons)                                                                     |
-| `jetbrains.svg`     | Junie (JetBrains' mark)        | JetBrains          | https://www.jetbrains.com/company/brand/logos/                                                                 | CC0 (Simple Icons)                                                                     |
-| `kimi.svg`          | Kimi Code, Kimi CLI (Legacy)   | Kimi               | https://moonshotai.github.io/Branding-Guide                                                                    | CC0 (Simple Icons)                                                                     |
-| `langchain.svg`     | DeepAgents (LangChain's mark)  | LangChain          | https://www.langchain.com/langchain                                                                            | CC0 (Simple Icons)                                                                     |
-| `meta.svg`          | Muse Code (Meta's mark)        | Meta               | https://www.meta.com                                                                                           | CC0 (Simple Icons)                                                                     |
-| `minimax.svg`       | MiniMax Code                   | MiniMax            | https://github.com/MiniMax-AI/MiniMax-01/blob/57cf223b177e99636c7711a0f179e9fdc9c38e8a/figures/minimax.svg     | custom https://github.com/simple-icons/simple-icons/pull/13982#issuecomment-3531627803 |
-| `mistralai.svg`     | Mistral Vibe                   | Mistral AI         | https://chat.mistral.ai                                                                                        | CC0 (Simple Icons)                                                                     |
-| `opencode.svg`      | OpenCode, OpenCode V2          | OpenCode           | https://github.com/anomalyco/opencode/blob/1251a870cb384543c150c4a72fb101b55eec971b/packages/identity/mark.svg | CC0 (Simple Icons)                                                                     |
-| `pi.svg`            | Pi, pi ACP                     | Pi                 | https://pi.dev/favicon.svg                                                                                     | CC0 (Simple Icons)                                                                     |
-| `qwen.svg`          | Qwen Code                      | QWen               | https://qwen.ai                                                                                                | CC0 (Simple Icons)                                                                     |
-| `snowflake.svg`     | Cortex Code (Snowflake's mark) | Snowflake          | https://www.snowflake.com/brand-guidelines/                                                                    | CC0 (Simple Icons)                                                                     |
+Each file came from
+`https://raw.githubusercontent.com/agentclientprotocol/registry/72697f65e971719c0d4ea4e0d3d954ac5b81510a/<file name without .svg>/icon.svg`.
 
-Every other agent shows a lettermark: Codex (OpenAI's mark is not in Simple
-Icons), Google Antigravity, goose, Kiro CLI, Devin, Factory Droid, Amp,
-Auggie CLI, Kilo, Grok Build, Bob, GLM Agent, Codebuddy Code, Qoder CLI,
-fast-agent, Poolside, VT Code, Stakpak, Autohand Code, Corust Agent,
-crow-cli, Dirac, DimCode, Harn, Kimchi, Minion Code, Nova, siGit Code and
-Agoragentic. The list of ACP agents is Stubb's bundled registry.
+| File                     | Shown for                 |
+| ------------------------ | ------------------------- |
+| `agoragentic-acp.svg`    | Agoragentic               |
+| `amp-acp.svg`            | Amp                       |
+| `antigravity-acp.svg`    | Google Antigravity        |
+| `auggie.svg`             | Auggie CLI                |
+| `autohand.svg`           | Autohand Code             |
+| `bob.svg`                | Bob                       |
+| `claude-acp.svg`         | Claude Code, Claude Agent |
+| `cline.svg`              | Cline                     |
+| `codebuddy-code.svg`     | Codebuddy Code            |
+| `codex-acp.svg`          | Codex, Codex              |
+| `cortex-code.svg`        | Cortex Code               |
+| `corust-agent.svg`       | Corust Agent              |
+| `crow-cli.svg`           | crow-cli                  |
+| `cursor.svg`             | Cursor                    |
+| `deepagents.svg`         | DeepAgents                |
+| `devin.svg`              | Devin                     |
+| `dimcode.svg`            | DimCode                   |
+| `dirac.svg`              | Dirac                     |
+| `factory-droid.svg`      | Factory Droid             |
+| `fast-agent.svg`         | fast-agent                |
+| `gemini.svg`             | Gemini CLI                |
+| `github-copilot-cli.svg` | GitHub Copilot            |
+| `glm-acp-agent.svg`      | GLM Agent                 |
+| `goose.svg`              | goose                     |
+| `grok-build.svg`         | Grok Build                |
+| `harn.svg`               | Harn                      |
+| `junie.svg`              | Junie                     |
+| `kilo.svg`               | Kilo                      |
+| `kimchi.svg`             | Kimchi                    |
+| `kimi-code.svg`          | Kimi Code                 |
+| `kimi.svg`               | Kimi CLI (Legacy)         |
+| `kiro.svg`               | Kiro CLI                  |
+| `minimax-code.svg`       | MiniMax Code              |
+| `minion-code.svg`        | Minion Code               |
+| `mistral-vibe.svg`       | Mistral Vibe              |
+| `muse-code.svg`          | Muse Code                 |
+| `nova.svg`               | Nova                      |
+| `opencode.svg`           | OpenCode, OpenCode V2     |
+| `pi-acp.svg`             | Pi, pi ACP                |
+| `poolside.svg`           | Poolside                  |
+| `qoder.svg`              | Qoder CLI                 |
+| `qwen-code.svg`          | Qwen Code                 |
+| `sigit.svg`              | siGit Code                |
+| `stakpak.svg`            | Stakpak                   |
+| `vtcode.svg`             | VT Code                   |
+
+OpenCode V2 has no icon of its own in the registry and shows OpenCode's.
+Claude Code, Codex and Pi, which Ahab drives itself, show the icons of
+their ACP adapters (`claude-acp`, `codex-acp`, `pi-acp`).

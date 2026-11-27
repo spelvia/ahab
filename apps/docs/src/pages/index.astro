@@ -159,29 +159,85 @@ const faq = [
 			</section>
 
 			<section class="recording" aria-label="Ahab at work">
-				<figure class="desktop-frame">
-					<!-- The poster stands in while the video loads, and for good if it is missing. -->
-					<video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="/landing/hero-dark-poster.png" width="1600" height="1000">
-						<source src="/landing/hero-dark.webm" type="video/webm" />
-						<source src="/landing/hero-dark.mp4" type="video/mp4" />
+				<figure class="desktop-frame enlargeable">
+					<!-- Loaded once near the screen, playing while on it; the script sets the poster for the theme and size. -->
+					<video
+						id="hero-video"
+						muted
+						loop
+						playsinline
+						preload="none"
+						width="1600"
+						height="1000"
+						aria-label="A recording of Ahab: an agent session, its changes, the editor and a terminal."
+					>
+						<source type="video/webm" />
+						<source type="video/mp4" />
 					</video>
+					<button type="button" class="play" hidden aria-label="Play the recording">
+						<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+					</button>
+					<button type="button" class="enlarge" data-enlarge aria-label="Enlarge the recording">
+						<span class="enlarge-hint">Tap to enlarge</span>
+					</button>
 					<script is:inline>
-						// The recording in the page's theme (dark without this script).
+						// The recording in the page's theme and size, loaded near the
+						// screen and playing only while on it; with reduced motion, it
+						// waits for the play button.
 						(() => {
 							const video = document.getElementById("hero-video");
-							const pick = () => {
+							const play = video.parentElement.querySelector(".play");
+							const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+							let near = false;
+							let seen = false;
+							let started = !still;
+							const variant = () => {
 								const theme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
-								if (video.dataset.theme === theme) return;
-								video.dataset.theme = theme;
-								video.poster = `/landing/hero-${theme}-poster.png`;
-								const [webm, mp4] = video.querySelectorAll("source");
-								webm.src = `/landing/hero-${theme}.webm`;
-								mp4.src = `/landing/hero-${theme}.mp4`;
-								video.load();
-								video.play().catch(() => {});
+								const size = innerWidth < 900 ? "-960" : "";
+								return { theme, size, key: theme + size };
 							};
+							const pick = () => {
+								const { theme, size, key } = variant();
+								video.poster = `/landing/hero-${theme}-poster${size}.webp`;
+								if (!near || video.dataset.variant === key) return;
+								video.dataset.variant = key;
+								const [webm, mp4] = video.querySelectorAll("source");
+								webm.src = `/landing/hero-${theme}${size}.webm`;
+								mp4.src = `/landing/hero-${theme}${size}.mp4`;
+								video.load();
+								if (seen && started) video.play().catch(() => {});
+							};
+							play.hidden = !still;
+							play.addEventListener("click", () => {
+								started = true;
+								play.hidden = true;
+								near = true;
+								pick();
+								video.play().catch(() => {});
+							});
 							pick();
-							new MutationObserver(pick).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+							new IntersectionObserver(
+								([entry]) => {
+									if (entry.isIntersecting && !near) {
+										near = true;
+										pick();
+									}
+								},
+								{ rootMargin: "600px 0px" },
+							).observe(video);
+							new IntersectionObserver(
+								([entry]) => {
+									seen = entry.isIntersecting;
+									if (seen && started) video.play().catch(() => {});
+									else video.pause();
+								},
+								{ threshold: 0.15 },
+							).observe(video);
+							new MutationObserver(pick).observe(document.documentElement, {
+								attributes: true,
+								attributeFilter: ["data-theme"],
+							});
+							matchMedia("(max-width: 899px)").addEventListener("change", pick);
 						})();
 					</script>
 				</figure>
@@ -225,7 +281,15 @@ const faq = [
 							hidden={i !== 0}
 						>
 							<div class="stage">
-								<figure class="desktop-frame">
+								<figure class="desktop-frame enlargeable">
+									<button
+										type="button"
+										class="enlarge"
+										data-enlarge
+										aria-label={`Enlarge the screenshot: ${tab.alt}`}
+									>
+										<span class="enlarge-hint">Tap to enlarge</span>
+									</button>
 									<Shot
 										dark={tab.dark}
 										light={tab.light}
@@ -458,6 +522,71 @@ const faq = [
 					setTimeout(() => (button.textContent = "Copy"), 1500);
 				});
 			}
+		</script>
+		<dialog id="viewer" aria-label="Enlarged view">
+			<div class="viewer-scroll"></div>
+			<button type="button" class="viewer-close" aria-label="Close">
+				<svg viewBox="0 0 24 24" aria-hidden="true">
+					<path d="M18 6 6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+				</svg>
+			</button>
+		</dialog>
+		<script is:inline>
+			// One viewer for every screenshot and the recording: a modal dialog
+			// (it keeps focus inside and closes on Esc), closed by its button or
+			// the backdrop, with the page still behind it.
+			(() => {
+				const viewer = document.getElementById("viewer");
+				const scroll = viewer.querySelector(".viewer-scroll");
+				let opener = null;
+				const close = () => viewer.close();
+				for (const button of document.querySelectorAll("[data-enlarge]")) {
+					button.addEventListener("click", () => {
+						const frame = button.closest("figure");
+						const video = frame.querySelector("video");
+						scroll.replaceChildren();
+						if (video) {
+							const large = document.createElement("video");
+							for (const name of ["muted", "loop", "playsInline", "controls"]) large[name] = true;
+							// The full-size recording, in the page's theme.
+							const theme = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+							large.poster = `/landing/hero-${theme}-poster.webp`;
+							for (const type of ["webm", "mp4"]) {
+								const source = document.createElement("source");
+								source.src = `/landing/hero-${theme}.${type}`;
+								source.type = `video/${type}`;
+								large.append(source);
+							}
+							large.setAttribute("aria-label", video.getAttribute("aria-label"));
+							scroll.append(large);
+							video.pause();
+							large.play().catch(() => {});
+						} else {
+							const shown = [...frame.querySelectorAll("img")].find((img) => img.offsetParent);
+							const large = document.createElement("img");
+							large.src = shown.currentSrc || shown.src;
+							large.alt = shown.alt;
+							scroll.append(large);
+						}
+						opener = button;
+						document.documentElement.classList.add("viewing");
+						viewer.showModal();
+						scroll.scrollLeft = 0;
+					});
+				}
+				viewer.querySelector(".viewer-close").addEventListener("click", close);
+				// A click on the backdrop lands on the dialog or its scroll area, not the media.
+				viewer.addEventListener("click", (event) => {
+					if (event.target === viewer || event.target === scroll) close();
+				});
+				viewer.addEventListener("close", () => {
+					scroll.replaceChildren();
+					document.documentElement.classList.remove("viewing");
+					opener?.focus();
+					const hero = document.getElementById("hero-video");
+					if (hero.dataset.variant && hero.getBoundingClientRect().top < innerHeight) hero.play().catch(() => {});
+				});
+			})();
 		</script>
 	</body>
 </html>
@@ -792,6 +921,139 @@ const faq = [
 		margin: 16px 0 0;
 		font-size: 17px;
 	}
+	/* Enlarging: every desktop shot and the recording open in the viewer. */
+	.enlargeable {
+		position: relative;
+	}
+	.enlarge {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+		padding: 10px;
+		border: 0;
+		background: transparent;
+		cursor: zoom-in;
+	}
+	.enlarge-hint {
+		display: none;
+		padding: 4px 9px;
+		border-radius: 999px;
+		background: rgb(0 0 0 / 0.65);
+		color: #f2f2f0;
+		font: 500 12px var(--sans);
+	}
+	@media (hover: none) and (pointer: coarse) {
+		.enlarge-hint {
+			display: inline-block;
+		}
+	}
+	.play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 64px;
+		height: 64px;
+		margin: -32px 0 0 -32px;
+		border: 0;
+		border-radius: 50%;
+		background: rgb(0 0 0 / 0.7);
+		color: #f2f2f0;
+		cursor: pointer;
+	}
+	.play[hidden] {
+		display: none;
+	}
+	.play svg {
+		width: 28px;
+		height: 28px;
+		margin-left: 3px;
+	}
+	html.viewing {
+		overflow: hidden;
+	}
+	#viewer {
+		width: 100vw;
+		max-width: none;
+		height: 100dvh;
+		max-height: none;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+	}
+	#viewer::backdrop {
+		background: rgb(0 0 0 / 0.85);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+	}
+	.viewer-scroll {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		padding: 56px 4vw 24px;
+		overscroll-behavior: contain;
+	}
+	.viewer-scroll img,
+	.viewer-scroll video {
+		display: block;
+		flex: none;
+		max-width: 100%;
+		max-height: 100%;
+		margin: auto;
+		border-radius: 10px;
+	}
+	/* Narrow screens: the shot at a readable height, panned sideways. */
+	@media (max-width: 899px) {
+		.viewer-scroll {
+			padding: 56px 12px 24px;
+		}
+		.viewer-scroll img {
+			width: auto;
+			max-width: none;
+			height: min(72dvh, 820px);
+			max-height: none;
+			margin: auto 0;
+		}
+		.viewer-scroll video {
+			width: 100%;
+		}
+	}
+	@media (max-width: 899px) and (orientation: landscape) {
+		.viewer-scroll img {
+			width: 100%;
+			height: auto;
+		}
+	}
+	.viewer-close {
+		position: fixed;
+		top: 12px;
+		right: 12px;
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 40px;
+		height: 40px;
+		border: 1px solid rgb(255 255 255 / 0.2);
+		border-radius: 50%;
+		background: rgb(0 0 0 / 0.6);
+		color: #f2f2f0;
+		cursor: pointer;
+	}
+	.viewer-close svg {
+		width: 20px;
+		height: 20px;
+	}
+
 	/* The recording */
 	.recording {
 		padding: 8px 0 0;

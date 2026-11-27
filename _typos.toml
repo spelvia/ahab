@@ -21,3 +21,5 @@ Hel = "Hel"
 mak = "mak"
 # In RFC 8291's example keys (base64url), in the Web Push tests.
 Nto = "Nto"
+# siGit Code's id in the ACP registry, on the landing page.
+sigit = "sigit"
