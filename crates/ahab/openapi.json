@@ -4,7 +4,8 @@
     "title": "Ahab API",
     "description": "A self-hostable control plane for human-led, agent-assisted software work.",
     "license": {
-      "name": ""
+      "name": "Apache-2.0",
+      "identifier": "Apache-2.0"
     },
     "version": "0.1.0-rc.1"
   },
