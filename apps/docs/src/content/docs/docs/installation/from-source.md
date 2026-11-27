@@ -13,9 +13,8 @@ makes your computer a machine, the web app and the CLI.
 - Node.js 26 or newer, plus the pnpm version pinned in `package.json`.
 - Git, an SSH client and Make, with native compiler/linker tools for Rust
   on your operating system.
-- A local checkout of the Ahab repository.
-- SSH access to the private [Stubb repository](https://github.com/spelvia/stubb),
-  which Cargo fetches as a pinned dependency.
+- A local checkout of the Ahab repository. Cargo downloads its dependencies,
+  [Stubb](https://crates.io/crates/stubb) among them, from crates.io.
 
 Docker is optional; you only need it if you use the repository's Postgres
 service instead of SQLite.
